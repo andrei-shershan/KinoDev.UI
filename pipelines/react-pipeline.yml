@@ -2,15 +2,9 @@ trigger:
   branches:
     include:
       - main
-  paths:
-    include:
-      - 'KinoDev.UI/**'
 
 pool:
   vmImage: 'ubuntu-latest'
-
-variables:
-  workingDirectory: 'KinoDev.UI'
 
 stages:
   - stage: Build_and_Test
