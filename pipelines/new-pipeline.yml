@@ -1,0 +1,87 @@
+trigger:
+  branches:
+    include:
+    - main
+    - develop
+  paths:
+    include:
+    - 'KinoDev.UI/**'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  nodeVersion: '18.x'
+
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '$(nodeVersion)'
+      displayName: 'Install Node.js'
+
+    - script: |
+        npm ci
+      displayName: 'Install Dependencies'
+      workingDirectory: '$(Build.SourcesDirectory)/KinoDev.UI'
+
+    - script: |
+        npm run lint
+      displayName: 'Run ESLint'
+      workingDirectory: '$(Build.SourcesDirectory)/KinoDev.UI'
+
+    - script: |
+        npm run build
+      displayName: 'Build React App'
+      workingDirectory: '$(Build.SourcesDirectory)/KinoDev.UI'
+
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(Build.SourcesDirectory)/KinoDev.UI/build'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        replaceExistingArchive: true
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+
+- stage: Test
+  dependsOn: Build
+  jobs:
+  - job: UnitTests
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '$(nodeVersion)'
+      displayName: 'Install Node.js'
+
+    - script: |
+        npm ci
+      displayName: 'Install Dependencies'
+      workingDirectory: '$(Build.SourcesDirectory)/KinoDev.UI'
+
+    - script: |
+        npm run test -- --coverage --watchAll=false
+      displayName: 'Run Unit Tests'
+      workingDirectory: '$(Build.SourcesDirectory)/KinoDev.UI'
+
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/junit.xml'
+        mergeTestResults: true
+        testRunTitle: 'React Unit Tests'
+      condition: succeededOrFailed()
+
+    - task: PublishCodeCoverageResults@1
+      inputs:
+        codeCoverageTool: 'Cobertura'
+        summaryFileLocation: '$(Build.SourcesDirectory)/KinoDev.UI/coverage/cobertura-coverage.xml'
+        reportDirectory: '$(Build.SourcesDirectory)/KinoDev.UI/coverage'
