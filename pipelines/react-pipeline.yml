@@ -1,4 +1,3 @@
-# azure-pipelines.yml
 trigger:
   branches:
     include:
@@ -7,49 +6,58 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  workingDirectory: '$(System.DefaultWorkingDirectory)'
+
 stages:
-- stage: Build
-  displayName: 'Build Stage'
-  jobs:
-  - job: BuildJob
-    displayName: 'Build Job'
-    steps:
-    # Install Node.js
-    - task: NodeTool@0
-      inputs:
-        versionSpec: '16.x'
-      displayName: 'Install Node.js'
+  - stage: Build_and_Test
+    displayName: 'Build and Test React App'
+    jobs:
+      - job: Build_Test_Job
+        displayName: 'Build and Test'
+        steps:
+        - checkout: self
+          clean: true
 
-    # Install dependencies
-    - script: npm install
-      displayName: 'Install Dependencies'
+        - task: NodeTool@0
+          inputs:
+            versionSpec: '18.x'
+          displayName: 'Install Node.js'
 
-    # Build the project
-    - script: npm run build
-      displayName: 'Build React App'
+        - task: Cache@2
+          inputs:
+            key: 'npm | "$(Agent.OS)" | package-lock.json'
+            path: 'node_modules'
+            cacheHitVar: 'CACHE_RESTORED'
+          displayName: 'Cache node_modules'
 
-    # Optionally, publish the build output as an artifact
-    - publish: build
-      artifact: build
-      displayName: 'Publish Build Artifacts'
+        - task: Npm@1
+          inputs:
+            command: 'ci'
+          displayName: 'Install dependencies'
+          condition: ne(variables.CACHE_RESTORED, 'true')
 
-- stage: Test
-  displayName: 'Test Stage'
-  dependsOn: Build
-  jobs:
-  - job: TestJob
-    displayName: 'Test Job'
-    steps:
-    # Install Node.js again (each stage is isolated)
-    - task: NodeTool@0
-      inputs:
-        versionSpec: '16.x'
-      displayName: 'Install Node.js'
+        - task: Npm@1
+          inputs:
+            command: 'custom'
+            customCommand: 'run test'
+          displayName: 'Run tests'
 
-    # Install dependencies (ensure tests run against the same version)
-    - script: npm install
-      displayName: 'Install Dependencies'
+        - task: Npm@1
+          inputs:
+            command: 'custom'
+            customCommand: 'run build'
+          displayName: 'Build application'
 
-    # Run tests. The additional flag '--watchAll=false' ensures the test runner exits after completion.
-    - script: npm run test -- --watchAll=false
-      displayName: 'Run Tests'
+        - task: PublishTestResults@2
+          inputs:
+            testResultsFormat: 'JUnit'
+            testResultsFiles: 'coverage/junit.xml'
+          displayName: 'Publish test results'
+          condition: succeededOrFailed()
+
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: 'build'
+            ArtifactName: 'react-app'
+          displayName: 'Publish build artifacts'
