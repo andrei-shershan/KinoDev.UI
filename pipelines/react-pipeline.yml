@@ -17,6 +17,7 @@ stages:
         displayName: 'Build and Test'
         steps:
         - checkout: self
+          clean: true
 
         - task: NodeTool@0
           inputs:
@@ -25,42 +26,38 @@ stages:
 
         - task: Cache@2
           inputs:
-            key: 'npm | "$(Agent.OS)" | $(workingDirectory)/package-lock.json'
-            path: '$(workingDirectory)/node_modules'
+            key: 'npm | "$(Agent.OS)" | package-lock.json'
+            path: 'node_modules'
             cacheHitVar: 'CACHE_RESTORED'
           displayName: 'Cache node_modules'
 
         - task: Npm@1
           inputs:
             command: 'ci'
-            workingDir: '$(workingDirectory)'
           displayName: 'Install dependencies'
           condition: ne(variables.CACHE_RESTORED, 'true')
 
         - task: Npm@1
           inputs:
             command: 'custom'
-            workingDir: '$(workingDirectory)'
             customCommand: 'run test'
           displayName: 'Run tests'
 
         - task: Npm@1
           inputs:
             command: 'custom'
-            workingDir: '$(workingDirectory)'
             customCommand: 'run build'
           displayName: 'Build application'
 
         - task: PublishTestResults@2
           inputs:
             testResultsFormat: 'JUnit'
-            testResultsFiles: '**/junit.xml'
-            searchFolder: '$(workingDirectory)'
+            testResultsFiles: 'coverage/junit.xml'
           displayName: 'Publish test results'
           condition: succeededOrFailed()
 
         - task: PublishBuildArtifacts@1
           inputs:
-            PathtoPublish: '$(workingDirectory)/build'
+            PathtoPublish: 'build'
             ArtifactName: 'react-app'
           displayName: 'Publish build artifacts'
