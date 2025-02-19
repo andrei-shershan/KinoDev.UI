@@ -49,6 +49,13 @@ stages:
             customCommand: 'run build'
           displayName: 'Build application'
 
+        - script: |
+            echo "Listing directory contents:"
+            ls -la $(System.DefaultWorkingDirectory)
+            echo "Listing build directory contents:"
+            ls -la $(System.DefaultWorkingDirectory)/dist
+          displayName: 'Debug directory contents'
+
         - task: PublishTestResults@2
           inputs:
             testResultsFormat: 'JUnit'
@@ -58,6 +65,6 @@ stages:
 
         - task: PublishBuildArtifacts@1
           inputs:
-            PathtoPublish: 'build'
+            PathtoPublish: '$(System.DefaultWorkingDirectory)/dist'
             ArtifactName: 'react-app'
           displayName: 'Publish build artifacts'
