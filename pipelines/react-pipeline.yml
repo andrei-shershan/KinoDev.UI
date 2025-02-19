@@ -6,6 +6,9 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  workingDirectory: '$(System.DefaultWorkingDirectory)'
+
 stages:
   - stage: Build_and_Test
     displayName: 'Build and Test React App'
@@ -13,6 +16,8 @@ stages:
       - job: Build_Test_Job
         displayName: 'Build and Test'
         steps:
+        - checkout: self
+
         - task: NodeTool@0
           inputs:
             versionSpec: '18.x'
