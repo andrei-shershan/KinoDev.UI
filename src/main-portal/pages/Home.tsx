@@ -1,12 +1,15 @@
 import React from 'react';
+import { useHttpClient } from '../../hooks/useHttpClient';
 
 const Home: React.FC = () => {
   const [resp, setResp] = React.useState<string>('');
+  const httpClient = useHttpClient();
 
   const buttonClick = () => {
-    fetch('https://api-gateway.kinodev.localhost/api/test/hello')
+    httpClient.fetch('https://api-gateway.kinodev.localhost/api/test/mediatr')
       .then((response) => response.text())
-      .then((data) => setResp(data));
+      .then((data) => setResp(data))
+      .catch((error) => console.error('Error:', error));
   }
 
   return (
