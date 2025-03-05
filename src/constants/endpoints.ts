@@ -6,6 +6,9 @@ export const ENDPOINTS = {
   API_GATEWAY: {
     USERS: {
       DETAILS: 'api/users/details',
+    },
+    TEST: {
+      MEDIATR: 'api/test/mediatr',
     }
   }
 } as const;

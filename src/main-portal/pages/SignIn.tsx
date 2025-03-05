@@ -1,9 +1,9 @@
-import { useState, FormEvent } from 'react';
-import { httpClient } from '../../services/httpClient';
+import { useState, FormEvent, useEffect } from 'react';
 import { ENDPOINTS } from '../../constants/endpoints';
 import { URLS } from '../../constants/urls';
 import { ROLES } from '../../constants/roles';
-import { AUTHENTICATION } from '../../constants/authentication';
+import { useAuthContext } from '../../context/AuthContext';
+import { useInternalApiClient } from '../../hooks/useInternalApiClient';
 
 interface SignInForm {
   email: string;
@@ -11,6 +11,29 @@ interface SignInForm {
 }
 
 export const SignIn = () => {
+  const { state } = useAuthContext();
+  const { fetchSignIn, fetchWithAccessToken } = useInternalApiClient();
+
+  useEffect(() => {
+    const makeRequest = async () => {
+      const userDetailsResponse = await fetchWithAccessToken(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.USERS.DETAILS}`);
+      if (userDetailsResponse.ok) {
+        const userDetails = await userDetailsResponse.json();
+
+        if (userDetails.find((x: string) => x === ROLES.ADMIN)) {
+          window.location.href = URLS.ADMIN_PORTAL_URL;
+        }
+        else {
+          window.location.href = URLS.MAIN_PORTAL_URL;
+        }
+      }
+    }
+
+    if (state.accessToken) {
+      makeRequest();
+    }
+  }, [state.accessToken]);
+
   const [formData, setFormData] = useState<SignInForm>({
     email: '',
     password: ''
@@ -20,39 +43,10 @@ export const SignIn = () => {
     e.preventDefault();
 
     try {
-      const response = await httpClient.fetch(`${URLS.AUTH_BASE_URL}/${ENDPOINTS.AUTHENTICATION.SIGN_IN}`, {
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password
-        }),
-        method: 'POST'
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Sign in failed');
+      const response = await fetchSignIn(formData.email, formData.password);
+      if (!response) {
+        throw new Error('Sign in failed');
       }
-
-      // Handle successful login
-      console.log('Login successful:', data);
-
-      localStorage.setItem(AUTHENTICATION.ACCESS_TOKEN, data.access_token);
-      localStorage.setItem(AUTHENTICATION.REFRESH_TOKEN, data.refresh_token);
-
-      const userDetailsResponse = await httpClient.fetch(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.USERS.DETAILS}`);
-      if (userDetailsResponse.ok) {
-        const userDetails = await userDetailsResponse.json();
-
-        console.log(userDetails);
-        if (userDetails.find((x: string) => x === ROLES.ADMIN)) {
-          window.location.href = URLS.ADMIN_PORTAL_URL;
-        }
-        else {
-          window.location.href = URLS.MAIN_PORTAL_URL;
-        }
-      }
-
     } catch (error) {
       console.error('Login failed:', error instanceof Error ? error.message : 'Unknown error');
       // You might want to show an error message to the user here
