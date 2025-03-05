@@ -22,8 +22,15 @@ RUN npm install
 # Copy all source files including TypeScript configs
 COPY . .
 
-# Build the application
-RUN npm run build
+# Set a default value for NODE_ENV; you can override this during build with --build-arg NODE_ENV=development
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
+
+RUN if [ "$NODE_ENV" = "development" ]; then \
+      npm run build -- --sourcemap; \
+    else \
+      npm run build; \
+    fi
 
 FROM nginx:alpine
 
