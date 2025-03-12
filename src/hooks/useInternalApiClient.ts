@@ -85,7 +85,7 @@ export const useInternalApiClient = () => {
 
       dispatch({ type: 'CLEAR_AUTH' });
 
-      window.location.href = `${URLS.MAIN_PORTAL_URL}/${ROUTES.MAIN_PORTAL.SIGN_IN}`;
+      window.location.href = `${URLS.MAIN_PORTAL_URL}/${ROUTES.SIGN_IN}`;
     }
 
     return response;

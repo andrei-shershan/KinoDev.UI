@@ -1,9 +1,10 @@
 export const ROUTES = {
-  MAIN_PORTAL: {
-    SIGN_IN: 'signin',
-  },
+  SIGN_IN: 'signin',
+  SHOWING: 'showing',
+  SHOWTIMES: 'showtimes',
   ADMIN_PORTAL: {
-
+    HOME: 'admin-portal',
+    MOVIES: 'admin-portal/movies',  
   }
 } as const;
 

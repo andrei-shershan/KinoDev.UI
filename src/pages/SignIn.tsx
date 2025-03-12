@@ -1,9 +1,9 @@
 import { useState, FormEvent, useEffect } from 'react';
-import { ENDPOINTS } from '../../constants/endpoints';
-import { URLS } from '../../constants/urls';
-import { ROLES } from '../../constants/roles';
-import { useAuthContext } from '../../context/AuthContext';
-import { useInternalApiClient } from '../../hooks/useInternalApiClient';
+import { ENDPOINTS } from '../constants/endpoints';
+import { URLS } from '../constants/urls';
+import { ROLES } from '../constants/roles';
+import { useAuthContext } from '../context/AuthContext';
+import { useInternalApiClient } from '../hooks/useInternalApiClient';
 
 interface SignInForm {
   email: string;
