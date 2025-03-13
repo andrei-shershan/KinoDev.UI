@@ -19,6 +19,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Route path={`/${ROUTES.SIGN_IN}`} element={<SignIn />} />
             <Route path={`/${ROUTES.SHOWING}/:date?`} element={<ShowTimes />} />
             <Route path={`/${ROUTES.SHOWTIMES}/:showTimeId`} element={<ShowTime />} />
+            <Route path={`/${ROUTES.SHOWTIMES}/:showTimeId/booking`} element={<ShowTime />} />
             <Route path={`/${ROUTES.ADMIN_PORTAL.MOVIES}`} element={<AdminPortal />} />
             <Route path="*" element={<Navigate to={`/${ROUTES.SHOWING}`} replace />} />
           </Routes>

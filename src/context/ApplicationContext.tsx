@@ -18,6 +18,11 @@ const authReducer = (state: IApplicationContextState, action: ApplciationContext
         ...state,
         spinning: action.payload
       };
+    case 'GET_SHOW_TIME_DETAILS':
+      return {
+        ...state,
+        showTimeDetails: action.payload
+      };
     default:
       return state;
   }
