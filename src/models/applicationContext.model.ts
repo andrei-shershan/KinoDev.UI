@@ -39,12 +39,55 @@ export interface IShowTimeDetails {
   hall: IHall
 }
 
+export interface IShowTimeSeat {
+  id: number,
+  row: number,
+  number: number,
+  isAvailable: boolean
+}
+
+export interface IShowTimeSeats {
+  id: number,
+  hallId: number,
+  time: Date,
+  price: number,
+  seats: IShowTimeSeat[]
+} 
+
+export interface IBokingStorageData extends IShowTimeSeats {
+  movie: IMovie,
+  hall: IHall
+}
+
 export interface IApplicationContextState {
   showingMovies: IMovieShowTimes[],
-  showTimeDetails: IShowTimeDetails,
+  showTimeDetails?: IShowTimeDetails
   spinning: boolean,
 }
 
+export enum OrderState {
+  NEW = 0,
+  PENDING = 10,
+  PROCESSING = 20,
+  COMPLETED = 30,
+  CANCELLED = 40
+}
+
+export interface IOrder{
+  id: number,
+  cost: number,
+  state: OrderState,
+  createdAt: Date,
+  completedAt: Date,
+  ticket: ITicket[]
+}
+
+export interface ITicket{
+  id: number,
+  seatId: number,
+  showTimeId: number,
+  orderId: number,
+}
 
 export type ApplciationContextActions =
   | { type: 'GET_SHOWING_MOVIES'; payload: IMovieShowTimes[] }

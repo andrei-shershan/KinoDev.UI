@@ -4,6 +4,9 @@ export const ENDPOINTS = {
       GET_LIST: 'api/movies',
       GET_SHOWTIMES: 'api/movies/showing',
     },
+    ORDERS: {
+      CREATE: 'api/orders',
+    },
     SHOW_TIMES: {
       GET_SHOW_TIME_DETAILS: 'api/showtimes/details',
       GET_SHOW_TIME_SEATS: 'api/showtimes/seats'

@@ -9,8 +9,111 @@ import { IShowTimeDetails } from '../models/applicationContext.model';
 import { Grid, message } from 'antd';
 import { ERRORS } from '../constants/errors';
 import { getDateTimeObject } from '../utils/dateFormatter';
-import ShowTimeSeatsMap from '../components/ShowTimeSeatsMap';
+import ShowTimeSeatsMap from '../components/show-times/ShowTimeSeatsMap';
+import ShowTimeHeader from '../components/show-times/showTimeHeader';
+import ShowTimeContent from '../components/show-times/showTimeContent';
 const { useBreakpoint } = Grid;
+
+const styles = {
+  movieImage: (width: string, height: string) => ({
+    width,
+    height,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center'
+  }),
+  container: {
+    display: 'flex',
+    gap: '24px'
+  },
+  mobileContainer: {
+    padding: '16px'
+  },
+  imageWrapper: (width: string) => ({
+    width,
+    flexShrink: 0
+  }),
+  button: (isBooking: boolean) => ({
+    padding: '12px 24px',
+    fontSize: '16px',
+    backgroundColor: isBooking ? '#808080' : '#1677ff',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer'
+  }),
+  bookingSection: {
+    marginTop: '20px'
+  }
+};
+
+const MovieDetails = ({ movie, isBooking }: { movie: IShowTimeDetails['movie'], isBooking: boolean }) => (
+  <>
+    <h1>{movie.name}</h1>
+    <p>{movie.releaseDate.toString()}</p>
+    <p>{movie.duration}</p>
+    {!isBooking && <p>{movie.description}</p>}
+  </>
+);
+
+const BookingSection = ({ showTimeId }: { showTimeId: string }) => (
+  <div style={styles.bookingSection}>
+    <h3>Select your seats</h3>
+    <ShowTimeSeatsMap showTimeId={showTimeId}  />
+  </div>
+);
+
+const DesktopLayout = ({ showTimeDetails, isBooking, showTimeId, onButtonClick }: any) => (
+  <div style={styles.container}>
+    <div style={styles.imageWrapper('300px')}>
+      <div
+        style={{
+          ...styles.movieImage('300px', isBooking ? '150px' : '300px'),
+          backgroundImage: `url(${showTimeDetails.movie.url})`
+        }}
+      />
+    </div>
+    <div style={{ flex: 1 }}>
+      <MovieDetails movie={showTimeDetails.movie} isBooking={isBooking} />
+      <h2>{getDateTimeObject(showTimeDetails.time).date} {getDateTimeObject(showTimeDetails.time).time}</h2>
+      <h2>{showTimeDetails.price}</h2>
+      <h3>{showTimeDetails.hall.name}</h3>
+      <button
+        onClick={onButtonClick}
+        style={styles.button(isBooking)}
+      >
+        {isBooking ? 'Cancel' : 'Buy Ticket'}
+      </button>
+      {isBooking && <BookingSection showTimeId={showTimeId} />}
+    </div>
+  </div>
+);
+
+const MobileLayout = ({ showTimeDetails, isBooking, showTimeId, onButtonClick }: any) => (
+  <div style={styles.mobileContainer}>
+    <div style={{ width: isBooking ? '200px' : '300px', margin: '0 auto' }}>
+      <div
+        style={{
+          ...styles.movieImage(isBooking ? '200px' : '300px', '150px'),
+          backgroundImage: `url(${showTimeDetails.movie.url})`,
+          marginBottom: '16px'
+        }}
+      />
+    </div>
+    <div>
+      <MovieDetails movie={showTimeDetails.movie} isBooking={isBooking} />
+      <h2>{getDateTimeObject(showTimeDetails.time).date} {getDateTimeObject(showTimeDetails.time).time}</h2>
+      <h2>{showTimeDetails.price}</h2>
+      <h3>{showTimeDetails.hall.name}</h3>
+      <button
+        onClick={onButtonClick}
+        style={{ ...styles.button(isBooking), width: '100%' }}
+      >
+        {isBooking ? 'Cancel' : 'Buy Ticket'}
+      </button>
+      {isBooking && <BookingSection showTimeId={showTimeId} />}
+    </div>
+  </div>
+);
 
 const ShowTime = () => {
   const { showTimeId } = useParams<{ showTimeId: string }>();
@@ -18,6 +121,7 @@ const ShowTime = () => {
   const location = useLocation();
   const isBooking = location.pathname.includes('booking');
 
+  console.log('isBooking', isBooking);
   if (!showTimeId) {
     // TODO: Add page like NotFound, etc, to prevent this
     return <div>Show time ID is required</div>;
@@ -54,100 +158,32 @@ const ShowTime = () => {
 
   return (
     <MainLayout>
-      {
-        screens.sm
-          ? state.showTimeDetails
-            ? <div style={{ display: 'flex', gap: '24px' }}>
-              <div style={{ width: '300px', flexShrink: 0 }}>
-                <div
-                  style={{
-                    width: '300px',
-                    height: isBooking ? '150px' : '300px',
-                    backgroundImage: `url(${state.showTimeDetails.movie.url})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
-                  }}
-                />
-              </div>
-              <div style={{ flex: 1 }}>
-                <h1>{state.showTimeDetails.movie.name}</h1>
-                <p>{state.showTimeDetails.movie.releaseDate.toString()}</p>
-                <p>{state.showTimeDetails.movie.duration}</p>
-                {!isBooking && <p>{state.showTimeDetails.movie.description}</p>}
-                <h2>{getDateTimeObject(state.showTimeDetails.time).date} {getDateTimeObject(state.showTimeDetails.time).time}</h2>
-                <h2>{state.showTimeDetails.price}</h2>
-                <h3>{state.showTimeDetails.hall.name}</h3>
-                <button
-                  onClick={() => isBooking ? navigate(`/showtimes/${showTimeId}`) : navigate(`/showtimes/${showTimeId}/booking`)}
-                  style={{
-                    padding: '12px 24px',
-                    fontSize: '16px',
-                    backgroundColor: isBooking ? '#808080' : '#1677ff',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  {isBooking ? 'Cancel' : 'Buy Ticket'}
-                </button>
-                {isBooking && (
-                  <div style={{ marginTop: '20px' }}>
-                    <h3>Select your seats</h3>
-                    <ShowTimeSeatsMap showTimeId={showTimeId} />
-                  </div>
-                )}
-              </div>
-            </div>
-            : <div>Loading...</div>
-          : state.showTimeDetails
-            ? <div style={{ padding: '16px' }}>
-              <div style={{ width: isBooking ? '200px' : '300px', margin: '0 auto' }}>
-                <div
-                  style={{
-                    width: isBooking ? '200px' : '300px',
-                    height: '150px',
-                    backgroundImage: `url(${state.showTimeDetails.movie.url})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    marginBottom: '16px'
-                  }}
-                />
-              </div>
-              <div>
-                <h1>{state.showTimeDetails.movie.name}</h1>
-                <p>{state.showTimeDetails.movie.releaseDate.toString()}</p>
-                <p>{state.showTimeDetails.movie.duration}</p>
-                {!isBooking && <p>{state.showTimeDetails.movie.description}</p>}
-                <h2>{getDateTimeObject(state.showTimeDetails.time).date} {getDateTimeObject(state.showTimeDetails.time).time}</h2>
-                <h2>{state.showTimeDetails.price}</h2>
-                <h3>{state.showTimeDetails.hall.name}</h3>
-                <button
-                  onClick={() => isBooking ? navigate(`/showtimes/${showTimeId}`) : navigate(`/showtimes/${showTimeId}/booking`)}
-                  style={{
-                    padding: '12px 24px',
-                    fontSize: '16px',
-                    backgroundColor: isBooking ? '#808080' : '#1677ff',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    width: '100%'
-                  }}
-                >
-                  {isBooking ? 'Cancel' : 'Buy Ticket'}
-                </button>
-                {isBooking && (
-                  <div style={{ marginTop: '20px' }}>
-                    <h3>Select your seats</h3>
-                    <ShowTimeSeatsMap showTimeId={showTimeId} />
-                  </div>
-                )}
-              </div>
-            </div>
-            : <div>Loading...</div>
-      }
+      <ShowTimeHeader showTimeDetails={state.showTimeDetails} isBooking={isBooking} />
+      <ShowTimeContent showTimeDetails={state.showTimeDetails} isBooking={isBooking} />
+    </MainLayout>
+  );
 
+  return (
+    <MainLayout>
+      {state.showTimeDetails ? (
+        screens.sm ? (
+          <DesktopLayout
+            showTimeDetails={state.showTimeDetails}
+            isBooking={isBooking}
+            showTimeId={showTimeId}
+            onButtonClick={() => isBooking ? navigate(`/showtimes/${showTimeId}`) : navigate(`/showtimes/${showTimeId}/booking`)}
+          />
+        ) : (
+          <MobileLayout
+            showTimeDetails={state.showTimeDetails}
+            isBooking={isBooking}
+            showTimeId={showTimeId}
+            onButtonClick={() => isBooking ? navigate(`/showtimes/${showTimeId}`) : navigate(`/showtimes/${showTimeId}/booking`)}
+          />
+        )
+      ) : (
+        <div>Loading...</div>
+      )}
     </MainLayout>
   );
 };

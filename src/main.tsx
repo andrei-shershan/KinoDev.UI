@@ -8,6 +8,7 @@ import SignIn from './pages/SignIn';
 import ShowTimes from './pages/ShowTimes';
 import AdminPortal from './pages/AdminPortal';
 import ShowTime from './pages/ShowTime';
+import Booking from './pages/Booking';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Router>
           <Routes>
             {/* <Route path={`/`} element={<ShowTimes />} /> */}
+            <Route path={`/${ROUTES.BOOKING}`} element={<Booking />} />
             <Route path={`/${ROUTES.SIGN_IN}`} element={<SignIn />} />
             <Route path={`/${ROUTES.SHOWING}/:date?`} element={<ShowTimes />} />
             <Route path={`/${ROUTES.SHOWTIMES}/:showTimeId`} element={<ShowTime />} />

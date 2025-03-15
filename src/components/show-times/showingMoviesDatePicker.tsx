@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import overrideTodayDateName from "../utils/overrideTodayDateName";
+import overrideTodayDateName from "../../utils/overrideTodayDateName";
 
 interface ShowingMoviesDatePickerProps {
   selectedDate: string;

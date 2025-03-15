@@ -6,10 +6,10 @@ import MainLayout from "../layouts/mainLayout";
 import { IMovieShowTimes } from "../models/applicationContext.model";
 import { Grid, message } from "antd";
 import { ERRORS } from "../constants/errors";
-import ShowTimeButton from "../components/showTimeButton";
+import ShowTimeButton from "../components/show-times/showTimeButton";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
-import ShowingMoviesDatePicker from "../components/showingMoviesDatePicker";
+import ShowingMoviesDatePicker from "../components/show-times/showingMoviesDatePicker";
 import { ROUTES } from "../constants/routes";
 const { useBreakpoint } = Grid;
 

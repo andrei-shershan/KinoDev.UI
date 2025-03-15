@@ -1,4 +1,5 @@
 export const ROUTES = {
+  BOOKING: 'booking',
   SIGN_IN: 'signin',
   SHOWING: 'showing',
   SHOWTIMES: 'showtimes',

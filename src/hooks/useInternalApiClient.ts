@@ -61,6 +61,18 @@ export const useInternalApiClient = () => {
     return true;
   }
 
+  const fetchPost = async (url: string, body: any, options: RequestInit = {}): Promise<Response> => {
+    return fetchWithAccessToken(url, {
+      ...options,
+      method: 'POST',
+      body: JSON.stringify(body)
+    });
+  }
+
+  const fetchGet = async (url: string, options: RequestInit = {}): Promise<Response> => {
+    return fetchWithAccessToken(url, options);
+  }
+
   const fetchWithAccessToken = async (url: string, options: RequestInit = {}, accessToken: string | null = null, retry: number = MAX_RETRY): Promise<Response> => {
     const headers = {
       ...options.headers,
@@ -91,5 +103,5 @@ export const useInternalApiClient = () => {
     return response;
   }
 
-  return { fetchWithAccessToken, fetchSignIn, refreshToken };
+  return { fetchWithAccessToken, fetchPost, fetchSignIn, refreshToken };
 }

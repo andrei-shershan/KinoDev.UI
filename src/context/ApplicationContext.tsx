@@ -3,6 +3,7 @@ import { ApplciationContextActions, IApplicationContext, IApplicationContextStat
 
 const initialState: IApplicationContextState = {
   showingMovies: [],
+  showTimeDetails: undefined,
   spinning: false
 };
 
