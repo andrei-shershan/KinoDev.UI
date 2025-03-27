@@ -1,14 +1,18 @@
-import { Grid, Modal } from "antd";
+import { 
+    // Grid,
+     Modal } from "antd";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import { IBokingStorageData, IShowTimeDetails, IShowTimeSeat, IShowTimeSeats } from "../../models/applicationContext.model";
+import { IBokingStorageData, IShowTimeDetails, IShowTimeSeat, 
+    // IShowTimeSeats
+ } from "../../models/applicationContext.model";
 import DataLoading from "../dataLoading";
 import { getDateTimeObject } from "../../utils/dateFormatter";
 import ShowTimeSeatsMap from "./ShowTimeSeatsMap";
 import { useState } from "react";
 import { STORAGE } from "../../constants/storage";
 
-const { useBreakpoint } = Grid;
+// const { useBreakpoint } = Grid;
 
 const CancelBookingButton = ({ showTimeId }: { showTimeId: number }) => {
     const navigate = useNavigate();
@@ -93,7 +97,7 @@ const ShowTimeContent = ({ showTimeDetails, isBooking }: { showTimeDetails: ISho
     }
 
     const [selectedSeats, setSelectedSeats] = useState<IShowTimeSeat[]>([]);
-    const screens = useBreakpoint();
+    // const screens = useBreakpoint();
 
     return (<div>
         <ShowTimeDetails

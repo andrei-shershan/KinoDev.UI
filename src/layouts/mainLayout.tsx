@@ -3,8 +3,9 @@ import { Content, Footer, Header } from "antd/es/layout/layout";
 import '../styles/index.css';
 import { useApplicationContext } from "../context/ApplicationContext";
 import { LoadingOutlined } from '@ant-design/icons';
+import { FC, PropsWithChildren } from 'react';
 
-const MainLayout = ({ children }) => {
+const MainLayout: FC<PropsWithChildren> = ({ children }) => {
   const { state } = useApplicationContext();
   return (
     <Layout style={{ minHeight: '100vh' }}>

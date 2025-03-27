@@ -69,9 +69,9 @@ export const useInternalApiClient = () => {
     });
   }
 
-  const fetchGet = async (url: string, options: RequestInit = {}): Promise<Response> => {
-    return fetchWithAccessToken(url, options);
-  }
+  // const fetchGet = async (url: string, options: RequestInit = {}): Promise<Response> => {
+  //   return fetchWithAccessToken(url, options);
+  // }
 
   const fetchWithAccessToken = async (url: string, options: RequestInit = {}, accessToken: string | null = null, retry: number = MAX_RETRY): Promise<Response> => {
     const headers = {

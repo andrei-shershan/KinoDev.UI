@@ -59,9 +59,9 @@ const drawSeatsMap = (
                 <div
                     key={seatIndex}
                     style={getSeatStyle(
-                        screens.sm,
+                        screens.sm ?? false,
                         seat?.isAvailable,
-                        seat && selectedSeats.some(s => s.row === seat.row && s.number === seat.number)
+                        (seat && selectedSeats.some(s => s.row === seat.row && s.number === seat.number)) ?? false
                     )}
                     onClick={() => seat && onSeatClick(seat)}
                 >

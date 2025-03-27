@@ -74,7 +74,7 @@ export enum OrderState {
 }
 
 export interface IOrder{
-  id: number,
+  id: string,
   cost: number,
   state: OrderState,
   createdAt: Date,
@@ -83,10 +83,10 @@ export interface IOrder{
 }
 
 export interface ITicket{
-  id: number,
+  id: string,
   seatId: number,
   showTimeId: number,
-  orderId: number,
+  orderId: string,
 }
 
 export type ApplciationContextActions =

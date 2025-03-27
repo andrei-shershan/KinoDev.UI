@@ -7,6 +7,9 @@ export const ENDPOINTS = {
     ORDERS: {
       CREATE: 'api/orders',
     },
+    PAYMENTS: {
+      CREATE_PAYMENT_INTENT: 'api/payments/create-payment-intent',
+    },
     SHOW_TIMES: {
       GET_SHOW_TIME_DETAILS: 'api/showtimes/details',
       GET_SHOW_TIME_SEATS: 'api/showtimes/seats'
