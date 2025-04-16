@@ -14,7 +14,7 @@ const MainLayout: FC<PropsWithChildren> = ({ children }) => {
       </Header>
       <Content style={{
         minWidth: "400px",
-        maxWidth: "1000px",
+        maxWidth: "700px",
         flex: "1 0 auto",
         backgroundColor: "white",
         margin: "0 auto",

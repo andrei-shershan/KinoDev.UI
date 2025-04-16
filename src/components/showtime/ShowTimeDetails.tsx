@@ -1,38 +1,20 @@
-import { Grid, Modal } from "antd";
-import {
-    // IMovie,
-    IShowTimeDetails
-} from "../../models/applicationContext.model";
-import DataLoading from "../dataLoading";
-import { getDateTimeObject } from "../../utils/dateFormatter";
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../constants/routes";
-import { useApplicationContext } from "../../context/ApplicationContext";
+import { IShowTimeDetails } from "../../models/applicationContext.model";
+import { Grid } from "antd";
 const { useBreakpoint } = Grid;
 
-const BuyTicketCard = ({ showTimeDetails }: { showTimeDetails: IShowTimeDetails }) => {
-    const navigate = useNavigate();
-
-    return (
-        <div>
-            <h2>{getDateTimeObject(showTimeDetails.time).date} {getDateTimeObject(showTimeDetails.time).time}</h2>
-            <h2>{showTimeDetails.price}</h2>
-            <h3>{showTimeDetails.hall.name}</h3>
-
-            <button
-                onClick={() => navigate(`/${ROUTES.SHOWTIMES}/${showTimeDetails.id}/booking`)}
-            >
-                {'Buy Ticket'}
-            </button>
-        </div>
-    );
-}
-
-const MovieDetails = ({ showTimeDetails, isBooking }: { showTimeDetails: IShowTimeDetails, isBooking: boolean }) => {
-    const screens = useBreakpoint();
+const ShowTimeDetails = (
+    {
+        showTimeDetails,
+        isBooking
+    }:
+        {
+            showTimeDetails: IShowTimeDetails,
+            isBooking: boolean
+        }) => {
 
     const { movie } = showTimeDetails;
 
+    const screens = useBreakpoint();
     if (screens.sm) {
         return (
             isBooking
@@ -65,7 +47,6 @@ const MovieDetails = ({ showTimeDetails, isBooking }: { showTimeDetails: IShowTi
                         <p>{movie.releaseDate.toString()}</p>
                         <p>{movie.duration}</p>
                         <p>{movie.description}</p>
-                        <BuyTicketCard showTimeDetails={showTimeDetails} />
                     </div>
                 </div>
         );
@@ -101,59 +82,11 @@ const MovieDetails = ({ showTimeDetails, isBooking }: { showTimeDetails: IShowTi
                         <h1>{movie.name}</h1>
                         <p>{movie.releaseDate.toString()}</p>
                         <p>{movie.duration}</p>
-                        <BuyTicketCard showTimeDetails={showTimeDetails} />
                     </div>
                 </div>
         );
     }
-};
 
-const DesktopLayout = ({ showTimeDetails, isBooking }: { showTimeDetails: IShowTimeDetails, isBooking: boolean }) => {
-    return (<>
-        <MovieDetails showTimeDetails={showTimeDetails} isBooking={isBooking} />
-    </>);
 }
 
-const MobileLayout = ({ showTimeDetails, isBooking }: { showTimeDetails: IShowTimeDetails, isBooking: boolean }) => {
-    return (<>
-        <MovieDetails showTimeDetails={showTimeDetails} isBooking={isBooking} />
-    </>);
-}
-
-const ShowTimeHeader = ({ showTimeDetails, isBooking }: { showTimeDetails: IShowTimeDetails, isBooking: boolean }) => {
-    if (!showTimeDetails) {
-        return <DataLoading />;
-    }
-
-    const { state } = useApplicationContext();
-    const navigate = useNavigate();
-
-    if (state.activeOrderSummary) {
-        return (
-            <div>
-                <div>
-                    <br />
-                    <br />
-                    Opps, you already have an active order. Please complete the order before booking a new one.
-                    <button
-                        onClick={() => navigate(`/${ROUTES.BOOKING}`)}
-                    >
-                        {'Go to basket'}
-                    </button>
-                </div>
-            </div>
-        );
-    }
-
-
-    const screens = useBreakpoint();
-
-    if (screens.md) {
-        return <DesktopLayout showTimeDetails={showTimeDetails} isBooking={isBooking} />;
-    }
-    else {
-        return <MobileLayout showTimeDetails={showTimeDetails} isBooking={isBooking} />;
-    }
-}
-
-export default ShowTimeHeader;
+export default ShowTimeDetails;

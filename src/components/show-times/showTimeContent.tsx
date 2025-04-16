@@ -1,16 +1,22 @@
-import { 
+import {
+    message,
     // Grid,
-     Modal } from "antd";
+    Modal
+} from "antd";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import { IBokingStorageData, IShowTimeDetails, IShowTimeSeat, 
+import {
+    IBokingStorageData, IOrder, IShowTimeDetails, IShowTimeSeat,
     // IShowTimeSeats
- } from "../../models/applicationContext.model";
+} from "../../models/applicationContext.model";
 import DataLoading from "../dataLoading";
 import { getDateTimeObject } from "../../utils/dateFormatter";
 import ShowTimeSeatsMap from "./ShowTimeSeatsMap";
 import { useState } from "react";
 import { STORAGE } from "../../constants/storage";
+import { URLS } from "../../constants/urls";
+import { ENDPOINTS } from "../../constants/endpoints";
+import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 
 // const { useBreakpoint } = Grid;
 
@@ -31,11 +37,13 @@ const ShowTimeDetails = ({ showTimeDetails, isBooking, selectedSeats }:
         selectedSeats: IShowTimeSeat[]
     }) => {
 
+    const { fetchPost } = useInternalApiClient();
+
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleOk = () => {
-        const bookinData: IBokingStorageData = {
+    const handleOk = async () => {
+        const bookingData: IBokingStorageData = {
             id: showTimeDetails.id,
             hallId: showTimeDetails.hall.id,
             time: showTimeDetails.time,
@@ -44,10 +52,24 @@ const ShowTimeDetails = ({ showTimeDetails, isBooking, selectedSeats }:
             movie: showTimeDetails.movie,
             hall: showTimeDetails.hall,
         };
-        
-        localStorage.setItem(STORAGE.BOOKING, JSON.stringify(bookinData));
-        setIsModalOpen(false);
-        navigate(`/${ROUTES.BOOKING}`);
+
+        const body = {
+            showTimeId: bookingData.id,
+            selectedSeatIds: bookingData.seats.map(seat => seat.id)
+        };
+
+        try {
+            var response = await fetchPost(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.ORDERS.CREATE}`, body);
+            if (response.ok) {
+                navigate(`/${ROUTES.BOOKING}`);
+            }
+            else {
+                message.error("Error creating order. Please try again.");
+            }
+        }
+        finally {
+            setIsModalOpen(false);
+        }
     };
 
     const handleCancel = () => {
@@ -74,10 +96,10 @@ const ShowTimeDetails = ({ showTimeDetails, isBooking, selectedSeats }:
                         </>
                     }
                 </div>
-                <Modal 
-                    title="Booking Confirmation" 
-                    open={isModalOpen} 
-                    onOk={handleOk} 
+                <Modal
+                    title="Booking Confirmation"
+                    open={isModalOpen}
+                    onOk={handleOk}
                     onCancel={handleCancel}
                 >
                     <p>Total price: {selectedSeats.length * showTimeDetails.price}</p>

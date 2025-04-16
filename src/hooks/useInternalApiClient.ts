@@ -7,13 +7,15 @@ import { ROUTES } from "../constants/routes";
 const MAX_RETRY = 1;
 
 const getCsrfToken = (): string => {
-  const match = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
-  return match ? match[1] : '';
+  return localStorage.getItem('xsrfToken') || '';
+  // const match = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
+  // return match ? match[1] : '';
 }
 
 export const useInternalApiClient = () => {
   const { state, dispatch } = useAuthContext();
 
+  //TODO: fetch post, move to service
   const refreshToken = async () => {
     const response = await fetch(`${URLS.AUTH_BASE_URL}/${ENDPOINTS.AUTHENTICATION.REFRESH_TOKEN}`, {
       method: 'POST',
@@ -33,6 +35,7 @@ export const useInternalApiClient = () => {
     return null;
   };
 
+  // TODO: fetch post, move to service
   const fetchSignIn = async (email: string, password: string) => {
     const response = await fetch(`${URLS.AUTH_BASE_URL}/${ENDPOINTS.AUTHENTICATION.SIGN_IN}`, {
       body: JSON.stringify({
@@ -57,6 +60,11 @@ export const useInternalApiClient = () => {
       return false;
     }
 
+    console.log('Sign in successful!');
+    console.log('Response data:', data);
+
+    localStorage.setItem('xsrfToken', data['xsrfToken']);
+
     dispatch({ type: 'SET_ACCESS_TOKEN', payload: data[AUTHENTICATION.ACCESS_TOKEN] });
     return true;
   }
@@ -65,7 +73,7 @@ export const useInternalApiClient = () => {
     return fetchWithAccessToken(url, {
       ...options,
       method: 'POST',
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     });
   }
 
@@ -73,6 +81,7 @@ export const useInternalApiClient = () => {
   //   return fetchWithAccessToken(url, options);
   // }
 
+  // TODO: should be just fetchGet
   const fetchWithAccessToken = async (url: string, options: RequestInit = {}, accessToken: string | null = null, retry: number = MAX_RETRY): Promise<Response> => {
     const headers = {
       ...options.headers,
@@ -82,6 +91,7 @@ export const useInternalApiClient = () => {
 
     const response = await fetch(`${url}`, {
       ...options,
+      credentials: 'include',
       headers
     });
 

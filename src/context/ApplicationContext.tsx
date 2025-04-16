@@ -4,7 +4,8 @@ import { ApplciationContextActions, IApplicationContext, IApplicationContextStat
 const initialState: IApplicationContextState = {
   showingMovies: [],
   showTimeDetails: undefined,
-  spinning: false
+  activeOrderSummary: undefined,
+  spinning: false,
 };
 
 const authReducer = (state: IApplicationContextState, action: ApplciationContextActions): IApplicationContextState => {
@@ -23,6 +24,11 @@ const authReducer = (state: IApplicationContextState, action: ApplciationContext
       return {
         ...state,
         showTimeDetails: action.payload
+      };
+    case 'SET_ACTIVE_ORDER':
+      return {
+        ...state,
+        activeOrderSummary: action.payload
       };
     default:
       return state;

@@ -52,7 +52,7 @@ export interface IShowTimeSeats {
   time: Date,
   price: number,
   seats: IShowTimeSeat[]
-} 
+}
 
 export interface IBokingStorageData extends IShowTimeSeats {
   movie: IMovie,
@@ -63,6 +63,7 @@ export interface IApplicationContextState {
   showingMovies: IMovieShowTimes[],
   showTimeDetails?: IShowTimeDetails
   spinning: boolean,
+  activeOrderSummary?: IOrderSummary,
 }
 
 export enum OrderState {
@@ -73,7 +74,7 @@ export enum OrderState {
   CANCELLED = 40
 }
 
-export interface IOrder{
+export interface IOrder {
   id: string,
   cost: number,
   state: OrderState,
@@ -82,17 +83,43 @@ export interface IOrder{
   ticket: ITicket[]
 }
 
-export interface ITicket{
+export interface ITicket {
   id: string,
   seatId: number,
   showTimeId: number,
   orderId: string,
 }
 
+export interface IShowTimeSummary {
+  id: number,
+  time: Date,
+  hall: IHall,
+  movie: IMovie,
+}
+
+export interface ITicketSummary {
+  ticketId: string,
+  seatId: number,
+  row: number,
+  number: number,
+  price: number,
+}
+
+export interface IOrderSummary {
+  id: string,
+  state: OrderState,
+  orderCost: number,
+  createdAt: Date,
+  completedAt?: Date,
+  showTimeSummary: IShowTimeSummary,
+  tickets: ITicketSummary[],
+}
+
 export type ApplciationContextActions =
   | { type: 'GET_SHOWING_MOVIES'; payload: IMovieShowTimes[] }
   | { type: 'SET_SPINNING'; payload: boolean }
-  | { type: 'GET_SHOW_TIME_DETAILS'; payload: IShowTimeDetails };
+  | { type: 'GET_SHOW_TIME_DETAILS'; payload: IShowTimeDetails }
+  | { type: 'SET_ACTIVE_ORDER'; payload: IOrderSummary };
 
 export interface IApplicationContext {
   state: IApplicationContextState;

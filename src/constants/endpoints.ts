@@ -5,6 +5,7 @@ export const ENDPOINTS = {
       GET_SHOWTIMES: 'api/movies/showing',
     },
     ORDERS: {
+      GET_ACTIVE: 'api/orders/active',
       CREATE: 'api/orders',
     },
     PAYMENTS: {

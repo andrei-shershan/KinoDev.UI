@@ -74,7 +74,7 @@ const drawSeatsMap = (
 const ShowTimeSeatsMap = ({ showTimeId, onSelectSeat }:
     {
         showTimeId: string,
-        onSelectSeat: (selectedSeatsCount: IShowTimeSeat[]) => void
+        onSelectSeat: (selectedSeats: IShowTimeSeat[]) => void
     }) => {
     const { dispatch } = useApplicationContext();
     const { fetchWithAccessToken } = useInternalApiClient();
