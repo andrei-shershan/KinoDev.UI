@@ -4,6 +4,7 @@ import { FormEvent } from "react";
 import { IOrderSummary } from "../../models/applicationContext.model";
 import { ENDPOINTS } from "../../constants/endpoints";
 import { URLS } from "../../constants/urls";
+import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 
 
 const stripePromise = loadStripe('pk_test_51R312X01BnhxNbMc13npKhobKSEDspHTsphDdFtmA3jyxdWXcfpZfIiYhkgaTn86EIkyfNfi2qjbXtYFKRK1Ttxq00zZDSeWoJ');
@@ -14,6 +15,8 @@ const CheckoutForm = (
   }: { orderSummary: IOrderSummary }) => {
   const stripe = useStripe();
   const elements = useElements();
+
+  const { fetchPost } = useInternalApiClient();
 
   if (elements === null || stripe === null) {
     return null;
@@ -57,7 +60,11 @@ const CheckoutForm = (
     } else {
       if (result.paymentIntent.status === 'succeeded') {
         console.log("Payment succeeded!");
-        // Update UI, notify the user, etc.
+        var completeResult = await fetchPost(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.ORDERS.COMPLETE_ORDER}`, {
+          paymentIntentId: result.paymentIntent.id,
+        });
+
+        console.log(completeResult, "Payment completed successfully!");
       }
     }
   };
