@@ -9,6 +9,7 @@ import ShowTimes from './pages/ShowTimes';
 import AdminPortal from './pages/AdminPortal';
 import ShowTime from './pages/ShowTime';
 import Booking from './pages/Booking';
+import Tickets from './pages/Tickets';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -22,6 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Route path={`/${ROUTES.SHOWING}/:date?`} element={<ShowTimes />} />
             <Route path={`/${ROUTES.SHOWTIMES}/:showTimeId`} element={<ShowTime />} />
             <Route path={`/${ROUTES.SHOWTIMES}/:showTimeId/booking`} element={<ShowTime />} />
+            <Route path={`/${ROUTES.TICKETS}`} element={<Tickets />} />
             <Route path={`/${ROUTES.ADMIN_PORTAL.MOVIES}`} element={<AdminPortal />} />
             <Route path="*" element={<Navigate to={`/${ROUTES.SHOWING}`} replace />} />
           </Routes>

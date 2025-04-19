@@ -3,6 +3,7 @@ export const ROUTES = {
   SIGN_IN: 'signin',
   SHOWING: 'showing',
   SHOWTIMES: 'showtimes',
+  TICKETS: 'tickets',
   ADMIN_PORTAL: {
     HOME: 'admin-portal',
     MOVIES: 'admin-portal/movies',  
