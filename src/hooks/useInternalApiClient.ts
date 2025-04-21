@@ -69,6 +69,13 @@ export const useInternalApiClient = () => {
     return true;
   }
 
+  const fetchDelete = async (url: string, options: RequestInit = {}): Promise<Response> => {
+    return fetchWithAccessToken(url, {
+      ...options,
+      method: 'DELETE',
+    });
+  }
+
   const fetchPost = async (url: string, body: any = {}, options: RequestInit = {}): Promise<Response> => {
     return fetchWithAccessToken(url, {
       ...options,
@@ -113,5 +120,5 @@ export const useInternalApiClient = () => {
     return response;
   }
 
-  return { fetchWithAccessToken, fetchPost, fetchSignIn, refreshToken };
+  return { fetchWithAccessToken, fetchPost, fetchDelete, fetchSignIn, refreshToken };
 }

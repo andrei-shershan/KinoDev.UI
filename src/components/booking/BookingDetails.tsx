@@ -2,6 +2,11 @@ import { Grid, Modal } from "antd";
 import { IOrderSummary } from "../../models/applicationContext.model";
 import { getDateTimeObject } from "../../utils/dateFormatter";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useInternalApiClient } from "../../hooks/useInternalApiClient";
+import { URLS } from "../../constants/urls";
+import { ENDPOINTS } from "../../constants/endpoints";
+import { ROUTES } from "../../constants/routes";
 
 const BookingDetails = ({
   activeOrderSummary
@@ -9,11 +14,28 @@ const BookingDetails = ({
 
   const { useBreakpoint } = Grid;
   const { sm } = useBreakpoint();
+  const navigate = useNavigate();
+  const { fetchDelete } = useInternalApiClient();
 
   const { tickets, showTimeSummary, orderCost } = activeOrderSummary;
   const { movie, time, hall } = showTimeSummary;
 
   const [showCancelationModel, setShowCancelationModel] = useState(false);
+
+  const handleOrderCancelation = async () => {
+    try {
+      var response = await fetchDelete(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.ORDERS.CANCEL_ACTIVE}`);
+      if (response.ok) {
+        console.log("Order canceled successfully");
+        navigate(`/${ROUTES.SHOWTIMES}`);
+      }
+    }
+    catch (error) {
+      console.error("Error canceling order:", error);
+    }
+
+    setShowCancelationModel(false);
+  }
 
   return (
     <>
@@ -62,13 +84,13 @@ const BookingDetails = ({
         Cancel your booking: <button onClick={() => setShowCancelationModel(true)}>Cancel</button>
 
         <Modal
-            title="Cancel your booking"
-            open={showCancelationModel}
-            onOk={() => setShowCancelationModel(false)}
-            onCancel={() => setShowCancelationModel(false)}
+          title="Cancel your booking"
+          open={showCancelationModel}
+          onOk={handleOrderCancelation}
+          onCancel={() => setShowCancelationModel(false)}          
         >
         </Modal>
-        
+
       </div>
     </>
   );
