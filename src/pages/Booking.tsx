@@ -32,6 +32,9 @@ const Booking: React.FC = () => {
         console.log("orderSummary", orderSummary);
         dispatch({ type: 'SET_ACTIVE_ORDER', payload: orderSummary });
       }
+      else{
+        dispatch({ type: 'SET_ACTIVE_ORDER', payload: undefined });
+      }
     }
 
     getActive();

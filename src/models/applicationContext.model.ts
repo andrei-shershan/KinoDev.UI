@@ -119,7 +119,7 @@ export type ApplciationContextActions =
   | { type: 'GET_SHOWING_MOVIES'; payload: IMovieShowTimes[] }
   | { type: 'SET_SPINNING'; payload: boolean }
   | { type: 'GET_SHOW_TIME_DETAILS'; payload: IShowTimeDetails }
-  | { type: 'SET_ACTIVE_ORDER'; payload: IOrderSummary };
+  | { type: 'SET_ACTIVE_ORDER'; payload: IOrderSummary | undefined };
 
 export interface IApplicationContext {
   state: IApplicationContextState;

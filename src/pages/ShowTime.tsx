@@ -57,12 +57,15 @@ const ShowTime = () => {
         const orderSummary = await activeOrderResponse.json();
         dispatch({ type: 'SET_ACTIVE_ORDER', payload: orderSummary });
       }
+      else {
+        dispatch({ type: 'SET_ACTIVE_ORDER', payload: undefined });
+      }
     }
 
     getShowTimeDetails();
     getActiveOrder();
 
-  }, [showTimeId]);
+  }, []);
 
   if (!state.showTimeDetails) {
     return <div>No Data...</div>;

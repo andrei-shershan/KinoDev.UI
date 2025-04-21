@@ -1,6 +1,7 @@
-import { Grid } from "antd";
+import { Grid, Modal } from "antd";
 import { IOrderSummary } from "../../models/applicationContext.model";
 import { getDateTimeObject } from "../../utils/dateFormatter";
+import { useState } from "react";
 
 const BookingDetails = ({
   activeOrderSummary
@@ -11,6 +12,8 @@ const BookingDetails = ({
 
   const { tickets, showTimeSummary, orderCost } = activeOrderSummary;
   const { movie, time, hall } = showTimeSummary;
+
+  const [showCancelationModel, setShowCancelationModel] = useState(false);
 
   return (
     <>
@@ -53,6 +56,19 @@ const BookingDetails = ({
         <br />
         <span>Total price: {orderCost}</span> <br />
         <span>{tickets.length} x {tickets[0].price}</span>
+      </div>
+
+      <div>
+        Cancel your booking: <button onClick={() => setShowCancelationModel(true)}>Cancel</button>
+
+        <Modal
+            title="Cancel your booking"
+            open={showCancelationModel}
+            onOk={() => setShowCancelationModel(false)}
+            onCancel={() => setShowCancelationModel(false)}
+        >
+        </Modal>
+        
       </div>
     </>
   );

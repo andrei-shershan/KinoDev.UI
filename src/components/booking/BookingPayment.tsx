@@ -5,14 +5,13 @@ import { IOrderSummary } from "../../models/applicationContext.model";
 import { ENDPOINTS } from "../../constants/endpoints";
 import { URLS } from "../../constants/urls";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../constants/routes";
 
 
 const stripePromise = loadStripe('pk_test_51R312X01BnhxNbMc13npKhobKSEDspHTsphDdFtmA3jyxdWXcfpZfIiYhkgaTn86EIkyfNfi2qjbXtYFKRK1Ttxq00zZDSeWoJ');
 
-const CheckoutForm = (
-  {
-    orderSummary,
-  }: { orderSummary: IOrderSummary }) => {
+const CheckoutForm = () => {
 
   const [payButtonDisabled, setPaymentButtonDisabled] = useState(false);
 
@@ -20,6 +19,7 @@ const CheckoutForm = (
   const elements = useElements();
 
   const { fetchPost } = useInternalApiClient();
+  const navigate = useNavigate();
 
   if (elements === null || stripe === null) {
     return null;
@@ -33,19 +33,7 @@ const CheckoutForm = (
     try {
 
       // Create a PaymentIntent by calling your backend
-      const response = await fetch(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.PAYMENTS.CREATE_PAYMENT_INTENT}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          amount: 1000, // e.g., $10.00 in cents
-          currency: 'usd',
-          metadata: {
-            orderId: orderSummary.id?.toString() || '',
-            movieName: orderSummary?.showTimeSummary?.movie?.name || '',
-            seats: orderSummary?.tickets?.map(s => `Row:${s.row},Num:${s.number}`).join(';') || ''
-          }
-        })
-      });
+      const response = await fetchPost(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.PAYMENTS.CREATE_PAYMENT}`);
 
       const { clientSecret } = await response.json();
 
@@ -70,6 +58,12 @@ const CheckoutForm = (
           var completeResult = await fetchPost(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.ORDERS.COMPLETE_ORDER}`, {
             paymentIntentId: result.paymentIntent.id,
           });
+
+          if (completeResult.ok) {
+            navigate(`/${ROUTES.TICKETS}`);
+          } else {
+            console.error("Error completing order");
+          }
 
           console.log(completeResult, "Payment completed successfully!");
         }
@@ -97,7 +91,7 @@ const BookingPayment = ({
 }) => {
   return (
     <div><br /><br /><Elements stripe={stripePromise}>
-      <CheckoutForm orderSummary={orderSummary} />
+      <CheckoutForm />
     </Elements>
     </div>
   );

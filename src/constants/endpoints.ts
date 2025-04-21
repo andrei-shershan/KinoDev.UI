@@ -10,7 +10,7 @@ export const ENDPOINTS = {
       COMPLETE_ORDER: 'api/orders/complete',
     },
     PAYMENTS: {
-      CREATE_PAYMENT_INTENT: 'api/payments/create-payment-intent',
+      CREATE_PAYMENT: 'api/payments',
     },
     SHOW_TIMES: {
       GET_SHOW_TIME_DETAILS: 'api/showtimes/details',

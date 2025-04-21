@@ -69,7 +69,7 @@ export const useInternalApiClient = () => {
     return true;
   }
 
-  const fetchPost = async (url: string, body: any, options: RequestInit = {}): Promise<Response> => {
+  const fetchPost = async (url: string, body: any = {}, options: RequestInit = {}): Promise<Response> => {
     return fetchWithAccessToken(url, {
       ...options,
       method: 'POST',
