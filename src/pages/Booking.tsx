@@ -32,7 +32,7 @@ const Booking: React.FC = () => {
         console.log("orderSummary", orderSummary);
         dispatch({ type: 'SET_ACTIVE_ORDER', payload: orderSummary });
       }
-      else{
+      else {
         dispatch({ type: 'SET_ACTIVE_ORDER', payload: undefined });
       }
     }
@@ -61,7 +61,7 @@ const Booking: React.FC = () => {
       />
 
       {
-        email && <BookingPayment orderSummary={state.activeOrderSummary} />
+        email && <BookingPayment orderSummary={state.activeOrderSummary} email={email} />
       }
     </MainLayout>
 }

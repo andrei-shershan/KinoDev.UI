@@ -11,7 +11,10 @@ import { ROUTES } from "../../constants/routes";
 
 const stripePromise = loadStripe('pk_test_51R312X01BnhxNbMc13npKhobKSEDspHTsphDdFtmA3jyxdWXcfpZfIiYhkgaTn86EIkyfNfi2qjbXtYFKRK1Ttxq00zZDSeWoJ');
 
-const CheckoutForm = () => {
+const CheckoutForm = ({
+  email}: {
+  email: string
+}) => {
 
   const [payButtonDisabled, setPaymentButtonDisabled] = useState(false);
 
@@ -33,7 +36,9 @@ const CheckoutForm = () => {
     try {
 
       // Create a PaymentIntent by calling your backend
-      const response = await fetchPost(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.PAYMENTS.CREATE_PAYMENT}`);
+      const response = await fetchPost(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.PAYMENTS.CREATE_PAYMENT}`, {
+        email
+      });
 
       const { clientSecret } = await response.json();
 
@@ -85,13 +90,15 @@ const CheckoutForm = () => {
 }
 
 const BookingPayment = ({
-  orderSummary
+  orderSummary,
+  email
 }: {
-  orderSummary: IOrderSummary
+  orderSummary: IOrderSummary,
+  email: string
 }) => {
   return (
     <div><br /><br /><Elements stripe={stripePromise}>
-      <CheckoutForm />
+      <CheckoutForm email={email} />
     </Elements>
     </div>
   );
