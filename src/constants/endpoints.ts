@@ -9,6 +9,7 @@ export const ENDPOINTS = {
       CREATE: 'api/orders',
       COMPLETE_ORDER: 'api/orders/complete',
       CANCEL_ACTIVE: 'api/orders/active',
+      COMPLETED: 'api/orders/completed',
     },
     PAYMENTS: {
       CREATE_PAYMENT: 'api/payments',
