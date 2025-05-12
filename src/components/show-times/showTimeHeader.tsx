@@ -1,4 +1,4 @@
-import { Grid, Modal } from "antd";
+import { Grid } from "antd";
 import {
     // IMovie,
     IShowTimeDetails
@@ -8,6 +8,7 @@ import { getDateTimeObject } from "../../utils/dateFormatter";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 import { useApplicationContext } from "../../context/ApplicationContext";
+import Button from "../../ui/Button";
 const { useBreakpoint } = Grid;
 
 const BuyTicketCard = ({ showTimeDetails }: { showTimeDetails: IShowTimeDetails }) => {
@@ -19,11 +20,11 @@ const BuyTicketCard = ({ showTimeDetails }: { showTimeDetails: IShowTimeDetails 
             <h2>{showTimeDetails.price}</h2>
             <h3>{showTimeDetails.hall.name}</h3>
 
-            <button
+            <Button
                 onClick={() => navigate(`/${ROUTES.SHOWTIMES}/${showTimeDetails.id}/booking`)}
             >
                 {'Buy Ticket'}
-            </button>
+            </Button>
         </div>
     );
 }
@@ -135,11 +136,11 @@ const ShowTimeHeader = ({ showTimeDetails, isBooking }: { showTimeDetails: IShow
                     <br />
                     <br />
                     Opps, you already have an active order. Please complete the order before booking a new one.
-                    <button
+                    <Button
                         onClick={() => navigate(`/${ROUTES.BOOKING}`)}
                     >
                         {'Go to basket'}
-                    </button>
+                    </Button>
                 </div>
             </div>
         );

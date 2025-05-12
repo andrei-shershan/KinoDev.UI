@@ -2,7 +2,8 @@ import { ENDPOINTS } from "../constants/endpoints";
 import { URLS } from "../constants/urls";
 import { useInternalApiClient } from "../hooks/useInternalApiClient";
 import MainLayout from "../layouts/mainLayout";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Button from "../ui/Button";
 
 
 const inputStyle = {
@@ -39,11 +40,11 @@ const Tickets = () => {
             placeholder="Enter your email"
             style={inputStyle}
           />
-          <button
+          <Button
             onClick={handleLoadTickets}
           >
             Load Tickets
-          </button>
+          </Button>
         </div>
       </div>
     </MainLayout>

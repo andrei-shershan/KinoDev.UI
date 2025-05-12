@@ -6,14 +6,16 @@ import {
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 import {
-    IBokingStorageData, IOrder, IShowTimeDetails, IShowTimeSeat,
+    IBokingStorageData, 
+    // IOrder, 
+    IShowTimeDetails, IShowTimeSeat,
     // IShowTimeSeats
 } from "../../models/applicationContext.model";
 import DataLoading from "../dataLoading";
 import { getDateTimeObject } from "../../utils/dateFormatter";
-import ShowTimeSeatsMap from "./ShowTimeSeatsMap";
+import ShowTimeSeatsMap from "../showtime/ShowTimeSeatsMap";
 import { useState } from "react";
-import { STORAGE } from "../../constants/storage";
+// import { STORAGE } from "../../constants/storage";
 import { URLS } from "../../constants/urls";
 import { ENDPOINTS } from "../../constants/endpoints";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";

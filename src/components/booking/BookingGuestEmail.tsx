@@ -1,4 +1,5 @@
 import { useState, FormEvent } from 'react';
+import Button from '../../ui/Button';
 
 const BookingGuestEmail = ({
   editMode = false,
@@ -92,9 +93,9 @@ const BookingGuestEmail = ({
           {errors.confirmEmail && <div style={errorStyle}>{errors.confirmEmail}</div>}
         </div>
         <div>
-          <button onClick={handleSubmit} style={{ padding: '0.5rem', fontSize: '1rem', borderRadius: '4px', border: '1px solid #007BFF', backgroundColor: '#007BFF', color: '#fff' }}>
+          <Button onClick={handleSubmit} >
             Continue
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -104,8 +105,8 @@ const BookingGuestEmail = ({
     <div>
       <span
       > {submittedEmail}</span>
-      <button onClick={() => onEmailSubmit('')}>
-        Edit</button></div>
+      <Button onClick={() => onEmailSubmit('')}>
+        Edit</Button></div>
   );
 
 

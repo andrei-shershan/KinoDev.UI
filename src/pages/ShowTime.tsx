@@ -4,7 +4,7 @@ import {
   useNavigate
 } from 'react-router-dom';
 import MainLayout from '../layouts/mainLayout';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useApplicationContext } from '../context/ApplicationContext';
 import { ENDPOINTS } from '../constants/endpoints';
 import { URLS } from '../constants/urls';

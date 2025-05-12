@@ -4,6 +4,8 @@ import ShowTimeSeatsMap from "../showtime/ShowTimeSeatsMap";
 import { IShowTimeDetails, IShowTimeSeat } from "../../models/applicationContext.model";
 import { useState } from "react";
 import SelectedSeatsDetails from "../showtime/SelectedSeatsDetails";
+import Button from "../../ui/Button";
+import { StyleType } from "../../ui/types";
 
 const ShowTimeSeatsMapSelector = ({
     showTimeDetails,
@@ -19,9 +21,9 @@ const ShowTimeSeatsMapSelector = ({
     return (
         <div className="showtime-content">
             <h1>Show Time Content</h1>
-            <button onClick={() => navigate(`/${ROUTES.SHOWTIMES}/${showTimeDetails.id}`)}>
+            <Button style={StyleType.None} onClick={() => navigate(`/${ROUTES.SHOWTIMES}/${showTimeDetails.id}`)}>
                 Cancel Booking
-            </button>
+            </Button>
             {
                 selectedSeats?.length > 0 && (
                     <SelectedSeatsDetails

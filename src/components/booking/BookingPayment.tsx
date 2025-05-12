@@ -90,7 +90,7 @@ const CheckoutForm = ({
 }
 
 const BookingPayment = ({
-  orderSummary,
+  // orderSummary,
   email
 }: {
   orderSummary: IOrderSummary,
