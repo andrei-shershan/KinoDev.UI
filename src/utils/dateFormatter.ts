@@ -18,6 +18,6 @@ export const getDateTimeObject = (date: string | number | Date): DateTimeObject 
   const d = new Date(date);
   return {
     date: formatDateToLong(d),
-    time: d.toLocaleTimeString('en-US', { hour12: false })
+    time: d.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
   };
 };

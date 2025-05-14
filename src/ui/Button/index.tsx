@@ -8,19 +8,25 @@ const Button = ({
   onClick,
   text,
   style = StyleType.Primary,
-  size = SizeType.Medium
+  size = SizeType.Medium,
+  type = undefined,
+  disabled = false
 }: {
   children?: React.ReactNode;
   onClick?: (e: FormEvent) => void;
   text?: string;
   style?: StyleType,
   size?: SizeType;
+  type?: "submit" | "reset" | "button" | undefined;
+  disabled?: boolean;
 }) => {
   return (
-    <button onClick={onClick} className={getStyleClass('kd-button', style, size)}>
+    <button disabled={disabled} type={type} onClick={onClick} className={getStyleClass('kd-button', style, size, disabled)} >
       {text ? text : children}
     </button>
   );
 }
 
 export default Button;
+
+{/* <button disabled="" class="kd-button kd-primary kd-medium kd-disabled">Available</button> */}

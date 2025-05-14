@@ -10,6 +10,8 @@ export const ENDPOINTS = {
       COMPLETE_ORDER: 'api/orders/complete',
       CANCEL_ACTIVE: 'api/orders/active',
       COMPLETED: 'api/orders/completed',
+      COMPLETED_EMAIL_VERIFICATION: 'api/orders/completed/verify-email',
+      GET_COMPLETED_ORDER_COOKIE: 'api/orders/completed/cookie',
     },
     PAYMENTS: {
       CREATE_PAYMENT: 'api/payments',

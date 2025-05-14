@@ -7,6 +7,8 @@ import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import { URLS } from "../../constants/urls";
 import { ENDPOINTS } from "../../constants/endpoints";
 import { ROUTES } from "../../constants/routes";
+import Button from "../../ui/Button";
+import { SizeType, StyleType } from "../../ui/types";
 
 const BookingDetails = ({
   activeOrderSummary
@@ -81,7 +83,7 @@ const BookingDetails = ({
       </div>
 
       <div>
-        Cancel your booking: <button onClick={() => setShowCancelationModel(true)}>Cancel</button>
+        Cancel your booking: <Button style={StyleType.None} size={SizeType.Small} onClick={() => setShowCancelationModel(true)} text="Cancel" />
 
         <Modal
           title="Cancel your booking"

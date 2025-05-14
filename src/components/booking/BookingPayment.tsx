@@ -7,14 +7,41 @@ import { URLS } from "../../constants/urls";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
+import Button from "../../ui/Button";
+import { StyleType } from "../../ui/types";
 
+const CARD_ELEMENT_OPTIONS = {
+  style: {
+    base: {
+      fontSize: '16px',
+      color: '#424770',
+      fontFamily: '"Ideal Sans", system-ui, sans-serif',
+      letterSpacing: '0.025em',
+      lineHeight: '24px',
+      backgroundColor: '#f8f9fa',
+      '::placeholder': {
+        color: '#aab7c4',
+      },
+      // You can even set padding, border, boxShadow, etc.
+      padding: '12px 14px',
+      border: '1px solid #ced4da',
+      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+      borderRadius: '4px',
+    },
+    invalid: {
+      color: '#fa755a',
+      iconColor: '#fa755a',
+    },
+  },
+  hidePostalCode: true,
+};
 
 const stripePromise = loadStripe('pk_test_51R312X01BnhxNbMc13npKhobKSEDspHTsphDdFtmA3jyxdWXcfpZfIiYhkgaTn86EIkyfNfi2qjbXtYFKRK1Ttxq00zZDSeWoJ');
 
 const CheckoutForm = ({
-  email}: {
-  email: string
-}) => {
+  email }: {
+    email: string
+  }) => {
 
   const [payButtonDisabled, setPaymentButtonDisabled] = useState(false);
 
@@ -81,10 +108,9 @@ const CheckoutForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <CardElement options={{ hidePostalCode: true }} />
-      <button type="submit" disabled={!stripe || payButtonDisabled}>
-        Pay
-      </button>
+      <CardElement options={CARD_ELEMENT_OPTIONS} />
+      <Button text="Pay with Stripe" type="submit" style={StyleType.Primary} disabled={!stripe || payButtonDisabled} />
+
     </form>
   );
 }

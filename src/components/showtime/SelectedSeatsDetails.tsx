@@ -8,6 +8,8 @@ import { ROUTES } from "../../constants/routes";
 import { message } from "antd";
 import { getDateTimeObject } from "../../utils/dateFormatter";
 import Modal from "antd/es/modal/Modal";
+import Button from "../../ui/Button";
+import { StyleType } from "../../ui/types";
 
 const SelectedSeatsDetails = ({ showTimeDetails, selectedSeats }:
     {
@@ -66,7 +68,7 @@ const SelectedSeatsDetails = ({ showTimeDetails, selectedSeats }:
                         You selected {selectedSeats.length}, total price: {selectedSeats.length * showTimeDetails.price}
                     </div>
                     <div>
-                        <button onClick={() => setIsModalOpen(true)}>Book</button>
+                      <Button text="Book" style={StyleType.Primary} onClick={() => setIsModalOpen(true)} />
                     </div>
                 </>
             }

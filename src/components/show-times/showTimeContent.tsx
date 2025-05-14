@@ -19,6 +19,8 @@ import { useState } from "react";
 import { URLS } from "../../constants/urls";
 import { ENDPOINTS } from "../../constants/endpoints";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
+import Button from "../../ui/Button";
+import { StyleType } from "../../ui/types";
 
 // const { useBreakpoint } = Grid;
 
@@ -93,7 +95,7 @@ const ShowTimeDetails = ({ showTimeDetails, isBooking, selectedSeats }:
                                 You selected {selectedSeats.length}, total price: {selectedSeats.length * showTimeDetails.price}
                             </div>
                             <div>
-                                <button onClick={() => setIsModalOpen(true)}>Book</button>
+                              <Button style={StyleType.Primary} text="Book" onClick={() => setIsModalOpen(true)} />
                             </div>
                         </>
                     }

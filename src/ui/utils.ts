@@ -3,8 +3,13 @@ import { SizeType, StyleType } from "./types";
 export const getStyleClass = (
   initClass: string,
   styleType?: StyleType,
-  sizeType?: SizeType) => {
-  return `${initClass} ${getClassNameByStyleType(styleType)} ${getClassNameBySizeStyle(sizeType)}`;
+  sizeType?: SizeType,
+  disabled?: boolean) => {
+  return `${initClass} ${getClassNameByStyleType(styleType)} ${getClassNameBySizeStyle(sizeType)} ${getDisabledClass(disabled)}`;
+}
+
+export const getDisabledClass = (disabled?: boolean) => {
+  return disabled ? 'kd-disabled' : '';
 }
 
 export const getClassNameBySizeStyle = (size?: SizeType) => {
