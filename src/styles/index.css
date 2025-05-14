@@ -1,0 +1,69 @@
+:root {
+  --primary-color: #46c2d3;
+  --primary-color-dark: #3da8b6;
+  --primary-color-dark-darker: #368f9b;
+  --primary-color-dark-extra: #2f7b8a;
+  --primary-color-light: #a4e1e7;
+  --primary-color-light-extra: #e7fdff;
+  --danger-color: #ff4d4f;
+  --danger-color-dark: #d9363e;
+  --danger-color-dark-darker: #c41d3b;
+  --danger-color-dark-extra: #a8102b;
+  --danger-color-light: #ff7875;
+  --danger-color-light-extra: #fff1f0;
+  --none-color: #fff;
+  --none-color-dark: #e0e0e0;
+  --none-color-dark-darker: #d0d0d0;
+  --font-color: #333;
+  --font-color-contrast: #fff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* div {
+  border: 1px solid red;
+} */
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.movie-poster-wrapper {
+  width: 150px;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.movie-poster-wrapper:hover {
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  transition: all 1s;
+}
+
+.movie-poster-container {
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.movie-poster-container:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+  transition: all 1s;
+}

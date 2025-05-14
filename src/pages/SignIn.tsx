@@ -1,9 +1,9 @@
 import { useState, FormEvent, useEffect } from 'react';
-import { ENDPOINTS } from '../../constants/endpoints';
-import { URLS } from '../../constants/urls';
-import { ROLES } from '../../constants/roles';
-import { useAuthContext } from '../../context/AuthContext';
-import { useInternalApiClient } from '../../hooks/useInternalApiClient';
+import { ENDPOINTS } from '../constants/endpoints';
+import { URLS } from '../constants/urls';
+import { ROLES } from '../constants/roles';
+import { useAuthContext } from '../context/AuthContext';
+import { useInternalApiClient } from '../hooks/useInternalApiClient';
 
 interface SignInForm {
   email: string;
@@ -19,6 +19,8 @@ export const SignIn = () => {
       const userDetailsResponse = await fetchWithAccessToken(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.USERS.DETAILS}`);
       if (userDetailsResponse.ok) {
         const userDetails = await userDetailsResponse.json();
+
+        alert(URLS.MAIN_PORTAL_URL + URLS.ADMIN_PORTAL_URL);
 
         if (userDetails.find((x: string) => x === ROLES.ADMIN)) {
           window.location.href = URLS.ADMIN_PORTAL_URL;
