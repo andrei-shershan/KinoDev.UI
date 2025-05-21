@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Button from "../ui/Button";
 import { IOrderSummary } from "../models/applicationContext.model";
 import { getDateTimeObject } from "../utils/dateFormatter";
+import { PORTALS_TYPES } from "../constants/portalTypes";
 
 
 const inputStyle = {
@@ -62,7 +63,7 @@ const Tickets = () => {
   }
 
   return (
-    <MainLayout>
+    <MainLayout portalType={PORTALS_TYPES.CLIENT} >
       <div>
         {
           completedOrders.length > 0 ? (

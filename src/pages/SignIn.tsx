@@ -4,6 +4,8 @@ import { URLS } from '../constants/urls';
 import { ROLES } from '../constants/roles';
 import { useAuthContext } from '../context/AuthContext';
 import { useInternalApiClient } from '../hooks/useInternalApiClient';
+import MainLayout from '../layouts/mainLayout';
+import { PORTALS_TYPES } from '../constants/portalTypes';
 
 interface SignInForm {
   email: string;
@@ -56,49 +58,51 @@ export const SignIn = () => {
   };
 
   return (
-    <div className="signin-container">
-      <div className="signin-form-container">
-        <h2 className="signin-title">
-          Sign in to your account
-        </h2>
+    <MainLayout portalType={PORTALS_TYPES.NONE} >
+      <div className="signin-container">
+        <div className="signin-form-container">
+          <h2 className="signin-title">
+            Sign in to your account
+          </h2>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="email" className="sr-only">Email address</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              className="input-field"
-              placeholder="Email address"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="sr-only">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              className="input-field"
-              placeholder="Password"
-              value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-            />
-          </div>
+          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="email" className="sr-only">Email address</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                className="input-field"
+                placeholder="Email address"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+            </div>
+            <div>
+              <label htmlFor="password" className="sr-only">Password</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                required
+                className="input-field"
+                placeholder="Password"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              />
+            </div>
 
-          <button
-            type="submit"
-            className="signin-button"
-          >
-            Sign in
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="signin-button"
+            >
+              Sign in
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+    </MainLayout>
   );
 };
 

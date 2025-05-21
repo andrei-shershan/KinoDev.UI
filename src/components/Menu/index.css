@@ -1,0 +1,158 @@
+.menu-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+/* Desktop Menu Styles */
+.desktop-menu {
+  max-width: 700px;
+  width: 100%;
+}
+
+.desktop-menu .menu-items {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.desktop-menu .menu-item {
+  margin: 0 15px;
+  position: relative;
+}
+
+.desktop-menu .menu-item.logo-item {
+  margin-right: auto;
+}
+
+.desktop-menu .menu-item .logo-link {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 10px 0;
+  display: block;
+}
+
+/* The logo won't change on hover or when active */
+.desktop-menu .menu-item .logo-link:hover,
+.desktop-menu .menu-item.active .logo-link {
+  color: white;
+  text-decoration: none;
+}
+
+.desktop-menu .menu-item a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 10px 0;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+.desktop-menu .menu-item a:hover {
+  color: var(--primary-color-light);
+}
+
+.desktop-menu .menu-item.active a {
+  color: var(--primary-color-light);
+  text-decoration: underline solid var(--primary-color-light);
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
+}
+
+.right-menu-items {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.right-menu-items .menu-item {
+  margin-left: 15px;
+}
+
+/* Mobile Menu Styles */
+.menu-burger-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 24px;
+  padding: 0;
+  z-index: 101;
+  position: relative;
+}
+
+.menu-burger-button span {
+  display: block;
+  width: 30px;
+  height: 3px;
+  background-color: white;
+  border-radius: 3px;
+  transition: transform 0.3s ease;
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 250px;
+  height: 100vh;
+  background-color: var(--dark-color);
+  z-index: 100;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  padding: 60px 20px 20px;
+}
+
+.mobile-menu .menu-items {
+  padding: 0;
+  margin: 0;
+}
+
+.mobile-menu .menu-item {
+  margin: 15px 0;
+}
+
+.mobile-menu .menu-item a {
+  color: var(--primary-color-light-extra);
+  text-decoration: none;
+  font-size: 18px;
+  padding: 10px 0;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+.mobile-menu .menu-item.logo-item a,
+.mobile-menu .menu-item .logo-link {
+  color: white;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.mobile-menu .menu-item.logo-item a:hover,
+.mobile-menu .menu-item.logo-item.active a,
+.mobile-menu .menu-item .logo-link:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.mobile-menu .menu-item a:hover {
+  color: var(--primary-color);
+}
+
+.mobile-menu .menu-item.active a {
+  color: var(--primary-color);
+  text-decoration: underline solid var(--primary-color-light);
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
+}
+
+@media (max-width: 768px) {
+  .menu-container {
+    justify-content: flex-end;
+  }
+}

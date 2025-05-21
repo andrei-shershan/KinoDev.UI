@@ -10,6 +10,8 @@ import AdminPortal from './pages/AdminPortal';
 import ShowTime from './pages/ShowTime';
 import Booking from './pages/Booking';
 import Tickets from './pages/Tickets';
+import About from './pages/About';
+import AboutCinema from './pages/AboutCinema';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -17,13 +19,14 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <ApplicationProvider>
         <Router>
           <Routes>
-            {/* <Route path={`/`} element={<ShowTimes />} /> */}
             <Route path={`/${ROUTES.BOOKING}`} element={<Booking />} />
             <Route path={`/${ROUTES.SIGN_IN}`} element={<SignIn />} />
             <Route path={`/${ROUTES.SHOWING}/:date?`} element={<ShowTimes />} />
             <Route path={`/${ROUTES.SHOWTIMES}/:showTimeId`} element={<ShowTime />} />
             <Route path={`/${ROUTES.SHOWTIMES}/:showTimeId/booking`} element={<ShowTime />} />
             <Route path={`/${ROUTES.TICKETS}`} element={<Tickets />} />
+            <Route path={`/${ROUTES.ABOUT}`} element={<About />} />
+            <Route path={`/${ROUTES.OUR_CINEMA}`} element={<AboutCinema />} />
             <Route path={`/${ROUTES.ADMIN_PORTAL.MOVIES}`} element={<AdminPortal />} />
             <Route path="*" element={<Navigate to={`/${ROUTES.SHOWING}`} replace />} />
           </Routes>
