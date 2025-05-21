@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import ShowingMoviesDatePicker from "../components/show-times/showingMoviesDatePicker";
 import { ROUTES } from "../constants/routes";
+import { PORTALS_TYPES } from "../constants/portalTypes";
 const { useBreakpoint } = Grid;
 
 const ShowTimes: React.FC = () => {
@@ -61,7 +62,7 @@ const ShowTimes: React.FC = () => {
   }
 
   return (
-    <MainLayout>
+    <MainLayout portalType={PORTALS_TYPES.CLIENT} >
       <div>
         <h1>
           Showing Movies

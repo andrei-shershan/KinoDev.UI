@@ -18,6 +18,7 @@ import ShowTimeDetails from '../components/showtime/ShowTimeDetails';
 import { ROUTES } from '../constants/routes';
 import BuyTicketCard from '../components/BuyTicketCard';
 import ShowTimeSeatsMapSelector from '../components/show-times/ShowTimeSeatsMapSelector';
+import { PORTALS_TYPES } from '../constants/portalTypes';
 
 const ShowTime = () => {
   const { showTimeId } = useParams<{ showTimeId: string }>();
@@ -80,7 +81,7 @@ const ShowTime = () => {
   }
 
   return (
-    <MainLayout>
+    <MainLayout portalType={PORTALS_TYPES.CLIENT} >
       <ShowTimeDetails showTimeDetails={state.showTimeDetails} isBooking={isBooking} />
       {
         isBooking

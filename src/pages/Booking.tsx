@@ -8,6 +8,7 @@ import { useApplicationContext } from "../context/ApplicationContext";
 import BookingDetails from "../components/booking/BookingDetails";
 import BookingGuestEmail from "../components/booking/BookingGuestEmail";
 import BookingPayment from "../components/booking/BookingPayment";
+import { PORTALS_TYPES } from "../constants/portalTypes";
 
 const Booking: React.FC = () => {
   const { state, dispatch } = useApplicationContext();
@@ -43,13 +44,13 @@ const Booking: React.FC = () => {
   const { fetchWithAccessToken } = useInternalApiClient();
 
   if (!state.activeOrderSummary || state.activeOrderSummary.state !== OrderState.NEW) {
-    return <MainLayout>
+    return <MainLayout  portalType={PORTALS_TYPES.CLIENT} >
       <h1>No booking data found</h1>
     </MainLayout>
   }
 
   return state.activeOrderSummary &&
-    <MainLayout>
+    <MainLayout  portalType={PORTALS_TYPES.CLIENT} >
       <BookingDetails
         activeOrderSummary={state.activeOrderSummary}
       />
