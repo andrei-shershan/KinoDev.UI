@@ -2,7 +2,8 @@ import React, { createContext, useContext, useReducer } from 'react';
 import { AdminContextActions, IAdminContext, IAdminContextState } from '../models/adminContext.model';
 
 const initialState: IAdminContextState = {
-  movies: []
+  movies: [],
+  halls: [],
 };
 
 const authReducer = (state: IAdminContextState, action: AdminContextActions): IAdminContextState => {
@@ -16,6 +17,11 @@ const authReducer = (state: IAdminContextState, action: AdminContextActions): IA
       return {
         ...state,
         movie: action.payload
+      };
+    case 'GET_HALLS':
+      return {
+        ...state,
+        halls: action.payload
       };
     default:
       return state;
