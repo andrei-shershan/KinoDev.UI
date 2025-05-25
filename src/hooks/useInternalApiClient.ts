@@ -3,19 +3,21 @@ import { ENDPOINTS } from "../constants/endpoints";
 import { URLS } from "../constants/urls";
 import { useAuthContext } from "../context/AuthContext"
 import { ROUTES } from "../constants/routes";
+import { STORAGE_KEYS } from "../constants/storageKeys";
 
 const MAX_RETRY = 1;
 
 const getCsrfToken = (): string => {
-  return localStorage.getItem('xsrfToken') || '';
-  // const match = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
-  // return match ? match[1] : '';
+  return localStorage.getItem(STORAGE_KEYS.XSRF_TOKEN) || '';
+}
+
+function isFormData(x: any): x is FormData {
+  return x instanceof FormData;
 }
 
 export const useInternalApiClient = () => {
   const { state, dispatch } = useAuthContext();
 
-  //TODO: fetch post, move to service
   const refreshToken = async () => {
     const response = await fetch(`${URLS.AUTH_BASE_URL}/${ENDPOINTS.AUTHENTICATION.REFRESH_TOKEN}`, {
       method: 'POST',
@@ -60,10 +62,7 @@ export const useInternalApiClient = () => {
       return false;
     }
 
-    console.log('Sign in successful!');
-    console.log('Response data:', data);
-
-    localStorage.setItem('xsrfToken', data['xsrfToken']);
+    localStorage.setItem(STORAGE_KEYS.XSRF_TOKEN, data[STORAGE_KEYS.XSRF_TOKEN]);
 
     dispatch({ type: 'SET_ACCESS_TOKEN', payload: data[AUTHENTICATION.ACCESS_TOKEN] });
     return true;
@@ -77,24 +76,34 @@ export const useInternalApiClient = () => {
   }
 
   const fetchPost = async (url: string, body: any = {}, options: RequestInit = {}): Promise<Response> => {
+    const isFormPayload = isFormData(body);
+
     return fetchWithAccessToken(url, {
       ...options,
       method: 'POST',
-      body: JSON.stringify(body),
+      body: isFormPayload ? body : JSON.stringify(body),
+    }, !isFormPayload);
+  }
+
+  const fetchGet = async (url: string, options: RequestInit = {}): Promise<Response> => {
+    return fetchWithAccessToken(url, {
+      ...options,
+      method: 'GET',
     });
   }
 
-  // const fetchGet = async (url: string, options: RequestInit = {}): Promise<Response> => {
-  //   return fetchWithAccessToken(url, options);
-  // }
-
   // TODO: should be just fetchGet
-  const fetchWithAccessToken = async (url: string, options: RequestInit = {}, accessToken: string | null = null, retry: number = MAX_RETRY): Promise<Response> => {
-    const headers = {
-      ...options.headers,
-      'Content-type': 'application/json',
-      'Authorization': `Bearer ${accessToken ?? state.accessToken}`,
-    };
+  const fetchWithAccessToken = async (url: string, options: RequestInit = {}, useAppJsonContent: boolean = true, accessToken: string | null = null, retry: number = MAX_RETRY): Promise<Response> => {
+    const headers = useAppJsonContent
+      ? {
+        ...options.headers,
+        'Content-type': 'application/json',
+        'Authorization': `Bearer ${accessToken ?? state.accessToken}`,
+      } :
+      {
+        ...options.headers,
+        'Authorization': `Bearer ${accessToken ?? state.accessToken}`,
+      };
 
     const response = await fetch(`${url}`, {
       ...options,
@@ -108,17 +117,17 @@ export const useInternalApiClient = () => {
 
         const refreshTokenResult = await refreshToken();
         if (refreshTokenResult) {
-          return await fetchWithAccessToken(url, options, refreshTokenResult, retry);
+          return await fetchWithAccessToken(url, options, useAppJsonContent, refreshTokenResult, retry);
         }
       }
 
       dispatch({ type: 'CLEAR_AUTH' });
 
-      window.location.href = `${URLS.MAIN_PORTAL_URL}/${ROUTES.SIGN_IN}`;
+      window.location.href = `${URLS.MAIN_PORTAL_URL}`;
     }
 
     return response;
   }
 
-  return { fetchWithAccessToken, fetchPost, fetchDelete, fetchSignIn, refreshToken };
+  return { fetchGet, fetchPost, fetchDelete, fetchSignIn, refreshToken };
 }

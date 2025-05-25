@@ -17,7 +17,7 @@ const { useBreakpoint } = Grid;
 const ShowTimes: React.FC = () => {
 
   const { state, dispatch } = useApplicationContext();
-  const { fetchWithAccessToken } = useInternalApiClient();
+  const { fetchGet } = useInternalApiClient();
   const { date } = useParams<{ date?: string }>();
   const navigate = useNavigate();
   const today = new Date().toISOString().split('T')[0];
@@ -36,7 +36,7 @@ const ShowTimes: React.FC = () => {
   useEffect(() => {
     const fetchShowTimes = async () => {
       dispatch({ type: 'SET_SPINNING', payload: true });
-      var result = await fetchWithAccessToken(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.MOVIES.GET_SHOWTIMES}?date=${getDateString()}`);
+      var result = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.MOVIES.GET_SHOWTIMES}?date=${getDateString()}`);
 
       try {
         if (result.ok) {

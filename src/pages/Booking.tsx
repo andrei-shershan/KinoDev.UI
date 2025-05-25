@@ -27,7 +27,7 @@ const Booking: React.FC = () => {
 
   useEffect(() => {
     const getActive = async () => {
-      var response = await fetchWithAccessToken(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.ORDERS.GET_ACTIVE}`);
+      var response = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.ORDERS.GET_ACTIVE}`);
       if (response.ok) {
         const orderSummary: IOrderSummary = await response.json();
         console.log("orderSummary", orderSummary);
@@ -41,7 +41,7 @@ const Booking: React.FC = () => {
     getActive();
   }, []);
 
-  const { fetchWithAccessToken } = useInternalApiClient();
+  const { fetchGet } = useInternalApiClient();
 
   if (!state.activeOrderSummary || state.activeOrderSummary.state !== OrderState.NEW) {
     return <MainLayout  portalType={PORTALS_TYPES.CLIENT} >

@@ -12,6 +12,8 @@ ENV VITE_AUTH_BASE_URL=$ApiClients_IdentityServiceUri
 ENV VITE_API_GATEWAY_BASE_URL=$ApiClients_ApiGatewayUri
 ENV VITE_MAIN_PORTAL_URL=$Portals_Main
 ENV VITE_ADMIN_PORTAL_URL=$Portals_Admin
+ENV VITE_PUBLIC_IMAGES_HOST=$Public_Images_Host
+ENV VITE_PUBLIC_IMAGES_STORE_ACCOUNT=$Public_Images_Store_Account
 
 # Copy package files first
 COPY package*.json ./

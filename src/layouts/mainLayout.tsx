@@ -37,8 +37,47 @@ const clientMenuItems = [
   },
 ];
 
+const adminMenuItems = [
+  {
+    key: '/admin-portal',
+    label: 'KinoDev Admin',
+    path: '/admin-portal',
+  },
+  {
+    key: `/${ROUTES.ADMIN_PORTAL.MOVIES}`,
+    label: 'Movies',
+    path: `/${ROUTES.ADMIN_PORTAL.MOVIES}`,
+  },
+  {
+    key: `/${ROUTES.ADMIN_PORTAL.SHOWTIMES}`,
+    label: 'Showtimes',
+    path: `/${ROUTES.ADMIN_PORTAL.SHOWTIMES}`,
+  },
+  {
+    key: `/${ROUTES.ADMIN_PORTAL.HALLS}`,
+    label: 'Halls',
+    path: `/${ROUTES.ADMIN_PORTAL.HALLS}`,
+  },
+  {
+    key: `/${ROUTES.ADMIN_PORTAL.USERS}`,
+    label: 'Users',
+    path: `/${ROUTES.ADMIN_PORTAL.USERS}`,
+  },
+];
+
 interface MainLayoutProps extends PropsWithChildren {
   portalType?: PORTALS_TYPES;
+}
+
+const getMenuItems = (portalType: PORTALS_TYPES) => {
+  switch (portalType) {
+    case PORTALS_TYPES.CLIENT:
+      return clientMenuItems;
+    case PORTALS_TYPES.ADMIN:
+      return adminMenuItems;
+    default:
+      return [];
+  }
 }
 
 const MainLayout: FC<MainLayoutProps> = ({ children, portalType = PORTALS_TYPES.CLIENT }) => {
@@ -58,11 +97,13 @@ const MainLayout: FC<MainLayoutProps> = ({ children, portalType = PORTALS_TYPES.
         top: isMobile ? 0 : 'auto',
         left: isMobile ? 0 : 'auto',
         right: isMobile ? 0 : 'auto',
-        zIndex: 99      }}>
+        zIndex: 99
+      }}>
         <div style={{ maxWidth: '700px', width: '100%', margin: '0 auto' }}>
-          <Menu menuItems={portalType === PORTALS_TYPES.CLIENT ? clientMenuItems : []} />
+          <Menu menuItems={getMenuItems(portalType)} />
         </div>
-      </Header>      <Content style={{
+      </Header>
+      <Content style={{
         minWidth: "400px",
         maxWidth: "700px",
         flex: "1 0 auto",
@@ -74,7 +115,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children, portalType = PORTALS_TYPES.
         {children}
       </Content>
       <Footer>
-        {portalType === 'CLIENT' ? 'CLIENT PORTAL FOOTER' : 'ADMIN PORTAL FOOTER'}
+        {portalType === PORTALS_TYPES.CLIENT ? 'CLIENT PORTAL FOOTER' : 'ADMIN PORTAL FOOTER'}
       </Footer>
       <Spin spinning={state.spinning} fullscreen indicator={<LoadingOutlined />} size="large" />
     </Layout>

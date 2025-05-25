@@ -77,7 +77,7 @@ const ShowTimeSeatsMap = ({ showTimeId, onSelectSeat }:
         onSelectSeat: (selectedSeats: IShowTimeSeat[]) => void
     }) => {
     const { dispatch } = useApplicationContext();
-    const { fetchWithAccessToken } = useInternalApiClient();
+    const { fetchGet } = useInternalApiClient();
 
     const [seats, setSeats] = useState<IShowTimeSeats>();
     const [selectedSeats, setSelectedSeats] = useState<IShowTimeSeat[]>([]);
@@ -100,7 +100,7 @@ const ShowTimeSeatsMap = ({ showTimeId, onSelectSeat }:
     useEffect(() => {
         const getShowTimeSeatsData = async () => {
             dispatch({ type: 'SET_SPINNING', payload: true });
-            var result = await fetchWithAccessToken(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.SHOW_TIMES.GET_SHOW_TIME_SEATS}/${showTimeId}`);
+            var result = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.SHOW_TIMES.GET_SHOW_TIME_SEATS}/${showTimeId}`);
 
             try {
                 if (result.ok) {
