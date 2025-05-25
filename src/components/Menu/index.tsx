@@ -34,16 +34,6 @@ const Menu: React.FC<MenuProps> = ({ menuItems }) => {
     }
   };
 
-  if (!menuItems || menuItems.length < 2) {
-    <div className="menu-container">
-      <div className="menu-item logo-item">
-        <Link to="/" className="logo-link">KinoDev</Link>
-      </div>
-      <div className="right-menu-items"></div>
-    </div>
-  }
-
-
   return (
     <div className="menu-container">
       {isMobile ? (

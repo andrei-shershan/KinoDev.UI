@@ -9,6 +9,10 @@ export const ROUTES = {
   ADMIN_PORTAL: {
     HOME: 'admin-portal',
     MOVIES: 'admin-portal/movies',  
+    MOVIES_ADD: 'admin-portal/movies/add',
+    SHOWTIMES: 'admin-portal/showtimes',
+    HALLS: 'admin-portal/halls',
+    USERS: 'admin-portal/users',
   }
 } as const;
 

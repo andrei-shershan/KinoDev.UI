@@ -1,7 +1,7 @@
 export const ENDPOINTS = {
   API_GATEWAY: {
     MOVIES: {
-      GET_LIST: 'api/movies',
+      GET_MOVIES: 'api/movies',
       GET_SHOWTIMES: 'api/movies/showing',
     },
     ORDERS: {

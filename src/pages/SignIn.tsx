@@ -14,15 +14,13 @@ interface SignInForm {
 
 export const SignIn = () => {
   const { state } = useAuthContext();
-  const { fetchSignIn, fetchWithAccessToken } = useInternalApiClient();
+  const { fetchSignIn, fetchGet } = useInternalApiClient();
 
   useEffect(() => {
     const makeRequest = async () => {
-      const userDetailsResponse = await fetchWithAccessToken(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.USERS.DETAILS}`);
+      const userDetailsResponse = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.USERS.DETAILS}`);
       if (userDetailsResponse.ok) {
         const userDetails = await userDetailsResponse.json();
-
-        alert(URLS.MAIN_PORTAL_URL + URLS.ADMIN_PORTAL_URL);
 
         if (userDetails.find((x: string) => x === ROLES.ADMIN)) {
           window.location.href = URLS.ADMIN_PORTAL_URL;

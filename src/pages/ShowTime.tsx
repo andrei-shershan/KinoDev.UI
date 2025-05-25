@@ -24,7 +24,7 @@ const ShowTime = () => {
   const { showTimeId } = useParams<{ showTimeId: string }>();
 
   const { state, dispatch } = useApplicationContext();
-  const { fetchWithAccessToken } = useInternalApiClient();
+  const { fetchGet } = useInternalApiClient();
 
   const location = useLocation();
   const isBooking = location.pathname.includes('booking');
@@ -34,7 +34,7 @@ const ShowTime = () => {
   useEffect(() => {
     const getShowTimeDetails = async () => {
       dispatch({ type: 'SET_SPINNING', payload: true });
-      var result = await fetchWithAccessToken(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.SHOW_TIMES.GET_SHOW_TIME_DETAILS}/${showTimeId}`);
+      var result = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.SHOW_TIMES.GET_SHOW_TIME_DETAILS}/${showTimeId}`);
 
       try {
         if (result.ok) {
@@ -53,7 +53,7 @@ const ShowTime = () => {
     };
 
     const getActiveOrder = async () => {
-      var activeOrderResponse = await fetchWithAccessToken(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.ORDERS.GET_ACTIVE}`);
+      var activeOrderResponse = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.ORDERS.GET_ACTIVE}`);
       if (activeOrderResponse.ok) {
         const orderSummary = await activeOrderResponse.json();
         dispatch({ type: 'SET_ACTIVE_ORDER', payload: orderSummary });
