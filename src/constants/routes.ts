@@ -12,6 +12,7 @@ export const ROUTES = {
     MOVIES_ADD: 'admin-portal/movies/add',
     SHOWTIMES: 'admin-portal/showtimes',
     HALLS: 'admin-portal/halls',
+    HALLS_ADD: 'admin-portal/halls/add',
     USERS: 'admin-portal/users',
   }
 } as const;

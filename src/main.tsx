@@ -16,6 +16,8 @@ import AdminMovies from './pages/AdminPortal/AdminMovies';
 import { AdminProvider } from './context/AdminContext';
 import AdminMovie from './pages/AdminPortal/AdminMovie';
 import AdminAddMovie from './pages/AdminPortal/AdminAddMovie';
+import AdminHalls from './pages/AdminPortal/AdminHalls';
+import AdminAddHall from './pages/AdminPortal/AdminAddHall';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -35,7 +37,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               <Route path={`/${ROUTES.ADMIN_PORTAL.MOVIES}/add`} element={<AdminAddMovie />} />
               <Route path={`/${ROUTES.ADMIN_PORTAL.MOVIES}/:movieId`} element={<AdminMovie />} />
               <Route path={`/${ROUTES.ADMIN_PORTAL.MOVIES}`} element={<AdminMovies />} />
+              <Route path={`/${ROUTES.ADMIN_PORTAL.HALLS}`} element={<AdminHalls />} />
               <Route path={`/${ROUTES.ADMIN_PORTAL.HOME}`} element={<AdminPortal />} />
+              <Route path={`/${ROUTES.ADMIN_PORTAL.HALLS}/add`} element={<AdminAddHall />} />
               <Route path="*" element={<Navigate to={`/${ROUTES.SHOWING}`} replace />} />
             </Routes>
           </Router>
