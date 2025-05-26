@@ -3,7 +3,7 @@ import { PORTALS_TYPES } from "../../constants/portalTypes";
 import MainLayout from "../../layouts/mainLayout";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import { ENDPOINTS } from "../../constants/endpoints";
-import { IHall } from "../../models/applicationContext.model";
+import { IHallSummary } from "../../models/applicationContext.model";
 import { useAdminContext } from "../../context/AdminContext";
 import { URLS } from "../../constants/urls";
 import Button from "../../ui/Button";
@@ -22,7 +22,7 @@ const AdminHalls = () => {
       console.log(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.HALLS}`);
       var hallsResponse = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.HALLS.GET_HALLS}`);
       if (hallsResponse.ok) {
-        const halls: IHall[] = await hallsResponse.json();
+        const halls: IHallSummary[] = await hallsResponse.json();
         dispatch({ type: 'GET_HALLS', payload: halls });
       }
     }
@@ -53,8 +53,10 @@ const AdminHalls = () => {
         state.halls.map((hall) => (
           <div key={hall.id} className="hall-card">
             <div>
-              <span>{hall.name}</span>
+              <h3>{hall.name}</h3>
+              <p>Seats: <strong>{hall.seats.length}</strong></p>
             </div>
+            <br />
           </div>
         ))
       }
