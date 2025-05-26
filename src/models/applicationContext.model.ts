@@ -31,6 +31,12 @@ export interface IHall {
   name: string
 }
 
+export interface ISeat {
+  id: number,
+  row: number,
+  number: number
+}
+
 export interface IShowTimeDetails {
   id: number,
   time: Date,
@@ -113,6 +119,10 @@ export interface IOrderSummary {
   completedAt?: Date,
   showTimeSummary: IShowTimeSummary,
   tickets: ITicketSummary[],
+}
+
+export interface IHallSummary extends IHall {
+  seats: ISeat[]
 }
 
 export type ApplciationContextActions =
