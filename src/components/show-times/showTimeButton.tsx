@@ -1,6 +1,6 @@
 import { IMovieShowTimeDetails } from "../../models/applicationContext.model";
 
-const getShowTimeTime = (fullDate: Date) => {
+export const getShowTimeTime = (fullDate: Date) => {
   var date = new Date(fullDate);
   var hours = date.getHours().toString().padStart(2, '0');
   var minutes = date.getMinutes().toString().padStart(2, '0');

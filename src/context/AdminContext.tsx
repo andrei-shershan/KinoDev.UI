@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import { AdminContextActions, IAdminContext, IAdminContextState } from '../models/adminContext.model';
+import { AdminActions } from '../constants/adminActionTypes';
 
 const initialState: IAdminContextState = {
   movies: [],
@@ -8,20 +9,25 @@ const initialState: IAdminContextState = {
 
 const authReducer = (state: IAdminContextState, action: AdminContextActions): IAdminContextState => {
   switch (action.type) {
-    case 'GET_MOVIES':
+    case AdminActions.GET_MOVIES:
       return {
         ...state,
         movies: action.payload
       };
-    case 'GET_MOVIE':
+    case AdminActions.GET_MOVIE:
       return {
         ...state,
         movie: action.payload
       };
-    case 'GET_HALLS':
+    case AdminActions.GET_HALLS:
       return {
         ...state,
         halls: action.payload
+      };
+    case AdminActions.GET_SHOW_TIMES:
+      return {
+        ...state,
+        showTimes: action.payload
       };
     default:
       return state;
