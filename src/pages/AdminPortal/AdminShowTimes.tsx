@@ -10,6 +10,10 @@ import Dropdown from "../../ui/Dropdown";
 import useIsMobile from "../../hooks/useIsMobile";
 import { getImageSource } from "../../utils/imageSource";
 import { getShowTimeTime } from "../../components/show-times/showTimeButton";
+import Button from "../../ui/Button";
+import { SizeType, StyleType } from "../../ui/types";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../constants/routes";
 
 const getDateTime = (date: Date) => {
   const year = date.getFullYear();
@@ -21,7 +25,8 @@ const getDateTime = (date: Date) => {
 
 const today = new Date();
 
-const getDays = () => {
+// TODO: Move this to a utility file
+export const getDays = () => {
   const days = [];
   let date = new Date(today);
 
@@ -63,7 +68,6 @@ interface ShowTimeGroupedByDate {
 const getShowTimesGroupedByDate = (showTimes: IShowTimeDetails[]): ShowTimeGroupedByDate[] => {
   let result: ShowTimeGroupedByDate[] = [];
 
-
   for (let i = 0; i < showTimes.length; i++) {
     const dateKey = new Date(showTimes[i].time).toISOString().split("T")[0];
     if (!result.find(x => x.dateKey === dateKey)) {
@@ -96,6 +100,7 @@ const AdminShowTimes = () => {
   const { state, dispatch } = useAdminContext();
   const [startDate, setStartDate] = useState(getDateTime(new Date()));
   const [endDate, setEndDate] = useState(getDateTime(new Date()));
+  const navigate = useNavigate();
 
   const { fetchGet } = useInternalApiClient();
 
@@ -109,6 +114,10 @@ const AdminShowTimes = () => {
         const showTimes: IShowTimeDetails[] = await getShowTimesResponse.json();
         // TODO: use AdminActions 
         dispatch({ type: "GET_SHOW_TIMES", payload: showTimes });
+      } else {
+        if (getShowTimesResponse.status === 404) {
+          dispatch({ type: "GET_SHOW_TIMES", payload: [] });
+        }
       }
     }
 
@@ -131,8 +140,19 @@ const AdminShowTimes = () => {
 
   return (
     <MainLayout portalType={PORTALS_TYPES.ADMIN} >
+
       <div className="admin-showtimes">
         <h1>Admin Show Times</h1>
+
+        <br />
+        <Button
+          text="Add Show time"
+          size={SizeType.Medium}
+          style={StyleType.Primary}
+          onClick={() => { navigate(`/${ROUTES.ADMIN_PORTAL.SHOWTIMES_ADD}`) }}
+        />
+        <br />
+
         <p>Select start and end dates</p>
 
         <div className="dropdown-container">

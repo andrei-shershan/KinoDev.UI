@@ -1,3 +1,5 @@
+import './index.css'
+
 const Dropdown = ({
   id,
   options,
@@ -15,15 +17,17 @@ const Dropdown = ({
   return (
     <div>
       <label htmlFor="valueDropdown">{labelText}</label>
+      <br />
       <select
         id={id}
         value={selectedValue}
         onChange={onChange}
         className="form-select"
       >
+        <option value="" disabled>Select an option...</option>
         {
           options.map((option, index) => (
-            <option key={index} value={option.value}>
+            <option key={index} value={option.value} className="dropdown-option">
               {option.label}
             </option>
           ))

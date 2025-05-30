@@ -26,9 +26,23 @@ export interface IMovie {
   url: string
 }
 
+export interface IMovieWithShowTime extends IMovie {
+  time: Date
+}
+
 export interface IHall {
   id: number,
   name: string
+}
+
+export interface IHallWithMovies {
+  hall: IHall,
+  movies: IMovieWithShowTime[]
+}
+
+export interface IShowTimeForDate {
+  date: Date,
+  hallWithMovies: IHallWithMovies[]
 }
 
 export interface ISeat {
@@ -64,6 +78,8 @@ export interface IBokingStorageData extends IShowTimeSeats {
   movie: IMovie,
   hall: IHall
 }
+
+
 
 export interface IApplicationContextState {
   showingMovies: IMovieShowTimes[],

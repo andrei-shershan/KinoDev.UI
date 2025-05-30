@@ -1,0 +1,13 @@
+select {
+  /* styles the dropdown itself */
+  width: 200px;
+  padding: 10px;
+  font-family: sans-serif;
+}
+
+.dropdown-option {
+  /* limited support: font and colors */
+  font-size: 14px;
+  font-weight: bold;    /* Chrome, Firefox */
+  color: #000000;          /* Chrome, Firefox, Edge */
+}
