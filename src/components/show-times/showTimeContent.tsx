@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 
 import DataLoading from "../dataLoading";
-import { getDateTimeObject } from "../../utils/dateFormatter";
 import ShowTimeSeatsMap from "../showtime/ShowTimeSeatsMap";
 import { useState } from "react";
 // import { STORAGE } from "../../constants/storage";
@@ -17,6 +16,7 @@ import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import Button from "../../ui/Button";
 import { StyleType } from "../../ui/types";
 import { BokingStorageData, ShowTimeDetailsApiModel, ShowTimeSeat } from "../../models/api.models";
+import { getDateTimeObject } from "../../utils/date-time";
 
 // const { useBreakpoint } = Grid;
 

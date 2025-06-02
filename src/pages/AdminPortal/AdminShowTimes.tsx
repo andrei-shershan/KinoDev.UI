@@ -6,7 +6,6 @@ import { URLS } from "../../constants/urls";
 import { ENDPOINTS } from "../../constants/endpoints";
 import Dropdown from "../../ui/Dropdown";
 import useIsMobile from "../../hooks/useIsMobile";
-import { getImageSource } from "../../utils/imageSource";
 import { getShowTimeTime } from "../../components/show-times/showTimeButton";
 import Button from "../../ui/Button";
 import { SizeType, StyleType } from "../../ui/types";
@@ -14,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 import { ShowTimeDetailsApiModel } from "../../models/api.models";
 import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
+import { getImageSourceUrl } from "../../utils/images";
 
 const getDateTime = (date: Date) => {
   const year = date.getFullYear();
@@ -185,7 +185,7 @@ const AdminShowTimes = () => {
                       <div className="movie-card-img" style={{
                         width: isMobile ? '100px' : '200px',
                         height: isMobile ? '100px' : '200px',
-                        backgroundImage: `url(${getImageSource(movie.url)})`,
+                        backgroundImage: `url(${getImageSourceUrl(movie.url)})`,
                         backgroundSize: 'cover',
                         display: 'inline-block',
                         verticalAlign: 'top'

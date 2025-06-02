@@ -15,7 +15,7 @@ export const ROUTES = {
     HALLS: 'admin-portal/halls',
     HALLS_ADD: 'admin-portal/halls/add',
     USERS: 'admin-portal/users',
-  }
+  },
 } as const;
 
 export type RouteKeys = keyof typeof ROUTES;

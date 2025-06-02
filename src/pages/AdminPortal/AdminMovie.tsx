@@ -9,10 +9,10 @@ import "./index.css";
 import useIsMobile from "../../hooks/useIsMobile";
 import { Link, useParams } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import { getDateTimeObject } from "../../utils/dateFormatter";
-import { getImageSource } from "../../utils/imageSource";
 import { Movie } from "../../models/api.models";
 import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
+import { getImageSourceUrl } from "../../utils/images";
+import { getDateTimeObject } from "../../utils/date-time";
 
 const AdminMovie: React.FC = () => {
   const { fetchGet } = useInternalApiClient();
@@ -55,7 +55,7 @@ const AdminMovie: React.FC = () => {
             <div className="movie-card-img" style={{
               width: isMobile ? '100px' : '200px',
               height: isMobile ? '100px' : '200px',
-              backgroundImage: `url(${getImageSource(movie.url)})`,
+              backgroundImage: `url(${getImageSourceUrl(movie.url)})`,
               backgroundSize: 'cover',
               display: 'inline-block',
               verticalAlign: 'top'

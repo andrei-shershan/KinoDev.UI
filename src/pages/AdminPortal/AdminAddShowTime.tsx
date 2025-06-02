@@ -7,12 +7,12 @@ import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import { ENDPOINTS } from "../../constants/endpoints";
 import { URLS } from "../../constants/urls";
 import Dropdown from "../../ui/Dropdown";
-import { getImageSource } from "../../utils/imageSource";
 import { getDays } from "./AdminShowTimes";
 import Button from "../../ui/Button";
 import { SizeType, StyleType } from "../../ui/types";
 import { Modal } from "antd";
 import { Hall, Movie, ShowTimeForDate } from "../../models/api.models";
+import { getImageSourceUrl } from "../../utils/images";
 
 interface AddShowTimeRequestModel {
   movieId: number;
@@ -125,7 +125,7 @@ const AdminAddShowTime = () => {
               <div className="movie-card-img" style={{
                 width: '200px',
                 height: '200px',
-                backgroundImage: `url(${getImageSource(selectedMovie.url)})`,
+                backgroundImage: `url(${getImageSourceUrl(selectedMovie.url)})`,
                 backgroundSize: 'cover',
                 display: 'inline-block',
                 verticalAlign: 'top'

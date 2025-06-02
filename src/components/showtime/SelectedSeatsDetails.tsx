@@ -5,11 +5,11 @@ import { URLS } from "../../constants/urls";
 import { ENDPOINTS } from "../../constants/endpoints";
 import { ROUTES } from "../../constants/routes";
 import { message } from "antd";
-import { getDateTimeObject } from "../../utils/dateFormatter";
 import Modal from "antd/es/modal/Modal";
 import Button from "../../ui/Button";
 import { StyleType } from "../../ui/types";
 import { BokingStorageData, ShowTimeDetailsApiModel, ShowTimeSeat } from "../../models/api.models";
+import { getDateTimeObject } from "../../utils/date-time";
 
 const SelectedSeatsDetails = ({ showTimeDetails, selectedSeats }:
     {

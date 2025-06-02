@@ -1,11 +1,11 @@
 import { Grid } from "antd";
 import DataLoading from "../dataLoading";
-import { getDateTimeObject } from "../../utils/dateFormatter";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 import Button from "../../ui/Button";
 import { ShowTimeDetailsApiModel } from "../../models/api.models";
 import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
+import { getDateTimeObject } from "../../utils/date-time";
 const { useBreakpoint } = Grid;
 
 const BuyTicketCard = ({ showTimeDetails }: { showTimeDetails: ShowTimeDetailsApiModel }) => {

@@ -1,4 +1,5 @@
 import { HallSummary, Movie, MovieShowTimes, OrderSummary, ShowTimeDetailsApiModel } from "../../models/api.models";
+import { PortalSettings } from "../../models/portal-settings";
 
 export interface ApplicationContextState {
   movies?: Movie[],
@@ -9,4 +10,5 @@ export interface ApplicationContextState {
   showTimeDetails?: ShowTimeDetailsApiModel
   spinning: boolean
   activeOrderSummary?: OrderSummary,
+  portalSettings?: PortalSettings,
 }

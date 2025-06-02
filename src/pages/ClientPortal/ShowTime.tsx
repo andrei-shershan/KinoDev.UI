@@ -3,23 +3,25 @@ import {
   useLocation,
   useNavigate
 } from 'react-router-dom';
-import MainLayout from '../layouts/mainLayout';
 import { useEffect } from 'react';
-import { useApplicationContext } from '../state-management/providers/AdminContextProvider';
-import { ENDPOINTS } from '../constants/endpoints';
-import { URLS } from '../constants/urls';
-import { useInternalApiClient } from '../hooks/useInternalApiClient';
+
 import {
   message
 } from 'antd';
-import { ERRORS } from '../constants/errors';
-import ShowTimeDetailsComponent from '../components/showtime/ShowTimeDetails';
-import { ROUTES } from '../constants/routes';
-import BuyTicketCard from '../components/BuyTicketCard';
-import ShowTimeSeatsMapSelector from '../components/show-times/ShowTimeSeatsMapSelector';
-import { PORTALS_TYPES } from '../constants/portalTypes';
-import { ShowTimeDetailsApiModel } from '../models/api.models';
-import { OrderState } from '../models/enums.model';
+import { useApplicationContext } from '../../state-management/providers/AdminContextProvider';
+import BuyTicketCard from '../../components/BuyTicketCard';
+import ShowTimeSeatsMapSelector from '../../components/show-times/ShowTimeSeatsMapSelector';
+import ShowTimeDetailsComponent from '../../components/showtime/ShowTimeDetails';
+import { ENDPOINTS } from '../../constants/endpoints';
+import { ERRORS } from '../../constants/errors';
+import { PORTALS_TYPES } from '../../constants/portalTypes';
+import { ROUTES } from '../../constants/routes';
+import { URLS } from '../../constants/urls';
+import { useInternalApiClient } from '../../hooks/useInternalApiClient';
+import MainLayout from '../../layouts/mainLayout';
+import { ShowTimeDetailsApiModel } from '../../models/api.models';
+import { OrderState } from '../../models/enums.model';
+
 
 const ShowTime = () => {
   const { showTimeId } = useParams<{ showTimeId: string }>();

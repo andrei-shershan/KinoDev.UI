@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { getDateTimeObject } from "../utils/dateFormatter";
 import { ROUTES } from "../constants/routes";
 import Button from '../ui/Button';
+import { getDateTimeObject } from "../utils/date-time";
 
 const BuyTicketCard = ({ isActiveOrderAlredyExist, showTimeId, time, price, hallName }: {
   isActiveOrderAlredyExist: boolean, showTimeId: number, time: Date, price: number, hallName: string

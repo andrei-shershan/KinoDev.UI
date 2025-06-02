@@ -2,14 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { ROUTES } from './constants/routes';
-import SignIn from './pages/SignIn';
-import ShowTimes from './pages/ShowTimes';
-import AdminPortal from './pages/AdminPortal';
-import ShowTime from './pages/ShowTime';
-import Booking from './pages/Booking';
-import Tickets from './pages/Tickets';
-import About from './pages/About';
-import AboutCinema from './pages/AboutCinema';
 import AdminMovies from './pages/AdminPortal/AdminMovies';
 import AdminMovie from './pages/AdminPortal/AdminMovie';
 import AdminAddMovie from './pages/AdminPortal/AdminAddMovie';
@@ -19,6 +11,13 @@ import AdminShowTimes from './pages/AdminPortal/AdminShowTimes';
 import AdminAddShowTime from './pages/AdminPortal/AdminAddShowTime';
 import { ApplicationProvider } from './state-management/providers/AdminContextProvider';
 import { AuthProvider } from './state-management/providers/AuthContextProvider';
+import ShowTime from './components/show-times/showTime';
+import About from './pages/ClientPortal/About';
+import AboutCinema from './pages/ClientPortal/AboutCinema';
+import Booking from './pages/ClientPortal/Booking';
+import ShowTimes from './pages/ClientPortal/ShowTimes';
+import Tickets from './pages/ClientPortal/Tickets';
+import SignIn from './pages/Shared/SignIn';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -38,10 +37,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Route path={`/${ROUTES.ADMIN_PORTAL.MOVIES}/:movieId`} element={<AdminMovie />} />
             <Route path={`/${ROUTES.ADMIN_PORTAL.MOVIES}`} element={<AdminMovies />} />
             <Route path={`/${ROUTES.ADMIN_PORTAL.HALLS}`} element={<AdminHalls />} />
-            <Route path={`/${ROUTES.ADMIN_PORTAL.HOME}`} element={<AdminPortal />} />
             <Route path={`/${ROUTES.ADMIN_PORTAL.HALLS}/add`} element={<AdminAddHall />} />
             <Route path={`/${ROUTES.ADMIN_PORTAL.SHOWTIMES}`} element={<AdminShowTimes />} />
             <Route path={`/${ROUTES.ADMIN_PORTAL.SHOWTIMES}/add`} element={<AdminAddShowTime />} />
+            <Route path={`/${ROUTES.ADMIN_PORTAL.HOME}`} element={<Navigate to={`/${ROUTES.ADMIN_PORTAL.MOVIES}`} replace />} />
             <Route path="*" element={<Navigate to={`/${ROUTES.SHOWING}`} replace />} />
           </Routes>
         </Router>

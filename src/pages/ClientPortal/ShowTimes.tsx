@@ -1,17 +1,18 @@
-import { ENDPOINTS } from "../constants/endpoints";
-import { URLS } from "../constants/urls";
-import { useInternalApiClient } from "../hooks/useInternalApiClient";
-import MainLayout from "../layouts/mainLayout";
 import { Grid, message } from "antd";
-import { ERRORS } from "../constants/errors";
-import ShowTimeButton from "../components/show-times/showTimeButton";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
-import ShowingMoviesDatePicker from "../components/show-times/showingMoviesDatePicker";
-import { ROUTES } from "../constants/routes";
-import { PORTALS_TYPES } from "../constants/portalTypes";
-import { MovieShowTimes } from "../models/api.models";
-import { useApplicationContext } from "../state-management/providers/AdminContextProvider";
+import ShowingMoviesDatePicker from "../../components/show-times/showingMoviesDatePicker";
+import ShowTimeButton from "../../components/show-times/showTimeButton";
+import { ENDPOINTS } from "../../constants/endpoints";
+import { ERRORS } from "../../constants/errors";
+import { PORTALS_TYPES } from "../../constants/portalTypes";
+import { ROUTES } from "../../constants/routes";
+import { URLS } from "../../constants/urls";
+import { useInternalApiClient } from "../../hooks/useInternalApiClient";
+import MainLayout from "../../layouts/mainLayout";
+import { MovieShowTimes } from "../../models/api.models";
+import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
+
 const { useBreakpoint } = Grid;
 
 const ShowTimes: React.FC = () => {

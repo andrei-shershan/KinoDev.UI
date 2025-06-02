@@ -3,12 +3,9 @@ import { ENDPOINTS } from "../constants/endpoints";
 import { URLS } from "../constants/urls";
 import { STORAGE_KEYS } from "../constants/storageKeys";
 import { useAuthContext } from "../state-management/providers/AuthContextProvider";
+import { getCsrfToken } from "../utils/storage";
 
 const MAX_RETRY = 1;
-
-const getCsrfToken = (): string => {
-  return localStorage.getItem(STORAGE_KEYS.XSRF_TOKEN) || '';
-}
 
 function isFormData(x: any): x is FormData {
   return x instanceof FormData;

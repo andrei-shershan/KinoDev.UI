@@ -1,16 +1,11 @@
-import { useState, FormEvent, useEffect } from 'react';
-import { ENDPOINTS } from '../constants/endpoints';
-import { URLS } from '../constants/urls';
-import { ROLES } from '../constants/roles';
-import { useInternalApiClient } from '../hooks/useInternalApiClient';
-import MainLayout from '../layouts/mainLayout';
-import { PORTALS_TYPES } from '../constants/portalTypes';
-import { useAuthContext } from '../state-management/providers/AuthContextProvider';
-
-interface SignInForm {
-  email: string;
-  password: string;
-}
+import { useEffect, useState, FormEvent } from "react";
+import { ENDPOINTS } from "../../constants/endpoints";
+import { PORTALS_TYPES } from "../../constants/portalTypes";
+import { ROLES } from "../../constants/roles";
+import { URLS } from "../../constants/urls";
+import { useInternalApiClient } from "../../hooks/useInternalApiClient";
+import MainLayout from "../../layouts/mainLayout";
+import { useAuthContext } from "../../state-management/providers/AuthContextProvider";
 
 export const SignIn = () => {
   const { state } = useAuthContext();
@@ -36,7 +31,7 @@ export const SignIn = () => {
     }
   }, [state.accessToken]);
 
-  const [formData, setFormData] = useState<SignInForm>({
+  const [formData, setFormData] = useState({
     email: '',
     password: ''
   });

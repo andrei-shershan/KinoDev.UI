@@ -9,10 +9,10 @@ import "./index.css";
 import useIsMobile from "../../hooks/useIsMobile";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import { getImageSource } from "../../utils/imageSource";
 import Button from "../../ui/Button";
 import { SizeType, StyleType } from "../../ui/types";
 import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
+import { getImageSourceUrl } from "../../utils/images";
 
 const AdminMovies: React.FC = () => {
   const { fetchGet } = useInternalApiClient();
@@ -82,7 +82,7 @@ const AdminMovies: React.FC = () => {
                 <div className="movie-card-img" style={{
                   width: isMobile ? '100px' : '200px',
                   height: isMobile ? '100px' : '200px',
-                  backgroundImage: `url(${getImageSource(movie.url)})`,
+                  backgroundImage: `url(${getImageSourceUrl(movie.url)})`,
                   backgroundSize: 'cover',
                   display: 'inline-block',
                   verticalAlign: 'top'

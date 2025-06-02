@@ -44,6 +44,11 @@ export const applicationReducer = (state: ApplicationContextState, action: Appli
         ...state,
         activeOrderSummary: action.payload
       };
+    case APPLICATION_ACTIONS_CONSTS.SET_PORTAL_SETTINGS:
+      return {
+        ...state,
+        portalSettings: action.payload
+      };
     default:
       return state;
   }

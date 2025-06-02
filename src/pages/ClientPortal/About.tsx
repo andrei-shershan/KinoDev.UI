@@ -1,6 +1,6 @@
 import React from 'react';
-import MainLayout from '../layouts/mainLayout';
-import { PORTALS_TYPES } from '../constants/portalTypes';
+import { PORTALS_TYPES } from '../../constants/portalTypes';
+import MainLayout from '../../layouts/mainLayout';
 
 const About: React.FC = () => {
   return (

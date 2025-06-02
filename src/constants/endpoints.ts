@@ -30,7 +30,8 @@ export const ENDPOINTS = {
     },
     USERS: {
       DETAILS: 'api/users/details',
-    }
+    },
+    PORTAL_SETTINGS: 'api/portalsettings',
   },
   AUTHENTICATION: {
     REFRESH_TOKEN: 'api/authentication/refresh',

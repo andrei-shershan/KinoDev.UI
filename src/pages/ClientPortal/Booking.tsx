@@ -1,15 +1,15 @@
-import MainLayout from "../layouts/mainLayout";
-import { useInternalApiClient } from "../hooks/useInternalApiClient";
-import { ENDPOINTS } from "../constants/endpoints";
-import { URLS } from "../constants/urls";
 import { useEffect, useState } from "react";
-import { useApplicationContext } from "../state-management/providers/AdminContextProvider";
-import BookingDetails from "../components/booking/BookingDetails";
-import BookingGuestEmail from "../components/booking/BookingGuestEmail";
-import BookingPayment from "../components/booking/BookingPayment";
-import { PORTALS_TYPES } from "../constants/portalTypes";
-import { OrderSummary } from "../models/api.models";
-import { OrderState } from "../models/enums.model";
+import BookingDetails from "../../components/booking/BookingDetails";
+import BookingGuestEmail from "../../components/booking/BookingGuestEmail";
+import BookingPayment from "../../components/booking/BookingPayment";
+import { ENDPOINTS } from "../../constants/endpoints";
+import { PORTALS_TYPES } from "../../constants/portalTypes";
+import { URLS } from "../../constants/urls";
+import { useInternalApiClient } from "../../hooks/useInternalApiClient";
+import MainLayout from "../../layouts/mainLayout";
+import { OrderSummary } from "../../models/api.models";
+import { OrderState } from "../../models/enums.model";
+import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
 
 const Booking: React.FC = () => {
   const { state, dispatch } = useApplicationContext();
