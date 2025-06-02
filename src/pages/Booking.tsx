@@ -1,14 +1,15 @@
 import MainLayout from "../layouts/mainLayout";
-import { IOrderSummary, OrderState } from "../models/applicationContext.model";
 import { useInternalApiClient } from "../hooks/useInternalApiClient";
 import { ENDPOINTS } from "../constants/endpoints";
 import { URLS } from "../constants/urls";
 import { useEffect, useState } from "react";
-import { useApplicationContext } from "../context/ApplicationContext";
+import { useApplicationContext } from "../state-management/providers/AdminContextProvider";
 import BookingDetails from "../components/booking/BookingDetails";
 import BookingGuestEmail from "../components/booking/BookingGuestEmail";
 import BookingPayment from "../components/booking/BookingPayment";
 import { PORTALS_TYPES } from "../constants/portalTypes";
+import { IOrderSummary } from "../models/api.models";
+import { OrderState } from "../models/enums.model";
 
 const Booking: React.FC = () => {
   const { state, dispatch } = useApplicationContext();
@@ -44,13 +45,13 @@ const Booking: React.FC = () => {
   const { fetchGet } = useInternalApiClient();
 
   if (!state.activeOrderSummary || state.activeOrderSummary.state !== OrderState.NEW) {
-    return <MainLayout  portalType={PORTALS_TYPES.CLIENT} >
+    return <MainLayout portalType={PORTALS_TYPES.CLIENT} >
       <h1>No booking data found</h1>
     </MainLayout>
   }
 
   return state.activeOrderSummary &&
-    <MainLayout  portalType={PORTALS_TYPES.CLIENT} >
+    <MainLayout portalType={PORTALS_TYPES.CLIENT} >
       <BookingDetails
         activeOrderSummary={state.activeOrderSummary}
       />

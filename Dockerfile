@@ -7,6 +7,9 @@ ARG ApiClients_IdentityServiceUri
 ARG ApiClients_ApiGatewayUri
 ARG Portals_Main
 ARG Portals_Admin
+ARG Public_Images_Host
+ARG Public_Images_Store_Account
+
 # Set the environment variable for Vite to pick up
 ENV VITE_AUTH_BASE_URL=$ApiClients_IdentityServiceUri
 ENV VITE_API_GATEWAY_BASE_URL=$ApiClients_ApiGatewayUri

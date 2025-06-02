@@ -2,10 +2,10 @@ import { useState, FormEvent, useEffect } from 'react';
 import { ENDPOINTS } from '../constants/endpoints';
 import { URLS } from '../constants/urls';
 import { ROLES } from '../constants/roles';
-import { useAuthContext } from '../context/AuthContext';
 import { useInternalApiClient } from '../hooks/useInternalApiClient';
 import MainLayout from '../layouts/mainLayout';
 import { PORTALS_TYPES } from '../constants/portalTypes';
+import { useAuthContext } from '../state-management/providers/AuthContextProvider';
 
 interface SignInForm {
   email: string;

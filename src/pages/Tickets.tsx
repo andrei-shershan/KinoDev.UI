@@ -4,10 +4,9 @@ import { useInternalApiClient } from "../hooks/useInternalApiClient";
 import MainLayout from "../layouts/mainLayout";
 import { useEffect, useState } from "react";
 import Button from "../ui/Button";
-import { IOrderSummary } from "../models/applicationContext.model";
 import { getDateTimeObject } from "../utils/dateFormatter";
 import { PORTALS_TYPES } from "../constants/portalTypes";
-
+import { IOrderSummary } from "../models/api.models";
 
 const inputStyle = {
   padding: '0.5rem',

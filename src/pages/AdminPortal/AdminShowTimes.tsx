@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { PORTALS_TYPES } from "../../constants/portalTypes";
-import { useAdminContext } from "../../context/AdminContext";
 import MainLayout from "../../layouts/mainLayout";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import { URLS } from "../../constants/urls";
 import { ENDPOINTS } from "../../constants/endpoints";
-import { IShowTimeDetails } from "../../models/applicationContext.model";
 import Dropdown from "../../ui/Dropdown";
 import useIsMobile from "../../hooks/useIsMobile";
 import { getImageSource } from "../../utils/imageSource";
@@ -14,6 +12,8 @@ import Button from "../../ui/Button";
 import { SizeType, StyleType } from "../../ui/types";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
+import { IShowTimeDetails } from "../../models/api.models";
+import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
 
 const getDateTime = (date: Date) => {
   const year = date.getFullYear();
@@ -97,7 +97,7 @@ const getShowTimesGroupedByDate = (showTimes: IShowTimeDetails[]): ShowTimeGroup
 }
 
 const AdminShowTimes = () => {
-  const { state, dispatch } = useAdminContext();
+  const { state, dispatch } = useApplicationContext();
   const [startDate, setStartDate] = useState(getDateTime(new Date()));
   const [endDate, setEndDate] = useState(getDateTime(new Date()));
   const navigate = useNavigate();

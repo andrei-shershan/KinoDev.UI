@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
-import { IBokingStorageData, IShowTimeDetails, IShowTimeSeat } from "../../models/applicationContext.model";
 import { useState } from "react";
 import { URLS } from "../../constants/urls";
 import { ENDPOINTS } from "../../constants/endpoints";
@@ -10,6 +9,7 @@ import { getDateTimeObject } from "../../utils/dateFormatter";
 import Modal from "antd/es/modal/Modal";
 import Button from "../../ui/Button";
 import { StyleType } from "../../ui/types";
+import { IBokingStorageData, IShowTimeDetails, IShowTimeSeat } from "../../models/api.models";
 
 const SelectedSeatsDetails = ({ showTimeDetails, selectedSeats }:
     {

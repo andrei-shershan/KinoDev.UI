@@ -1,5 +1,5 @@
-import { IShowTimeDetails } from "../../models/applicationContext.model";
 import { Grid } from "antd";
+import { IShowTimeDetails } from "../../models/api.models";
 const { useBreakpoint } = Grid;
 
 const ShowTimeDetails = (

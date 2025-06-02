@@ -8,7 +8,7 @@ import MainLayout from "../../layouts/mainLayout";
 import "./index.css";
 import { Link, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import { IMovie } from "../../models/applicationContext.model";
+import { IMovie } from "../../models/api.models";
 
 const AdminAddMovie: React.FC = () => {
   const { fetchPost } = useInternalApiClient();

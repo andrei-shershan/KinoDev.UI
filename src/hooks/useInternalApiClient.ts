@@ -1,9 +1,8 @@
 import { AUTHENTICATION } from "../constants/authentication";
 import { ENDPOINTS } from "../constants/endpoints";
 import { URLS } from "../constants/urls";
-import { useAuthContext } from "../context/AuthContext"
-import { ROUTES } from "../constants/routes";
 import { STORAGE_KEYS } from "../constants/storageKeys";
+import { useAuthContext } from "../state-management/providers/AuthContextProvider";
 
 const MAX_RETRY = 1;
 

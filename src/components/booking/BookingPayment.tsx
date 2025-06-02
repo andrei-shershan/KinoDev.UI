@@ -1,7 +1,6 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { CardElement, Elements, useElements, useStripe } from "@stripe/react-stripe-js";
 import { FormEvent, useState } from "react";
-import { IOrderSummary } from "../../models/applicationContext.model";
 import { ENDPOINTS } from "../../constants/endpoints";
 import { URLS } from "../../constants/urls";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
@@ -9,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 import Button from "../../ui/Button";
 import { StyleType } from "../../ui/types";
+import { IOrderSummary } from "../../models/api.models";
 
 const CARD_ELEMENT_OPTIONS = {
   style: {

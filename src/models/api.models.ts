@@ -1,21 +1,4 @@
-export interface IMovieShowTimeDetails {
-  id: number,
-  hallId: number,
-  hallName: string,
-  time: Date,
-  price: number,
-  isSellingAvailable: boolean
-}
-
-export interface IMovieShowTimes {
-  id: number,
-  name: string,
-  description: string,
-  releaseDate: Date,
-  duration: number,
-  url: string,
-  moviesShowTimeDetails: IMovieShowTimeDetails[]
-}
+import { OrderState } from "./enums.model"
 
 export interface IMovie {
   id: number,
@@ -35,16 +18,6 @@ export interface IHall {
   name: string
 }
 
-export interface IHallWithMovies {
-  hall: IHall,
-  movies: IMovieWithShowTime[]
-}
-
-export interface IShowTimeForDate {
-  date: Date,
-  hallWithMovies: IHallWithMovies[]
-}
-
 export interface ISeat {
   id: number,
   row: number,
@@ -57,6 +30,35 @@ export interface IShowTimeDetails {
   price: number,
   movie: IMovie,
   hall: IHall
+}
+
+export interface IHallWithMovies {
+  hall: IHall,
+  movies: IMovieWithShowTime[]
+}
+
+export interface IShowTimeForDate {
+  date: Date,
+  hallWithMovies: IHallWithMovies[]
+}
+
+export interface IMovieShowTimeDetails {
+  id: number,
+  hallId: number,
+  hallName: string,
+  time: Date,
+  price: number,
+  isSellingAvailable: boolean
+}
+
+export interface IMovieShowTimes {
+  id: number,
+  name: string,
+  description: string,
+  releaseDate: Date,
+  duration: number,
+  url: string,
+  moviesShowTimeDetails: IMovieShowTimeDetails[]
 }
 
 export interface IShowTimeSeat {
@@ -77,23 +79,6 @@ export interface IShowTimeSeats {
 export interface IBokingStorageData extends IShowTimeSeats {
   movie: IMovie,
   hall: IHall
-}
-
-
-
-export interface IApplicationContextState {
-  showingMovies: IMovieShowTimes[],
-  showTimeDetails?: IShowTimeDetails
-  spinning: boolean,
-  activeOrderSummary?: IOrderSummary,
-}
-
-export enum OrderState {
-  NEW = 0,
-  PENDING = 10,
-  PROCESSING = 20,
-  COMPLETED = 30,
-  CANCELLED = 40
 }
 
 export interface IOrder {
@@ -139,15 +124,4 @@ export interface IOrderSummary {
 
 export interface IHallSummary extends IHall {
   seats: ISeat[]
-}
-
-export type ApplciationContextActions =
-  | { type: 'GET_SHOWING_MOVIES'; payload: IMovieShowTimes[] }
-  | { type: 'SET_SPINNING'; payload: boolean }
-  | { type: 'GET_SHOW_TIME_DETAILS'; payload: IShowTimeDetails }
-  | { type: 'SET_ACTIVE_ORDER'; payload: IOrderSummary | undefined };
-
-export interface IApplicationContext {
-  state: IApplicationContextState;
-  dispatch: React.Dispatch<ApplciationContextActions>;
 }

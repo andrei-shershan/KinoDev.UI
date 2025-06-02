@@ -1,13 +1,13 @@
 import { Layout, Spin } from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import '../styles/index.css';
-import { useApplicationContext } from "../context/ApplicationContext";
 import { LoadingOutlined } from '@ant-design/icons';
 import { FC, PropsWithChildren } from 'react';
 import Menu from "../components/Menu";
 import useIsMobile from "../hooks/useIsMobile";
 import { ROUTES } from "../constants/routes";
 import { PORTALS_TYPES } from "../constants/portalTypes";
+import { useApplicationContext } from "../state-management/providers/AdminContextProvider";
 
 const clientMenuItems = [
   {

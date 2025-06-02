@@ -1,5 +1,4 @@
 import { Grid, Modal } from "antd";
-import { IOrderSummary } from "../../models/applicationContext.model";
 import { getDateTimeObject } from "../../utils/dateFormatter";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +8,7 @@ import { ENDPOINTS } from "../../constants/endpoints";
 import { ROUTES } from "../../constants/routes";
 import Button from "../../ui/Button";
 import { SizeType, StyleType } from "../../ui/types";
+import { IOrderSummary } from "../../models/api.models";
 
 const BookingDetails = ({
   activeOrderSummary

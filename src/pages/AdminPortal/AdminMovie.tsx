@@ -4,15 +4,15 @@ import { PORTALS_TYPES } from "../../constants/portalTypes";
 import { URLS } from "../../constants/urls";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import MainLayout from "../../layouts/mainLayout";
-import { useAdminContext } from "../../context/AdminContext";
 
 import "./index.css";
 import useIsMobile from "../../hooks/useIsMobile";
 import { Link, useParams } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import { IMovie } from "../../models/applicationContext.model";
 import { getDateTimeObject } from "../../utils/dateFormatter";
 import { getImageSource } from "../../utils/imageSource";
+import { IMovie } from "../../models/api.models";
+import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
 
 const AdminMovie: React.FC = () => {
   const { fetchGet } = useInternalApiClient();
@@ -31,7 +31,7 @@ const AdminMovie: React.FC = () => {
     getMovie();
   }, [movieId]);
 
-  const { state, dispatch } = useAdminContext();
+  const { state, dispatch } = useApplicationContext();
 
   const movie = state.movie;
 

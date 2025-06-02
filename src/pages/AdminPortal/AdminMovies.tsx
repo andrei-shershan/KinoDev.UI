@@ -4,7 +4,6 @@ import { PORTALS_TYPES } from "../../constants/portalTypes";
 import { URLS } from "../../constants/urls";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import MainLayout from "../../layouts/mainLayout";
-import { useAdminContext } from "../../context/AdminContext";
 
 import "./index.css";
 import useIsMobile from "../../hooks/useIsMobile";
@@ -13,6 +12,7 @@ import { ROUTES } from "../../constants/routes";
 import { getImageSource } from "../../utils/imageSource";
 import Button from "../../ui/Button";
 import { SizeType, StyleType } from "../../ui/types";
+import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
 
 const AdminMovies: React.FC = () => {
   const { fetchGet } = useInternalApiClient();
@@ -29,7 +29,7 @@ const AdminMovies: React.FC = () => {
     getMovies();
   }, []);
 
-  const { state, dispatch } = useAdminContext();
+  const { state, dispatch } = useApplicationContext();
 
   const navigate = useNavigate();
 
@@ -54,7 +54,7 @@ const AdminMovies: React.FC = () => {
       <br />
 
       {
-        state.movies?.length > 0 &&
+        state.movies && state.movies?.length > 0 &&
         <div>
           <h1>Movies List</h1>
           {state.movies.map((movie) => (

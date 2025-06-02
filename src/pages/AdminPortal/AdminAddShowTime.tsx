@@ -6,13 +6,13 @@ import { useEffect, useState } from "react";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import { ENDPOINTS } from "../../constants/endpoints";
 import { URLS } from "../../constants/urls";
-import { IHall, IMovie, IShowTimeForDate } from "../../models/applicationContext.model";
 import Dropdown from "../../ui/Dropdown";
 import { getImageSource } from "../../utils/imageSource";
 import { getDays } from "./AdminShowTimes";
 import Button from "../../ui/Button";
 import { SizeType, StyleType } from "../../ui/types";
 import { Modal } from "antd";
+import { IHall, IMovie, IShowTimeForDate } from "../../models/api.models";
 
 interface AddShowTimeRequestModel {
   movieId: number;
@@ -79,7 +79,9 @@ const AdminAddShowTime = () => {
     try {
       const timeAndPriceAdjustedModel = {
         ...addShowTimeRequestModel,
-        time: new Date(addShowTimeRequestModel.time.getTime() - (addShowTimeRequestModel.time.getTimezoneOffset() * 60000)), // Adjust for timezone
+        time: addShowTimeRequestModel 
+          ? new Date(addShowTimeRequestModel.time.getTime() - (addShowTimeRequestModel.time.getTimezoneOffset() * 60000)) // Adjust for timezone
+          : new Date(),
         price: price
       }
 

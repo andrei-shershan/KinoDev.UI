@@ -1,9 +1,7 @@
 import { ENDPOINTS } from "../constants/endpoints";
 import { URLS } from "../constants/urls";
-import { useApplicationContext } from "../context/ApplicationContext";
 import { useInternalApiClient } from "../hooks/useInternalApiClient";
 import MainLayout from "../layouts/mainLayout";
-import { IMovieShowTimes } from "../models/applicationContext.model";
 import { Grid, message } from "antd";
 import { ERRORS } from "../constants/errors";
 import ShowTimeButton from "../components/show-times/showTimeButton";
@@ -12,6 +10,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ShowingMoviesDatePicker from "../components/show-times/showingMoviesDatePicker";
 import { ROUTES } from "../constants/routes";
 import { PORTALS_TYPES } from "../constants/portalTypes";
+import { IMovieShowTimes } from "../models/api.models";
+import { useApplicationContext } from "../state-management/providers/AdminContextProvider";
 const { useBreakpoint } = Grid;
 
 const ShowTimes: React.FC = () => {
@@ -74,7 +74,7 @@ const ShowTimes: React.FC = () => {
 
       </div>
       {
-        state.showingMovies?.length > 0
+        state.showingMovies && state.showingMovies?.length > 0
           ? state.showingMovies.map((movie) => {
 
             // middle screen or wider

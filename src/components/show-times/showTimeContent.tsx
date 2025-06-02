@@ -5,12 +5,7 @@ import {
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import {
-    IBokingStorageData, 
-    // IOrder, 
-    IShowTimeDetails, IShowTimeSeat,
-    // IShowTimeSeats
-} from "../../models/applicationContext.model";
+
 import DataLoading from "../dataLoading";
 import { getDateTimeObject } from "../../utils/dateFormatter";
 import ShowTimeSeatsMap from "../showtime/ShowTimeSeatsMap";
@@ -21,6 +16,7 @@ import { ENDPOINTS } from "../../constants/endpoints";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import Button from "../../ui/Button";
 import { StyleType } from "../../ui/types";
+import { IBokingStorageData, IShowTimeDetails, IShowTimeSeat } from "../../models/api.models";
 
 // const { useBreakpoint } = Grid;
 

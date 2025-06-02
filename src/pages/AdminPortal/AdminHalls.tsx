@@ -3,17 +3,17 @@ import { PORTALS_TYPES } from "../../constants/portalTypes";
 import MainLayout from "../../layouts/mainLayout";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import { ENDPOINTS } from "../../constants/endpoints";
-import { IHallSummary } from "../../models/applicationContext.model";
-import { useAdminContext } from "../../context/AdminContext";
 import { URLS } from "../../constants/urls";
 import Button from "../../ui/Button";
 import { SizeType, StyleType } from "../../ui/types";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
+import { IHallSummary } from "../../models/api.models";
+import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
 
 const AdminHalls = () => {
   const { fetchGet } = useInternalApiClient();
-  const { state, dispatch } = useAdminContext();
+  const { state, dispatch } = useApplicationContext();
   const navigate = useNavigate();
 
   useEffect(() => {

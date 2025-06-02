@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { ENDPOINTS } from "../../constants/endpoints";
 import { URLS } from "../../constants/urls";
-import { useApplicationContext } from "../../context/ApplicationContext";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import { Grid, message } from "antd";
 import { ERRORS } from "../../constants/errors";
-import { IShowTimeSeat, IShowTimeSeats } from "../../models/applicationContext.model";
+import { IShowTimeSeat, IShowTimeSeats } from "../../models/api.models";
+import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
 const { useBreakpoint } = Grid;
 
 const getSeatsMap = (seats: IShowTimeSeat[]) => {

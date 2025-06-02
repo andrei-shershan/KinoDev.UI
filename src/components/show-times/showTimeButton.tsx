@@ -1,4 +1,4 @@
-import { IMovieShowTimeDetails } from "../../models/applicationContext.model";
+import { IMovieShowTimeDetails } from "../../models/api.models";
 
 export const getShowTimeTime = (fullDate: Date) => {
   var date = new Date(fullDate);

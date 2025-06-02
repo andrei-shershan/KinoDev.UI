@@ -1,14 +1,11 @@
 import { Grid } from "antd";
-import {
-    // IMovie,
-    IShowTimeDetails
-} from "../../models/applicationContext.model";
 import DataLoading from "../dataLoading";
 import { getDateTimeObject } from "../../utils/dateFormatter";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import { useApplicationContext } from "../../context/ApplicationContext";
 import Button from "../../ui/Button";
+import { IShowTimeDetails } from "../../models/api.models";
+import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
 const { useBreakpoint } = Grid;
 
 const BuyTicketCard = ({ showTimeDetails }: { showTimeDetails: IShowTimeDetails }) => {

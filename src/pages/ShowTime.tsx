@@ -5,11 +5,10 @@ import {
 } from 'react-router-dom';
 import MainLayout from '../layouts/mainLayout';
 import { useEffect } from 'react';
-import { useApplicationContext } from '../context/ApplicationContext';
+import { useApplicationContext } from '../state-management/providers/AdminContextProvider';
 import { ENDPOINTS } from '../constants/endpoints';
 import { URLS } from '../constants/urls';
 import { useInternalApiClient } from '../hooks/useInternalApiClient';
-import { IShowTimeDetails, OrderState } from '../models/applicationContext.model';
 import {
   message
 } from 'antd';
@@ -19,6 +18,8 @@ import { ROUTES } from '../constants/routes';
 import BuyTicketCard from '../components/BuyTicketCard';
 import ShowTimeSeatsMapSelector from '../components/show-times/ShowTimeSeatsMapSelector';
 import { PORTALS_TYPES } from '../constants/portalTypes';
+import { IShowTimeDetails } from '../models/api.models';
+import { OrderState } from '../models/enums.model';
 
 const ShowTime = () => {
   const { showTimeId } = useParams<{ showTimeId: string }>();
