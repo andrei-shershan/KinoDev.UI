@@ -4,11 +4,11 @@ import { getDateTimeObject } from "../../utils/dateFormatter";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 import Button from "../../ui/Button";
-import { IShowTimeDetails } from "../../models/api.models";
+import { ShowTimeDetailsApiModel } from "../../models/api.models";
 import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
 const { useBreakpoint } = Grid;
 
-const BuyTicketCard = ({ showTimeDetails }: { showTimeDetails: IShowTimeDetails }) => {
+const BuyTicketCard = ({ showTimeDetails }: { showTimeDetails: ShowTimeDetailsApiModel }) => {
     const navigate = useNavigate();
 
     return (
@@ -26,7 +26,7 @@ const BuyTicketCard = ({ showTimeDetails }: { showTimeDetails: IShowTimeDetails 
     );
 }
 
-const MovieDetails = ({ showTimeDetails, isBooking }: { showTimeDetails: IShowTimeDetails, isBooking: boolean }) => {
+const MovieDetails = ({ showTimeDetails, isBooking }: { showTimeDetails: ShowTimeDetailsApiModel, isBooking: boolean }) => {
     const screens = useBreakpoint();
 
     const { movie } = showTimeDetails;
@@ -106,19 +106,19 @@ const MovieDetails = ({ showTimeDetails, isBooking }: { showTimeDetails: IShowTi
     }
 };
 
-const DesktopLayout = ({ showTimeDetails, isBooking }: { showTimeDetails: IShowTimeDetails, isBooking: boolean }) => {
+const DesktopLayout = ({ showTimeDetails, isBooking }: { showTimeDetails: ShowTimeDetailsApiModel, isBooking: boolean }) => {
     return (<>
         <MovieDetails showTimeDetails={showTimeDetails} isBooking={isBooking} />
     </>);
 }
 
-const MobileLayout = ({ showTimeDetails, isBooking }: { showTimeDetails: IShowTimeDetails, isBooking: boolean }) => {
+const MobileLayout = ({ showTimeDetails, isBooking }: { showTimeDetails: ShowTimeDetailsApiModel, isBooking: boolean }) => {
     return (<>
         <MovieDetails showTimeDetails={showTimeDetails} isBooking={isBooking} />
     </>);
 }
 
-const ShowTimeHeader = ({ showTimeDetails, isBooking }: { showTimeDetails: IShowTimeDetails, isBooking: boolean }) => {
+const ShowTimeHeader = ({ showTimeDetails, isBooking }: { showTimeDetails: ShowTimeDetailsApiModel, isBooking: boolean }) => {
     if (!showTimeDetails) {
         return <DataLoading />;
     }

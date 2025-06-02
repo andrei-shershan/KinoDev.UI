@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 import Button from "../../ui/Button";
 import { StyleType } from "../../ui/types";
-import { IOrderSummary } from "../../models/api.models";
+import { OrderSummary } from "../../models/api.models";
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -119,7 +119,7 @@ const BookingPayment = ({
   // orderSummary,
   email
 }: {
-  orderSummary: IOrderSummary,
+  orderSummary: OrderSummary,
   email: string
 }) => {
   return (

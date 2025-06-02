@@ -1,6 +1,6 @@
 import { OrderState } from "./enums.model"
 
-export interface IMovie {
+export interface Movie {
   id: number,
   name: string,
   description: string,
@@ -9,40 +9,40 @@ export interface IMovie {
   url: string
 }
 
-export interface IMovieWithShowTime extends IMovie {
+export interface MovieWithShowTime extends Movie {
   time: Date
 }
 
-export interface IHall {
+export interface Hall {
   id: number,
   name: string
 }
 
-export interface ISeat {
+export interface Seat {
   id: number,
   row: number,
   number: number
 }
 
-export interface IShowTimeDetails {
+export interface ShowTimeDetailsApiModel {
   id: number,
   time: Date,
   price: number,
-  movie: IMovie,
-  hall: IHall
+  movie: Movie,
+  hall: Hall
 }
 
-export interface IHallWithMovies {
-  hall: IHall,
-  movies: IMovieWithShowTime[]
+export interface HallWithMovies {
+  hall: Hall,
+  movies: MovieWithShowTime[]
 }
 
-export interface IShowTimeForDate {
+export interface ShowTimeForDate {
   date: Date,
-  hallWithMovies: IHallWithMovies[]
+  hallWithMovies: HallWithMovies[]
 }
 
-export interface IMovieShowTimeDetails {
+export interface MovieShowTimeDetails {
   id: number,
   hallId: number,
   hallName: string,
@@ -51,60 +51,60 @@ export interface IMovieShowTimeDetails {
   isSellingAvailable: boolean
 }
 
-export interface IMovieShowTimes {
+export interface MovieShowTimes {
   id: number,
   name: string,
   description: string,
   releaseDate: Date,
   duration: number,
   url: string,
-  moviesShowTimeDetails: IMovieShowTimeDetails[]
+  moviesShowTimeDetails: MovieShowTimeDetails[]
 }
 
-export interface IShowTimeSeat {
+export interface ShowTimeSeat {
   id: number,
   row: number,
   number: number,
   isAvailable: boolean
 }
 
-export interface IShowTimeSeats {
+export interface ShowTimeSeats {
   id: number,
   hallId: number,
   time: Date,
   price: number,
-  seats: IShowTimeSeat[]
+  seats: ShowTimeSeat[]
 }
 
-export interface IBokingStorageData extends IShowTimeSeats {
-  movie: IMovie,
-  hall: IHall
+export interface BokingStorageData extends ShowTimeSeats {
+  movie: Movie,
+  hall: Hall
 }
 
-export interface IOrder {
+export interface Order {
   id: string,
   cost: number,
   state: OrderState,
   createdAt: Date,
   completedAt: Date,
-  ticket: ITicket[]
+  ticket: Ticket[]
 }
 
-export interface ITicket {
+export interface Ticket {
   id: string,
   seatId: number,
   showTimeId: number,
   orderId: string,
 }
 
-export interface IShowTimeSummary {
+export interface ShowTimeSummary {
   id: number,
   time: Date,
-  hall: IHall,
-  movie: IMovie,
+  hall: Hall,
+  movie: Movie,
 }
 
-export interface ITicketSummary {
+export interface TicketSummary {
   ticketId: string,
   seatId: number,
   row: number,
@@ -112,16 +112,16 @@ export interface ITicketSummary {
   price: number,
 }
 
-export interface IOrderSummary {
+export interface OrderSummary {
   id: string,
   state: OrderState,
   orderCost: number,
   createdAt: Date,
   completedAt?: Date,
-  showTimeSummary: IShowTimeSummary,
-  tickets: ITicketSummary[],
+  showTimeSummary: ShowTimeSummary,
+  tickets: TicketSummary[],
 }
 
-export interface IHallSummary extends IHall {
-  seats: ISeat[]
+export interface HallSummary extends Hall {
+  seats: Seat[]
 }

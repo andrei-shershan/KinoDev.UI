@@ -4,11 +4,11 @@ import { URLS } from "../../constants/urls";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import { Grid, message } from "antd";
 import { ERRORS } from "../../constants/errors";
-import { IShowTimeSeat, IShowTimeSeats } from "../../models/api.models";
+import { ShowTimeSeat, ShowTimeSeats } from "../../models/api.models";
 import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
 const { useBreakpoint } = Grid;
 
-const getSeatsMap = (seats: IShowTimeSeat[]) => {
+const getSeatsMap = (seats: ShowTimeSeat[]) => {
     if (!seats || seats.length === 0) {
         return [[]];
     }
@@ -18,7 +18,7 @@ const getSeatsMap = (seats: IShowTimeSeat[]) => {
     const maxNumber = Math.max(...seats.map(seat => seat.number));
 
     // Initialize 2D array with null values
-    const seatMap: (IShowTimeSeat | null)[][] = Array(maxRow)
+    const seatMap: (ShowTimeSeat | null)[][] = Array(maxRow)
         .fill(null)
         .map(() => Array(maxNumber).fill(null));
 
@@ -42,9 +42,9 @@ const getSeatStyle = (isLargeScreen: boolean, isAvailable?: boolean, isSelected?
 });
 
 const drawSeatsMap = (
-    seatMap: (IShowTimeSeat | null)[][],
-    onSeatClick: (seat: IShowTimeSeat) => void,
-    selectedSeats: IShowTimeSeat[]
+    seatMap: (ShowTimeSeat | null)[][],
+    onSeatClick: (seat: ShowTimeSeat) => void,
+    selectedSeats: ShowTimeSeat[]
 ) => {
     const screens = useBreakpoint();
 
@@ -74,19 +74,19 @@ const drawSeatsMap = (
 const ShowTimeSeatsMap = ({ showTimeId, onSelectSeat }:
     {
         showTimeId: string,
-        onSelectSeat: (selectedSeats: IShowTimeSeat[]) => void
+        onSelectSeat: (selectedSeats: ShowTimeSeat[]) => void
     }) => {
     const { dispatch } = useApplicationContext();
     const { fetchGet } = useInternalApiClient();
 
-    const [seats, setSeats] = useState<IShowTimeSeats>();
-    const [selectedSeats, setSelectedSeats] = useState<IShowTimeSeat[]>([]);
+    const [seats, setSeats] = useState<ShowTimeSeats>();
+    const [selectedSeats, setSelectedSeats] = useState<ShowTimeSeat[]>([]);
 
     useEffect(() => {
         onSelectSeat(selectedSeats);
     }, [selectedSeats]);
 
-    const handleSeatClick = (seat: IShowTimeSeat) => {
+    const handleSeatClick = (seat: ShowTimeSeat) => {
         if (!seat.isAvailable) return;
 
         if (selectedSeats.some(s => s.row === seat.row && s.number === seat.number)) {
@@ -104,7 +104,7 @@ const ShowTimeSeatsMap = ({ showTimeId, onSelectSeat }:
 
             try {
                 if (result.ok) {
-                    var data: IShowTimeSeats = await result.json();
+                    var data: ShowTimeSeats = await result.json();
                     // dispatch({ type: 'GET_SHOW_TIME_DETAILS', payload: data });
                     setSeats(data);
                 } else {

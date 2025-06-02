@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ShowingMoviesDatePicker from "../components/show-times/showingMoviesDatePicker";
 import { ROUTES } from "../constants/routes";
 import { PORTALS_TYPES } from "../constants/portalTypes";
-import { IMovieShowTimes } from "../models/api.models";
+import { MovieShowTimes } from "../models/api.models";
 import { useApplicationContext } from "../state-management/providers/AdminContextProvider";
 const { useBreakpoint } = Grid;
 
@@ -40,7 +40,7 @@ const ShowTimes: React.FC = () => {
 
       try {
         if (result.ok) {
-          var data: IMovieShowTimes[] = await result.json();
+          var data: MovieShowTimes[] = await result.json();
           dispatch({ type: 'GET_SHOWING_MOVIES', payload: data });
         } else {
           message.error(ERRORS.GENERIC_API_ERROR);

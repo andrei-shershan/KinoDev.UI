@@ -1,14 +1,14 @@
 import { Grid } from "antd";
-import { IShowTimeDetails } from "../../models/api.models";
+import { ShowTimeDetailsApiModel } from "../../models/api.models";
 const { useBreakpoint } = Grid;
 
-const ShowTimeDetails = (
+const ShowTimeDetailsComponent = (
     {
         showTimeDetails,
         isBooking
     }:
         {
-            showTimeDetails: IShowTimeDetails,
+            showTimeDetails: ShowTimeDetailsApiModel,
             isBooking: boolean
         }) => {
 
@@ -89,4 +89,4 @@ const ShowTimeDetails = (
 
 }
 
-export default ShowTimeDetails;
+export default ShowTimeDetailsComponent;

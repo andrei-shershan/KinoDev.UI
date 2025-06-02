@@ -12,7 +12,7 @@ import { getDays } from "./AdminShowTimes";
 import Button from "../../ui/Button";
 import { SizeType, StyleType } from "../../ui/types";
 import { Modal } from "antd";
-import { IHall, IMovie, IShowTimeForDate } from "../../models/api.models";
+import { Hall, Movie, ShowTimeForDate } from "../../models/api.models";
 
 interface AddShowTimeRequestModel {
   movieId: number;
@@ -25,10 +25,10 @@ const AdminAddShowTime = () => {
   const { fetchGet, fetchPost } = useInternalApiClient();
   const navigate = useNavigate();
 
-  const [movies, setMovies] = useState<IMovie[]>([]);
-  const [selectedMovie, setSelectedMovie] = useState<IMovie | null>(null);
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [showTimeForDate, setShowTimeForDate] = useState<IShowTimeForDate | null>(null);
+  const [showTimeForDate, setShowTimeForDate] = useState<ShowTimeForDate | null>(null);
   const [price, setPrice] = useState<number>(0);
   const [addShowTimeRequestModel, setAddShowTimeRequestModel] = useState<AddShowTimeRequestModel | null>();
   const [showConfirmationModal, setShowConfirmationModal] = useState<boolean>(false);
@@ -38,7 +38,7 @@ const AdminAddShowTime = () => {
       setAddShowTimeRequestModel(null);
       const moviesResponse = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.MOVIES.GET_MOVIES}`);
       if (moviesResponse.ok) {
-        const moviesResult: IMovie[] = await moviesResponse.json();
+        const moviesResult: Movie[] = await moviesResponse.json();
         setMovies(moviesResult);
       }
       else {
@@ -54,7 +54,7 @@ const AdminAddShowTime = () => {
       const showtimesSlotsResponse = await fetchGet(
         `${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.SHOW_TIMES.GET_SHOW_TIMES_SLOTS}/${selectedDate?.toISOString().split('T')[0]}`);
       if (showtimesSlotsResponse.ok) {
-        const showtimesSlots: IShowTimeForDate = await showtimesSlotsResponse.json();
+        const showtimesSlots: ShowTimeForDate = await showtimesSlotsResponse.json();
         setShowTimeForDate(showtimesSlots);
       }
     }
@@ -225,7 +225,7 @@ const AdminAddShowTime = () => {
 export default AdminAddShowTime;
 
 interface HallTimeTable {
-  hall: IHall,
+  hall: Hall,
   timeTable: TimeTableSlot[],
 }
 
@@ -235,7 +235,7 @@ interface TimeTableSlot {
   isEnoughTime: boolean,
 }
 
-const getTimeTable = (showTimeForDate: IShowTimeForDate, selectedMovie: IMovie) => {
+const getTimeTable = (showTimeForDate: ShowTimeForDate, selectedMovie: Movie) => {
   if (!showTimeForDate || !showTimeForDate.hallWithMovies || showTimeForDate.hallWithMovies.length === 0) {
     return [];
   }
@@ -299,7 +299,7 @@ const getTimeTable = (showTimeForDate: IShowTimeForDate, selectedMovie: IMovie) 
 }
 
 const ShotTimeForDateCard = ({ showTimeForDate, selectedMovie, onSlotSelected }
-  : { showTimeForDate: IShowTimeForDate, selectedMovie: IMovie, onSlotSelected: ({ h, s }: { h: IHall, s: TimeTableSlot }) => void }) => {
+  : { showTimeForDate: ShowTimeForDate, selectedMovie: Movie, onSlotSelected: ({ h, s }: { h: Hall, s: TimeTableSlot }) => void }) => {
   if (!showTimeForDate || !showTimeForDate.hallWithMovies || showTimeForDate.hallWithMovies.length === 0) {
     return <p>No showtimes available for the selected date.</p>;
   }

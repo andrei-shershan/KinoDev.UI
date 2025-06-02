@@ -8,7 +8,7 @@ import Button from "../../ui/Button";
 import { SizeType, StyleType } from "../../ui/types";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import { IHallSummary } from "../../models/api.models";
+import { HallSummary } from "../../models/api.models";
 import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
 
 const AdminHalls = () => {
@@ -22,7 +22,7 @@ const AdminHalls = () => {
       console.log(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.HALLS}`);
       var hallsResponse = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.HALLS.GET_HALLS}`);
       if (hallsResponse.ok) {
-        const halls: IHallSummary[] = await hallsResponse.json();
+        const halls: HallSummary[] = await hallsResponse.json();
         dispatch({ type: 'GET_HALLS', payload: halls });
       }
     }

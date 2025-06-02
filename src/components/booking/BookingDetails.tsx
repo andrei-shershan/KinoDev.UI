@@ -8,11 +8,11 @@ import { ENDPOINTS } from "../../constants/endpoints";
 import { ROUTES } from "../../constants/routes";
 import Button from "../../ui/Button";
 import { SizeType, StyleType } from "../../ui/types";
-import { IOrderSummary } from "../../models/api.models";
+import { OrderSummary } from "../../models/api.models";
 
 const BookingDetails = ({
   activeOrderSummary
-}: { activeOrderSummary: IOrderSummary }) => {
+}: { activeOrderSummary: OrderSummary }) => {
 
   const { useBreakpoint } = Grid;
   const { sm } = useBreakpoint();

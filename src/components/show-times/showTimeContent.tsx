@@ -16,7 +16,7 @@ import { ENDPOINTS } from "../../constants/endpoints";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import Button from "../../ui/Button";
 import { StyleType } from "../../ui/types";
-import { IBokingStorageData, IShowTimeDetails, IShowTimeSeat } from "../../models/api.models";
+import { BokingStorageData, ShowTimeDetailsApiModel, ShowTimeSeat } from "../../models/api.models";
 
 // const { useBreakpoint } = Grid;
 
@@ -32,9 +32,9 @@ const CancelBookingButton = ({ showTimeId }: { showTimeId: number }) => {
 
 const ShowTimeDetails = ({ showTimeDetails, isBooking, selectedSeats }:
     {
-        showTimeDetails: IShowTimeDetails,
+        showTimeDetails: ShowTimeDetailsApiModel,
         isBooking: boolean,
-        selectedSeats: IShowTimeSeat[]
+        selectedSeats: ShowTimeSeat[]
     }) => {
 
     const { fetchPost } = useInternalApiClient();
@@ -43,7 +43,7 @@ const ShowTimeDetails = ({ showTimeDetails, isBooking, selectedSeats }:
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleOk = async () => {
-        const bookingData: IBokingStorageData = {
+        const bookingData: BokingStorageData = {
             id: showTimeDetails.id,
             hallId: showTimeDetails.hall.id,
             time: showTimeDetails.time,
@@ -113,12 +113,12 @@ const ShowTimeDetails = ({ showTimeDetails, isBooking, selectedSeats }:
     </div>);
 }
 
-const ShowTimeContent = ({ showTimeDetails, isBooking }: { showTimeDetails: IShowTimeDetails, isBooking: boolean }) => {
+const ShowTimeContent = ({ showTimeDetails, isBooking }: { showTimeDetails: ShowTimeDetailsApiModel, isBooking: boolean }) => {
     if (!showTimeDetails || !isBooking) {
         return <DataLoading />
     }
 
-    const [selectedSeats, setSelectedSeats] = useState<IShowTimeSeat[]>([]);
+    const [selectedSeats, setSelectedSeats] = useState<ShowTimeSeat[]>([]);
     // const screens = useBreakpoint();
 
     return (<div>
@@ -129,7 +129,7 @@ const ShowTimeContent = ({ showTimeDetails, isBooking }: { showTimeDetails: ISho
         />
         <ShowTimeSeatsMap
             showTimeId={showTimeDetails.id.toString()}
-            onSelectSeat={(selectedSeatsCount: IShowTimeSeat[]) => setSelectedSeats(selectedSeatsCount)} />
+            onSelectSeat={(selectedSeatsCount: ShowTimeSeat[]) => setSelectedSeats(selectedSeatsCount)} />
     </div>);
 }
 

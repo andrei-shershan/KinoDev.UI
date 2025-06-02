@@ -13,12 +13,12 @@ import {
   message
 } from 'antd';
 import { ERRORS } from '../constants/errors';
-import ShowTimeDetails from '../components/showtime/ShowTimeDetails';
+import ShowTimeDetailsComponent from '../components/showtime/ShowTimeDetails';
 import { ROUTES } from '../constants/routes';
 import BuyTicketCard from '../components/BuyTicketCard';
 import ShowTimeSeatsMapSelector from '../components/show-times/ShowTimeSeatsMapSelector';
 import { PORTALS_TYPES } from '../constants/portalTypes';
-import { IShowTimeDetails } from '../models/api.models';
+import { ShowTimeDetailsApiModel } from '../models/api.models';
 import { OrderState } from '../models/enums.model';
 
 const ShowTime = () => {
@@ -39,7 +39,7 @@ const ShowTime = () => {
 
       try {
         if (result.ok) {
-          var data: IShowTimeDetails = await result.json();
+          var data: ShowTimeDetailsApiModel = await result.json();
           dispatch({ type: 'GET_SHOW_TIME_DETAILS', payload: data });
         } else {
           message.error(ERRORS.GENERIC_API_ERROR);
@@ -83,7 +83,7 @@ const ShowTime = () => {
 
   return (
     <MainLayout portalType={PORTALS_TYPES.CLIENT} >
-      <ShowTimeDetails showTimeDetails={state.showTimeDetails} isBooking={isBooking} />
+      <ShowTimeDetailsComponent showTimeDetails={state.showTimeDetails} isBooking={isBooking} />
       {
         isBooking
           ? <ShowTimeSeatsMapSelector

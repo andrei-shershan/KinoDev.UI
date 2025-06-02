@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Button from "../ui/Button";
 import { getDateTimeObject } from "../utils/dateFormatter";
 import { PORTALS_TYPES } from "../constants/portalTypes";
-import { IOrderSummary } from "../models/api.models";
+import { OrderSummary } from "../models/api.models";
 
 const inputStyle = {
   padding: '0.5rem',
@@ -19,13 +19,13 @@ const Tickets = () => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const { fetchGet, fetchPost } = useInternalApiClient();
-  const [completedOrders, setCompletedOrders] = useState<IOrderSummary[]>([]);
+  const [completedOrders, setCompletedOrders] = useState<OrderSummary[]>([]);
   const [verificationEmailSent, setVerificationEmailSent] = useState(false);
 
   const getCompetedOrders = async () => {
     var response = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.ORDERS.COMPLETED}`);
     if (response.ok) {
-      const data: IOrderSummary[] = await response.json();
+      const data: OrderSummary[] = await response.json();
       if (data?.length > 0) {
         setCompletedOrders(data);
       }

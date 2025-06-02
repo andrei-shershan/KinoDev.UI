@@ -8,7 +8,7 @@ import BookingDetails from "../components/booking/BookingDetails";
 import BookingGuestEmail from "../components/booking/BookingGuestEmail";
 import BookingPayment from "../components/booking/BookingPayment";
 import { PORTALS_TYPES } from "../constants/portalTypes";
-import { IOrderSummary } from "../models/api.models";
+import { OrderSummary } from "../models/api.models";
 import { OrderState } from "../models/enums.model";
 
 const Booking: React.FC = () => {
@@ -30,7 +30,7 @@ const Booking: React.FC = () => {
     const getActive = async () => {
       var response = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.ORDERS.GET_ACTIVE}`);
       if (response.ok) {
-        const orderSummary: IOrderSummary = await response.json();
+        const orderSummary: OrderSummary = await response.json();
         console.log("orderSummary", orderSummary);
         dispatch({ type: 'SET_ACTIVE_ORDER', payload: orderSummary });
       }

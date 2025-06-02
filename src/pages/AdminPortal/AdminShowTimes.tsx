@@ -12,7 +12,7 @@ import Button from "../../ui/Button";
 import { SizeType, StyleType } from "../../ui/types";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import { IShowTimeDetails } from "../../models/api.models";
+import { ShowTimeDetailsApiModel } from "../../models/api.models";
 import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
 
 const getDateTime = (date: Date) => {
@@ -56,7 +56,7 @@ interface ShowTimeGroupByMovie {
   movieName: string;
   url: string;
   duration?: number;
-  showTimes: IShowTimeDetails[];
+  showTimes: ShowTimeDetailsApiModel[];
 }
 
 
@@ -65,7 +65,7 @@ interface ShowTimeGroupedByDate {
   movies: ShowTimeGroupByMovie[];
 }
 
-const getShowTimesGroupedByDate = (showTimes: IShowTimeDetails[]): ShowTimeGroupedByDate[] => {
+const getShowTimesGroupedByDate = (showTimes: ShowTimeDetailsApiModel[]): ShowTimeGroupedByDate[] => {
   let result: ShowTimeGroupedByDate[] = [];
 
   for (let i = 0; i < showTimes.length; i++) {
@@ -111,7 +111,7 @@ const AdminShowTimes = () => {
       const getShowTimesResponse
         = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.SHOW_TIMES.GET_SHOW_TIMES}/${startDate}/${endDate}`);
       if (getShowTimesResponse.ok) {
-        const showTimes: IShowTimeDetails[] = await getShowTimesResponse.json();
+        const showTimes: ShowTimeDetailsApiModel[] = await getShowTimesResponse.json();
         // TODO: use AdminActions 
         dispatch({ type: "GET_SHOW_TIMES", payload: showTimes });
       } else {

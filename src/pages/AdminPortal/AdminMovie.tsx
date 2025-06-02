@@ -11,7 +11,7 @@ import { Link, useParams } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 import { getDateTimeObject } from "../../utils/dateFormatter";
 import { getImageSource } from "../../utils/imageSource";
-import { IMovie } from "../../models/api.models";
+import { Movie } from "../../models/api.models";
 import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
 
 const AdminMovie: React.FC = () => {
@@ -24,7 +24,7 @@ const AdminMovie: React.FC = () => {
       dispatch({ type: "GET_MOVIE", payload: undefined });
       const moviesResponse = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.MOVIES.GET_MOVIES}/${movieId}`);
       if (moviesResponse.ok) {
-        const movie: IMovie = await moviesResponse.json();
+        const movie: Movie = await moviesResponse.json();
         dispatch({ type: "GET_MOVIE", payload: movie });
       }
     }

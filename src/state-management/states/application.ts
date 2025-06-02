@@ -1,12 +1,12 @@
-import { IHallSummary, IMovie, IMovieShowTimes, IOrderSummary, IShowTimeDetails } from "../../models/api.models";
+import { HallSummary, Movie, MovieShowTimes, OrderSummary, ShowTimeDetailsApiModel } from "../../models/api.models";
 
 export interface ApplicationContextState {
-  movies?: IMovie[],
-  movie?: IMovie;
-  halls?: IHallSummary[],
-  showTimes?: IShowTimeDetails[],
-  showingMovies?: IMovieShowTimes[],
-  showTimeDetails?: IShowTimeDetails
+  movies?: Movie[],
+  movie?: Movie;
+  halls?: HallSummary[],
+  showTimes?: ShowTimeDetailsApiModel[],
+  showingMovies?: MovieShowTimes[],
+  showTimeDetails?: ShowTimeDetailsApiModel
   spinning: boolean
-  activeOrderSummary?: IOrderSummary,
+  activeOrderSummary?: OrderSummary,
 }

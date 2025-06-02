@@ -9,12 +9,12 @@ import { getDateTimeObject } from "../../utils/dateFormatter";
 import Modal from "antd/es/modal/Modal";
 import Button from "../../ui/Button";
 import { StyleType } from "../../ui/types";
-import { IBokingStorageData, IShowTimeDetails, IShowTimeSeat } from "../../models/api.models";
+import { BokingStorageData, ShowTimeDetailsApiModel, ShowTimeSeat } from "../../models/api.models";
 
 const SelectedSeatsDetails = ({ showTimeDetails, selectedSeats }:
     {
-        showTimeDetails: IShowTimeDetails,
-        selectedSeats: IShowTimeSeat[]
+        showTimeDetails: ShowTimeDetailsApiModel,
+        selectedSeats: ShowTimeSeat[]
     }) => {
 
     const { fetchPost } = useInternalApiClient();
@@ -23,7 +23,7 @@ const SelectedSeatsDetails = ({ showTimeDetails, selectedSeats }:
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleOk = async () => {
-        const bookingData: IBokingStorageData = {
+        const bookingData: BokingStorageData = {
             id: showTimeDetails.id,
             hallId: showTimeDetails.hall.id,
             time: showTimeDetails.time,

@@ -8,7 +8,7 @@ import MainLayout from "../../layouts/mainLayout";
 import "./index.css";
 import { Link, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import { IMovie } from "../../models/api.models";
+import { Movie } from "../../models/api.models";
 
 const AdminAddMovie: React.FC = () => {
   const { fetchPost } = useInternalApiClient();
@@ -77,7 +77,7 @@ const AdminAddMovie: React.FC = () => {
       // Let's examine the useInternalApiClient hook to see how it handles FormData
       const response = await fetchPost(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.MOVIES.GET_MOVIES}`, formData);
       if (response.ok) {
-        const newMovie: IMovie = await response.json();
+        const newMovie: Movie = await response.json();
         // Navigate to movie details page after successful creation
         navigate(`/${ROUTES.ADMIN_PORTAL.MOVIES}/${newMovie.id}`);
       } else {
