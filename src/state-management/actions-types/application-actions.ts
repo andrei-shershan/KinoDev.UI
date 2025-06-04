@@ -5,7 +5,7 @@ import { APPLICATION_ACTIONS_CONSTS } from "../action-constants/application";
 export type ApplicationContextActions =
   | { type: typeof APPLICATION_ACTIONS_CONSTS.SET_MOVIES; payload: Movie[] }
   | { type: typeof APPLICATION_ACTIONS_CONSTS.GET_MOVIE; payload?: Movie }
-  | { type: typeof APPLICATION_ACTIONS_CONSTS.GET_HALLS; payload: HallSummary[] }
+  | { type: typeof APPLICATION_ACTIONS_CONSTS.SET_HALLS; payload: HallSummary[] }
   | { type: typeof APPLICATION_ACTIONS_CONSTS.GET_SHOW_TIMES; payload?: ShowTimeDetailsApiModel[] }
   | { type: typeof APPLICATION_ACTIONS_CONSTS.GET_SHOWING_MOVIES; payload: MovieShowTimes[] }
   | { type: typeof APPLICATION_ACTIONS_CONSTS.SET_SPINNING; payload: boolean }

@@ -1,4 +1,24 @@
-.admin-page-header-container {
+.page-header-container {
   display: flex;
   align-items: center;
+}
+
+.page-header-back-action {
+  display: inline-block;
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+.page-header-back-action:hover {
+  color: var(--primary-color-dark);
+  text-decoration: underline;
+}
+
+.page-header-back-action-container {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  margin-top: 3px;
 }

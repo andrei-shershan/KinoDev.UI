@@ -6,7 +6,7 @@ import Dropdown from "../../ui/Dropdown";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
-import { AdminPageHeader } from "../../components/headers/adminPageHeader";
+import { PageHeader } from "../../components/headers/pageHeader";
 import { ShowTimesListAdmin } from "../../components/show-times/showtimesListAdmin";
 import { getShowTimes } from "../../api-calls/showtimes";
 import { getYearMonthDay } from "../../utils/date-time";
@@ -55,10 +55,11 @@ const AdminShowTimes = () => {
 
   return (
     <MainLayout portalType={PORTALS_TYPES.ADMIN} >
-      <AdminPageHeader
+      <PageHeader
         header="Admin ShowTimes"
-        addActionLabel="Add ShowTime"
-        addAction={() => navigate(`/${ROUTES.ADMIN_PORTAL.SHOWTIMES_ADD}`)}
+        actionLabel="Add ShowTime"
+        action={() => navigate(`/${ROUTES.ADMIN_PORTAL.SHOWTIMES_ADD}`)}
+        type="add"
       />
       <div className="admin-showtimes">
         <div className="dropdown-container">

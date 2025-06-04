@@ -14,7 +14,7 @@ export const applicationReducer = (state: ApplicationContextState, action: Appli
         ...state,
         movie: action.payload
       };
-    case APPLICATION_ACTIONS_CONSTS.GET_HALLS:
+    case APPLICATION_ACTIONS_CONSTS.SET_HALLS:
       return {
         ...state,
         halls: action.payload

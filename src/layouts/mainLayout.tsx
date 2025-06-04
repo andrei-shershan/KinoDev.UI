@@ -1,13 +1,10 @@
 import { Layout } from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import '../styles/index.css';
-import { LoadingOutlined } from '@ant-design/icons';
-import { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { FC, PropsWithChildren, useEffect } from 'react';
 import Menu from "../components/menu";
 import { PORTALS_TYPES } from "../constants/portalTypes";
 import { useApplicationContext } from "../state-management/providers/AdminContextProvider";
-
-import './index.css';
 import { getMenuItems } from "../utils/menu";
 import { FooterMessage } from "../components/footer/FooterMessage";
 import { useInternalApiClient } from "../hooks/useInternalApiClient";
@@ -15,6 +12,8 @@ import useIsMobile from "../hooks/useIsMobile";
 import { classNameAdjusted } from "../utils/class-names";
 import { Loading } from "../ui/Loading";
 import { getPortalSettings } from "../api-calls/portal-settings";
+
+import './index.css';
 
 interface MainLayoutProps extends PropsWithChildren {
   portalType?: PORTALS_TYPES;

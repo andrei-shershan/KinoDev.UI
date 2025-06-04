@@ -1,16 +1,23 @@
-import { PlusCircleOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import './index.css';
 
-export const AddAction = ({
+export const AdminAction = ({
   action,
-  label
+  label,
+  type
 }: {
   action: () => void,
-  label: string
+  label: string,
+  type: 'add' | 'back'
 }) => {
   return (
-    <div className="add-action-component" onClick={action}>
-      <PlusCircleOutlined style={{ fontSize: '20px' }} /><div className='add-action-component-label'>{label}</div>
+    <div className="action-component" onClick={action}>
+      {
+        type === 'add' ?
+          <PlusCircleOutlined style={{ fontSize: '20px' }} /> :
+          <ArrowLeftOutlined style={{ fontSize: '20px' }} />
+      }
+      <div className='action-component-label'>{label}</div>
     </div>
   );
 }

@@ -22,9 +22,4 @@ export const adminMenuItems: MainMenuType[] = [
     label: 'Halls',
     path: `/${ROUTES.ADMIN_PORTAL.HALLS}`,
   },
-  {
-    key: `/${ROUTES.ADMIN_PORTAL.USERS}`,
-    label: 'Users',
-    path: `/${ROUTES.ADMIN_PORTAL.USERS}`,
-  },
 ];

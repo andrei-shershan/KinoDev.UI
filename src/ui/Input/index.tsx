@@ -10,6 +10,8 @@ export const Input = ({
   value,
   labelText,
   onChange,
+  min,
+  max,
 }: {
   id?: string,
   name?: string,
@@ -19,6 +21,8 @@ export const Input = ({
   value?: string | readonly string[] | number | undefined,
   labelText?: string,
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  min?: number,
+  max?: number,
 }) => {
 
   return (
@@ -41,6 +45,8 @@ export const Input = ({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange ? onChange(e) : undefined}
+        min={min}
+        max={max}
       />
     </div>
   );

@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
 import { getMovies } from "../../api-calls/movies";
 import { MoviesListAdmin } from "../../components/movies/moviesListAdmin";
-import { AdminPageHeader } from "../../components/headers/adminPageHeader";
+import { PageHeader } from "../../components/headers/pageHeader";
 import { ROUTES } from "../../constants/routes";
 
 const AdminMovies: React.FC = () => {
@@ -23,10 +23,11 @@ const AdminMovies: React.FC = () => {
 
   return (
     <MainLayout portalType={PORTALS_TYPES.ADMIN} >
-      <AdminPageHeader
+      <PageHeader
         header="Movies List"
-        addActionLabel="Add Movie"
-        addAction={() => { navigate(`/${ROUTES.ADMIN_PORTAL.MOVIES_ADD}`) }}
+        actionLabel="Add Movie"
+        action={() => { navigate(`/${ROUTES.ADMIN_PORTAL.MOVIES_ADD}`) }}
+        type="add"
       />
 
       {

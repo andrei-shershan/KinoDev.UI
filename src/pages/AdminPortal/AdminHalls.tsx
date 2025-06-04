@@ -2,47 +2,29 @@ import { useEffect } from "react";
 import { PORTALS_TYPES } from "../../constants/portalTypes";
 import MainLayout from "../../layouts/mainLayout";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
-import { ENDPOINTS } from "../../constants/endpoints";
-import { URLS } from "../../constants/urls";
-import Button from "../../ui/Button";
-import { SizeType, StyleType } from "../../ui/types";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import { HallSummary } from "../../models/api.models";
 import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
+import { getHalls } from "../../api-calls/halls";
+import { PageHeader } from "../../components/headers/pageHeader";
 
 const AdminHalls = () => {
-  const { fetchGet } = useInternalApiClient();
+  const apiClient = useInternalApiClient();
   const { state, dispatch } = useApplicationContext();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getHalls = async () => {
-      console.log("Fetching halls...");
-      console.log(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.HALLS}`);
-      var hallsResponse = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.HALLS.GET_HALLS}`);
-      if (hallsResponse.ok) {
-        const halls: HallSummary[] = await hallsResponse.json();
-        dispatch({ type: 'GET_HALLS', payload: halls });
-      }
-    }
-
-    getHalls();
+    getHalls(apiClient, dispatch);
   }, []);
 
   return (
     <MainLayout portalType={PORTALS_TYPES.ADMIN} >
-      <br />
-      <Button
-        size={SizeType.Medium}
-        style={StyleType.Primary}
-        text="Add Hall"
-        onClick={() => {
-          navigate(`/${ROUTES.ADMIN_PORTAL.HALLS_ADD}`)
-        }}
+      <PageHeader
+        header="Halls"
+        action={() => navigate(`/${ROUTES.ADMIN_PORTAL.HALLS_ADD}`)}
+        actionLabel="Add a new hall"
+        type="add"
       />
-      <br />
-      <h1>Admin Halls</h1>
       {
         (!state.halls || state.halls.length === 0) &&
         <p>No halls available. Please add a hall.</p>
