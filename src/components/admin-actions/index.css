@@ -1,0 +1,22 @@
+.add-action-component {
+  margin-left: 25px;
+  display: inline-flex;
+  margin-top: 3px;
+  color: var(--primary-color);
+}
+
+.add-action-component:hover {
+  cursor: pointer;
+  color: var(--primary-color-dark);
+}
+
+.add-action-component-label {
+  font-size: 14px;
+  color: var(--primary-color);
+  margin-left: 5px;
+  font-weight: 600;  
+}
+
+.add-action-component-label:hover {
+  color: var(--primary-color-dark);
+}

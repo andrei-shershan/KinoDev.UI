@@ -1,8 +1,14 @@
 select {
-  /* styles the dropdown itself */
   width: 200px;
   padding: 10px;
   font-family: sans-serif;
+  color: var(--primary-color);
+  border: 3px solid var(--primary-color);
+}
+
+select:hover, select:focus {
+  border-color: var(--primary-color-dark-extra);
+  color: var(--primary-color-dark-extra);
 }
 
 .dropdown-option {

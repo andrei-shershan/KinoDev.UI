@@ -4,7 +4,7 @@ import { ApplicationContextState } from "../states/application";
 
 export const applicationReducer = (state: ApplicationContextState, action: ApplicationContextActions): ApplicationContextState => {
   switch (action.type) {
-    case APPLICATION_ACTIONS_CONSTS.GET_MOVIES:
+    case APPLICATION_ACTIONS_CONSTS.SET_MOVIES:
       return {
         ...state,
         movies: action.payload
