@@ -11,13 +11,13 @@ import AdminShowTimes from './pages/AdminPortal/AdminShowTimes';
 import AdminAddShowTime from './pages/AdminPortal/AdminAddShowTime';
 import { ApplicationProvider } from './state-management/providers/AdminContextProvider';
 import { AuthProvider } from './state-management/providers/AuthContextProvider';
-import ShowTime from './components/show-times/showTime';
 import About from './pages/ClientPortal/About';
 import AboutCinema from './pages/ClientPortal/AboutCinema';
 import Booking from './pages/ClientPortal/Booking';
 import ShowTimes from './pages/ClientPortal/ShowTimes';
 import Tickets from './pages/ClientPortal/Tickets';
 import SignIn from './pages/Shared/SignIn';
+import ShowTime from './pages/ClientPortal/ShowTime';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
