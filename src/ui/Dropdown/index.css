@@ -1,0 +1,20 @@
+select {
+  width: 200px;
+  padding: 10px;
+  font-family: sans-serif;
+  color: var(--primary-color);
+  border: 3px solid var(--primary-color);
+}
+
+select:hover, select:focus {
+  border-color: var(--primary-color-dark-extra);
+  color: var(--primary-color-dark-extra);
+  cursor: pointer;
+}
+
+.dropdown-option {
+  /* limited support: font and colors */
+  font-size: 14px;
+  font-weight: bold;    /* Chrome, Firefox */
+  color: #000000;          /* Chrome, Firefox, Edge */
+}

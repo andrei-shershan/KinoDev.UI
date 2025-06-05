@@ -1,0 +1,16 @@
+.kinodev-textarea {
+  width: 240px;
+  padding: 10px;
+  font-size: medium;
+  border: 3px solid var(--primary-color);
+  color: var(--primary-color);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+  font-family: unset;
+}
+
+.kinodev-textarea:focus,
+.kinodev-textarea.active {
+  border: 3px solid var(--primary-color-dark-extra);
+  color: var(--primary-color-dark-extra);
+}

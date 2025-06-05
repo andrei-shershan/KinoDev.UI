@@ -20,15 +20,18 @@ export const ENDPOINTS = {
       CREATE_PAYMENT: 'api/payments',
     },
     SHOW_TIMES: {
+      GET_SHOW_TIMES: 'api/showtimes',
       GET_SHOW_TIME_DETAILS: 'api/showtimes/details',
-      GET_SHOW_TIME_SEATS: 'api/showtimes/seats'
+      GET_SHOW_TIME_SEATS: 'api/showtimes/seats',
+      GET_SHOW_TIMES_SLOTS: 'api/showtimes/slots',
     },
     TEST: {
       MEDIATR: 'api/test/mediatr',
     },
     USERS: {
       DETAILS: 'api/users/details',
-    }
+    },
+    PORTAL_SETTINGS: 'api/portalsettings',
   },
   AUTHENTICATION: {
     REFRESH_TOKEN: 'api/authentication/refresh',

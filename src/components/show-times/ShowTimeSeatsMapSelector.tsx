@@ -1,20 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import ShowTimeSeatsMap from "../showtime/ShowTimeSeatsMap";
-import { IShowTimeDetails, IShowTimeSeat } from "../../models/applicationContext.model";
 import { useState } from "react";
-import SelectedSeatsDetails from "../showtime/SelectedSeatsDetails";
 import Button from "../../ui/Button";
 import { StyleType } from "../../ui/types";
+import { ShowTimeDetailsApiModel, ShowTimeSeat } from "../../models/api.models";
+import SelectedSeatsDetails from "./SelectedSeatsDetails";
+import ShowTimeSeatsMap from "./ShowTimeSeatsMap";
 
 const ShowTimeSeatsMapSelector = ({
     showTimeDetails,
 }: {
-    showTimeDetails: IShowTimeDetails;
+    showTimeDetails: ShowTimeDetailsApiModel;
 }) => {
     const navigate = useNavigate();
 
-    const [selectedSeats, setSelectedSeats] = useState<IShowTimeSeat[]>([]);
+    const [selectedSeats, setSelectedSeats] = useState<ShowTimeSeat[]>([]);
 
     console.log("Selected seats: ", selectedSeats);
 
@@ -36,7 +36,7 @@ const ShowTimeSeatsMapSelector = ({
             <div>
                 <ShowTimeSeatsMap
                     showTimeId={showTimeDetails.id.toString()}
-                    onSelectSeat={(selectedSeats: IShowTimeSeat[]) => setSelectedSeats(selectedSeats)} />
+                    onSelectSeat={(selectedSeats: ShowTimeSeat[]) => setSelectedSeats(selectedSeats)} />
             </div>
         </div>
     );

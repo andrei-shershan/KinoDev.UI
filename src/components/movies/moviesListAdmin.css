@@ -1,0 +1,12 @@
+.movie-card {
+  margin: 20px;
+  padding: 20px;
+}
+
+.movie-card:hover {
+  background-color: var(--primary-color-light);
+}
+
+.movie-card-img {}
+
+.movie-card-content {}

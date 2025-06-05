@@ -1,0 +1,54 @@
+.kinodev-input {
+  height: 40px;
+  width: 240px;
+  padding: 10px;
+  font-size: medium;
+  border: 3px solid var(--primary-color);
+  color: var(--primary-color);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+}
+
+.kinodev-input:focus,
+.kinodev-input.active {
+  border: 3px solid var(--primary-color-dark-extra);
+  color: var(--primary-color-dark-extra);
+}
+
+.kinodev-label-container {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.kinodev-label-text{
+  font-size: small;
+  color: var(--primary-color);
+}
+
+/* Hide the default border/outline so we can start from a “blank” button */
+input[type="file"] {
+  /* remove default padding/margin if desired */
+  font-size: 16px;      /* ensures button text inherits a reasonable size */
+  color: #444;          /* text color */
+  /* remove default appearance in WebKit-based browsers */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Restyle the “Choose File” button itself */
+input[type="file"]::file-selector-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  
+  /* Optionally, change the text inside the button: */
+  content: "Upload Document"; /* supported in some browsers */
+}
+
+/* On hover/focus, change background */
+input[type="file"]::file-selector-button:hover {
+  background-color: var(--primary-color-dark-extra);
+}

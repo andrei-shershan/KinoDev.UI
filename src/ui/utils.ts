@@ -32,6 +32,8 @@ export const getClassNameByStyleType = (type?: StyleType) => {
       return "kd-danger";
     case StyleType.None:
       return 'kd-none';
+      case StyleType.Free:
+      return 'kd-free';
     default:
       return '';
   }

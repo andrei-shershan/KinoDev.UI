@@ -1,6 +1,4 @@
 import { Grid, Modal } from "antd";
-import { IOrderSummary } from "../../models/applicationContext.model";
-import { getDateTimeObject } from "../../utils/dateFormatter";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
@@ -9,10 +7,12 @@ import { ENDPOINTS } from "../../constants/endpoints";
 import { ROUTES } from "../../constants/routes";
 import Button from "../../ui/Button";
 import { SizeType, StyleType } from "../../ui/types";
+import { OrderSummary } from "../../models/api.models";
+import { getDateTimeObject } from "../../utils/date-time";
 
 const BookingDetails = ({
   activeOrderSummary
-}: { activeOrderSummary: IOrderSummary }) => {
+}: { activeOrderSummary: OrderSummary }) => {
 
   const { useBreakpoint } = Grid;
   const { sm } = useBreakpoint();

@@ -1,6 +1,6 @@
-import { IMovieShowTimeDetails } from "../../models/applicationContext.model";
+import { MovieShowTimeDetails } from "../../models/api.models";
 
-const getShowTimeTime = (fullDate: Date) => {
+export const getShowTimeTime = (fullDate: Date) => {
   var date = new Date(fullDate);
   var hours = date.getHours().toString().padStart(2, '0');
   var minutes = date.getMinutes().toString().padStart(2, '0');
@@ -9,7 +9,7 @@ const getShowTimeTime = (fullDate: Date) => {
 }
 
 interface ShowTimeButtonProps {
-  movieShowTimeDetails: IMovieShowTimeDetails;
+  movieShowTimeDetails: MovieShowTimeDetails;
   onClick: (showTimeId: number) => void;
 }
 

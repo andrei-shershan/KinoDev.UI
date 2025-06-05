@@ -4,15 +4,16 @@ import { PORTALS_TYPES } from "../../constants/portalTypes";
 import { URLS } from "../../constants/urls";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import MainLayout from "../../layouts/mainLayout";
-import { useAdminContext } from "../../context/AdminContext";
+import useIsMobile from "../../hooks/useIsMobile";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { ROUTES } from "../../constants/routes";
+import { Movie } from "../../models/api.models";
+import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
+import { getImageSourceUrl } from "../../utils/images";
+import { getDateTimeObject } from "../../utils/date-time";
 
 import "./index.css";
-import useIsMobile from "../../hooks/useIsMobile";
-import { Link, useParams } from "react-router-dom";
-import { ROUTES } from "../../constants/routes";
-import { IMovie } from "../../models/applicationContext.model";
-import { getDateTimeObject } from "../../utils/dateFormatter";
-import { getImageSource } from "../../utils/imageSource";
+import { AdminAction } from "../../components/admin-actions/addAction";
 
 const AdminMovie: React.FC = () => {
   const { fetchGet } = useInternalApiClient();
@@ -24,24 +25,25 @@ const AdminMovie: React.FC = () => {
       dispatch({ type: "GET_MOVIE", payload: undefined });
       const moviesResponse = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.MOVIES.GET_MOVIES}/${movieId}`);
       if (moviesResponse.ok) {
-        const movie: IMovie = await moviesResponse.json();
+        const movie: Movie = await moviesResponse.json();
         dispatch({ type: "GET_MOVIE", payload: movie });
       }
     }
     getMovie();
   }, [movieId]);
 
-  const { state, dispatch } = useAdminContext();
+  const { state, dispatch } = useApplicationContext();
+  const navigate = useNavigate();
 
   const movie = state.movie;
 
   return (
     <MainLayout portalType={PORTALS_TYPES.ADMIN} >
-      <p>
-        <Link to={`/${ROUTES.ADMIN_PORTAL.MOVIES}`} className="admin-movie__back">
-          Go back to movies List
-        </Link>
-      </p>
+      <AdminAction 
+        action={() =>navigate(`/${ROUTES.ADMIN_PORTAL.MOVIES}`)}
+        label="Go back to movies List"
+        type="back"
+      />
       {
         (!movie) &&
         <p>
@@ -55,7 +57,7 @@ const AdminMovie: React.FC = () => {
             <div className="movie-card-img" style={{
               width: isMobile ? '100px' : '200px',
               height: isMobile ? '100px' : '200px',
-              backgroundImage: `url(${getImageSource(movie.url)})`,
+              backgroundImage: `url(${getImageSourceUrl(movie.url)})`,
               backgroundSize: 'cover',
               display: 'inline-block',
               verticalAlign: 'top'

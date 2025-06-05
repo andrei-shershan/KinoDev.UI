@@ -1,18 +1,22 @@
 import { AUTHENTICATION } from "../constants/authentication";
 import { ENDPOINTS } from "../constants/endpoints";
 import { URLS } from "../constants/urls";
-import { useAuthContext } from "../context/AuthContext"
-import { ROUTES } from "../constants/routes";
 import { STORAGE_KEYS } from "../constants/storageKeys";
+import { useAuthContext } from "../state-management/providers/AuthContextProvider";
+import { getCsrfToken } from "../utils/storage";
 
 const MAX_RETRY = 1;
 
-const getCsrfToken = (): string => {
-  return localStorage.getItem(STORAGE_KEYS.XSRF_TOKEN) || '';
-}
-
 function isFormData(x: any): x is FormData {
   return x instanceof FormData;
+}
+
+export interface InternalApiClient {
+  fetchGet: (url: string, options?: RequestInit) => Promise<Response>;
+  fetchPost: (url: string, body?: any, options?: RequestInit) => Promise<Response>;
+  fetchDelete: (url: string, options?: RequestInit) => Promise<Response>;
+  fetchSignIn: (email: string, password: string) => Promise<boolean | null>;
+  refreshToken: () => Promise<any>;
 }
 
 export const useInternalApiClient = () => {
@@ -94,6 +98,7 @@ export const useInternalApiClient = () => {
 
   // TODO: should be just fetchGet
   const fetchWithAccessToken = async (url: string, options: RequestInit = {}, useAppJsonContent: boolean = true, accessToken: string | null = null, retry: number = MAX_RETRY): Promise<Response> => {
+
     const headers = useAppJsonContent
       ? {
         ...options.headers,

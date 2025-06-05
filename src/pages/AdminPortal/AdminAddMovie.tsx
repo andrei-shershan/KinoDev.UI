@@ -6,13 +6,22 @@ import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import MainLayout from "../../layouts/mainLayout";
 
 import "./index.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import { IMovie } from "../../models/applicationContext.model";
+import { Movie } from "../../models/api.models";
+import { PageHeader } from "../../components/headers/pageHeader";
+import { Input } from "../../ui/Input";
+import { InputType, StyleType } from "../../ui/types";
+import { TextArea } from "../../ui/TextArea";
+import Button from "../../ui/Button";
+import { SyncOutlined } from "@ant-design/icons";
+import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
+import { APPLICATION_ACTIONS_CONSTS } from "../../state-management/action-constants/application";
 
 const AdminAddMovie: React.FC = () => {
   const { fetchPost } = useInternalApiClient();
   const navigate = useNavigate();
+  const { dispatch } = useApplicationContext();
 
   // Form state
   const [movieData, setMovieData] = useState({
@@ -25,7 +34,6 @@ const AdminAddMovie: React.FC = () => {
   });
   const [poster, setPoster] = useState<File | null>(null);
   const [posterPreview, setPosterPreview] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -54,14 +62,12 @@ const AdminAddMovie: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
     setError("");
 
     try {
       // Validate form
       if (!movieData.name || !movieData.description || !movieData.releaseDateDay || !movieData.releaseDateMonth || !movieData.releaseDateYear || !poster) {
         setError("Please fill all required fields and upload a poster");
-        setIsSubmitting(false);
         return;
       }
 
@@ -69,16 +75,16 @@ const AdminAddMovie: React.FC = () => {
       const formData = new FormData();
       formData.append("name", movieData.name);
       formData.append("description", movieData.description);
-      formData.append("releaseDate", '2025-02-01'); //new Date(movieData.releaseDate).toISOString());
+      formData.append("releaseDate", `${movieData.releaseDateYear}-${movieData.releaseDateMonth}-${movieData.releaseDateDay}`);
       formData.append("duration", movieData.duration.toString());
       if (poster) {
         formData.append("file", poster);
       }
-      // Let's examine the useInternalApiClient hook to see how it handles FormData
+      dispatch({ type: APPLICATION_ACTIONS_CONSTS.SET_SPINNING, payload: true });
       const response = await fetchPost(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.MOVIES.GET_MOVIES}`, formData);
       if (response.ok) {
-        const newMovie: IMovie = await response.json();
-        // Navigate to movie details page after successful creation
+        const newMovie: Movie = await response.json();
+        dispatch({ type: APPLICATION_ACTIONS_CONSTS.SET_SPINNING, payload: false });
         navigate(`/${ROUTES.ADMIN_PORTAL.MOVIES}/${newMovie.id}`);
       } else {
         const errorData = await response.json();
@@ -88,125 +94,143 @@ const AdminAddMovie: React.FC = () => {
       setError("An error occurred while adding the movie");
       console.error(err);
     } finally {
-      setIsSubmitting(false);
+      dispatch({ type: APPLICATION_ACTIONS_CONSTS.SET_SPINNING, payload: false });
     }
   };
 
   return (
     <MainLayout portalType={PORTALS_TYPES.ADMIN} >
-      <p>
-        <Link to={`/${ROUTES.ADMIN_PORTAL.MOVIES}`} className="admin-movie__back">
-          Go back to movies List
-        </Link>
-      </p>
+      <PageHeader
+        header="Add Movie"
+        actionLabel="Go back to movies list"
+        action={() => navigate(`/${ROUTES.ADMIN_PORTAL.MOVIES}`)}
+        type="back"
+      />
 
-      <h1>Upload Movie</h1>
-
-      <div className="admin-add-movie-container">
+      <div>
         {error && <div className="error-message">{error}</div>}
 
-        <form onSubmit={handleSubmit} className="admin-add-movie-form">
-          <div className="form-group">
-            <label htmlFor="name">Movie Name*</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={movieData.name}
+        <form onSubmit={handleSubmit}>
+
+          <Input
+            type={InputType.Text}
+            id="name"
+            name="name"
+            value={movieData.name}
+            onChange={handleInputChange}
+            labelText="Movie Name*"
+            placeholder="Enter movie name"
+            required
+          />
+
+          <TextArea
+            id="description"
+            name="description"
+            value={movieData.description}
+            onChange={handleInputChange}
+            rows={5}
+            required
+            placeholder="Enter movie description"
+            labelText="Description*"
+          />
+
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <Input
+              type={InputType.Number}
+              id="releaseDateDay"
+              name="releaseDateDay"
+              value={movieData.releaseDateDay}
               onChange={handleInputChange}
               required
+              min={1}
+              max={31}
+              labelText="Release Day*"
+              width={100}
+            />
+
+            <Input
+              type={InputType.Number}
+              id="releaseDateMonth"
+              name="releaseDateMonth"
+              value={movieData.releaseDateMonth}
+              onChange={handleInputChange}
+              required
+              min={1}
+              max={12}
+              labelText="Release Month*"
+              width={100}
+            />
+
+            <Input
+              type={InputType.Number}
+              id="releaseDateYear"
+              name="releaseDateYear"
+              value={movieData.releaseDateYear}
+              onChange={handleInputChange}
+              required
+              min={1900}
+              max={new Date().getFullYear() + 1}
+              labelText="Release Year*"
+              width={100}
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="description">Description*</label>
-            <textarea
-              id="description"
-              name="description"
-              value={movieData.description}
-              onChange={handleInputChange}
-              rows={5}
-              required
-            />
-          </div>
+          <Input
+            type={InputType.Number}
+            id="duration"
+            name="duration"
+            value={movieData.duration}
+            onChange={handleInputChange}
+            required
+            min={1}
+            max={300}
+            labelText="Duration (minutes)*"
+          />
 
-          <div className="form-group" >
-            <label htmlFor="releaseDate">Release Date*</label>
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <input
-                type="number"
-                id="releaseDateDay"
-                name="releaseDateDay"
-                value={movieData.releaseDateDay}
-                onChange={handleInputChange}
-                required
-                min={1}
-                max={31}
-              />
-              <input
-                type="number"
-                id="releaseDateMonth"
-                name="releaseDateMonth"
-                value={movieData.releaseDateMonth}
-                onChange={handleInputChange}
-                required
-                min={1}
-                max={12}
-              />
-              <input
-                type="number"
-                id="releaseDateYear"
-                name="releaseDateYear"
-                value={movieData.releaseDateYear}
-                onChange={handleInputChange}
-                required
-                min={1900}
-                max={new Date().getFullYear() + 1} // Allow up to next year
-              />
+          <Input
+            type={InputType.File}
+            id="poster"
+            name="poster"
+            accept="image/*"
+            onChange={handleFileChange}
+            labelText="Movie Poster*"
+            required
+          />
+
+          {posterPreview && (
+            <div className="poster-preview">
+              <img src={posterPreview} alt="Movie poster preview" style={{ maxWidth: '200px', marginTop: '10px' }} />
             </div>
-          </div>
+          )}
 
-          <div className="form-group">
-            <label htmlFor="duration">Duration (minutes)*</label>
-            <input
-              type="number"
-              id="duration"
-              name="duration"
-              value={movieData.duration}
-              onChange={handleInputChange}
-              min="1"
-              max={300} // Assuming max duration is 5 hours
-              required
-            />
-          </div>
+          <br />
 
-          <div className="form-group">
-            <label htmlFor="poster">Movie Poster*</label>
-            <input
-              type="file"
-              id="poster"
-              name="poster"
-              accept="image/*"
-              onChange={handleFileChange}
-              required
-            />
+          <Button
+            type="submit"
+            style={StyleType.Primary}
+            text={"Add Movie"}
+            disabled={!movieData.name.trim() || !movieData.description.trim() || !movieData.releaseDateDay || !movieData.releaseDateMonth || !movieData.releaseDateYear || !poster}
+          />
 
-            {posterPreview && (
-              <div className="poster-preview">
-                <img src={posterPreview} alt="Movie poster preview" style={{ maxWidth: '200px', marginTop: '10px' }} />
-              </div>
-            )}
-          </div>
+          <Button
+            type="button"
+            style={StyleType.Free}
+            onClick={() => {
+              setMovieData({
+                name: "",
+                description: "",
+                releaseDateDay: "",
+                releaseDateMonth: "",
+                releaseDateYear: "",
+                duration: 0,
 
-          <div className="form-actions">
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="submit-button"
-            >
-              {isSubmitting ? "Adding Movie..." : "Add Movie"}
-            </button>
-          </div>
+              });
+              setPoster(null);
+              setPosterPreview("");
+            }}
+          >
+            <SyncOutlined /> Reset
+          </Button>
         </form>
       </div>
     </MainLayout>

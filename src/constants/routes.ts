@@ -11,10 +11,11 @@ export const ROUTES = {
     MOVIES: 'admin-portal/movies',  
     MOVIES_ADD: 'admin-portal/movies/add',
     SHOWTIMES: 'admin-portal/showtimes',
+    SHOWTIMES_ADD: 'admin-portal/showtimes/add',
     HALLS: 'admin-portal/halls',
     HALLS_ADD: 'admin-portal/halls/add',
     USERS: 'admin-portal/users',
-  }
+  },
 } as const;
 
 export type RouteKeys = keyof typeof ROUTES;

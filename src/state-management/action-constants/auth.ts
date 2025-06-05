@@ -1,0 +1,4 @@
+export const AUTH_ACTIONS_CONSTS = {
+  SET_ACCESS_TOKEN: 'SET_ACCESS_TOKEN',
+  CLEAR_AUTH: 'CLEAR_AUTH'
+} as const;
