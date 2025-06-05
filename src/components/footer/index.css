@@ -10,5 +10,16 @@
   font-size: 14px;
   color: var(--primary-color-dark);
   text-align: center;
-  padding: 10px;  
+  padding: 10px;
+}
+
+.footer-link {
+  color: var(--primary-color-dark);
+  text-decoration: none;
+  font-weight: normal;
+}
+
+.footer-link:hover {
+  color: var(--primary-color-light);
+  text-decoration: none;
 }

@@ -11,7 +11,7 @@ export const PageHeader = ({
   header: string,
   action?: () => void,
   actionLabel?: string,
-  type: 'add' | 'back'
+  type?: 'add' | 'back' | undefined
 }) => {
 
   return (

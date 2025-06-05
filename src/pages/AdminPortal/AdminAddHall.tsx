@@ -11,10 +11,9 @@ import Button from "../../ui/Button";
 import { InputType, StyleType } from "../../ui/types";
 import { APPLICATION_ACTIONS_CONSTS } from "../../state-management/action-constants/application";
 import { PageHeader } from "../../components/headers/pageHeader";
-
-import "./index.css";
 import { Input } from "../../ui/Input";
 import { SyncOutlined } from "@ant-design/icons";
+import "./index.css";
 
 const AdminAddHall = () => {
   const { fetchPost } = useInternalApiClient();

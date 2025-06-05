@@ -19,6 +19,7 @@ import { useApplicationContext } from "../../state-management/providers/AdminCon
 import { APPLICATION_ACTIONS_CONSTS } from "../../state-management/action-constants/application";
 import { SyncOutlined } from "@ant-design/icons";
 import { ShowTimeForDateCard } from "../../components/show-times/ShowTimeForDateCard";
+import { useIsLoading } from "../../hooks/useIsLoading";
 
 interface AddShowTimeRequestModel {
   movieId: number;
@@ -38,30 +39,49 @@ const AdminAddShowTime = () => {
   const [showTimeForDate, setShowTimeForDate] = useState<ShowTimeForDate | null>(null);
   const [price, setPrice] = useState<number>(0);
   const [addShowTimeRequestModel, setAddShowTimeRequestModel] = useState<AddShowTimeRequestModel | null>();
+  const { setIsLoading } = useIsLoading();
 
   useEffect(() => {
     const getMovies = async () => {
-      setAddShowTimeRequestModel(null);
-      const moviesResponse = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.MOVIES.GET_MOVIES}`);
-      if (moviesResponse.ok) {
-        const moviesResult: Movie[] = await moviesResponse.json();
-        setMovies(moviesResult);
+      try {
+        setIsLoading(true);
+        setAddShowTimeRequestModel(null);
+        const moviesResponse = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.MOVIES.GET_MOVIES}`);
+        if (moviesResponse.ok) {
+          const moviesResult: Movie[] = await moviesResponse.json();
+          setMovies(moviesResult);
+        }
+        else {
+          setShowTimeForDate(null);
+        }
       }
-      else {
-        setShowTimeForDate(null);
+      catch (error) {
+        console.error("Failed to fetch movies:", error);
       }
-    };
+      finally {
+        setIsLoading(false);
+      }
+    }
     getMovies();
   }, []);
 
   useEffect(() => {
     const getShowTimesSlots = async () => {
-      setAddShowTimeRequestModel(null);
-      const showtimesSlotsResponse = await fetchGet(
-        `${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.SHOW_TIMES.GET_SHOW_TIMES_SLOTS}/${selectedDate?.toISOString().split('T')[0]}`);
-      if (showtimesSlotsResponse.ok) {
-        const showtimesSlots: ShowTimeForDate = await showtimesSlotsResponse.json();
-        setShowTimeForDate(showtimesSlots);
+      try {
+        setIsLoading(true);
+        setAddShowTimeRequestModel(null);
+        const showtimesSlotsResponse = await fetchGet(
+          `${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.SHOW_TIMES.GET_SHOW_TIMES_SLOTS}/${selectedDate?.toISOString().split('T')[0]}`);
+        if (showtimesSlotsResponse.ok) {
+          const showtimesSlots: ShowTimeForDate = await showtimesSlotsResponse.json();
+          setShowTimeForDate(showtimesSlots);
+        }
+      }
+      catch (error) {
+        console.error("Failed to fetch show times slots:", error);
+      }
+      finally {
+        setIsLoading(false);
       }
     }
 
@@ -221,7 +241,7 @@ const AdminAddShowTime = () => {
             setSelectedDate(null);
             setShowTimeForDate(null);
             setAddShowTimeRequestModel(null);
-            setPrice(0);            
+            setPrice(0);
           }}
         >
           <SyncOutlined /> Reset

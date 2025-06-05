@@ -15,10 +15,13 @@ import { InputType, StyleType } from "../../ui/types";
 import { TextArea } from "../../ui/TextArea";
 import Button from "../../ui/Button";
 import { SyncOutlined } from "@ant-design/icons";
+import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
+import { APPLICATION_ACTIONS_CONSTS } from "../../state-management/action-constants/application";
 
 const AdminAddMovie: React.FC = () => {
   const { fetchPost } = useInternalApiClient();
   const navigate = useNavigate();
+  const { dispatch } = useApplicationContext();
 
   // Form state
   const [movieData, setMovieData] = useState({
@@ -72,16 +75,16 @@ const AdminAddMovie: React.FC = () => {
       const formData = new FormData();
       formData.append("name", movieData.name);
       formData.append("description", movieData.description);
-      formData.append("releaseDate", '2025-02-01'); //new Date(movieData.releaseDate).toISOString());
+      formData.append("releaseDate", `${movieData.releaseDateYear}-${movieData.releaseDateMonth}-${movieData.releaseDateDay}`);
       formData.append("duration", movieData.duration.toString());
       if (poster) {
         formData.append("file", poster);
       }
-      // Let's examine the useInternalApiClient hook to see how it handles FormData
+      dispatch({ type: APPLICATION_ACTIONS_CONSTS.SET_SPINNING, payload: true });
       const response = await fetchPost(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.MOVIES.GET_MOVIES}`, formData);
       if (response.ok) {
         const newMovie: Movie = await response.json();
-        // Navigate to movie details page after successful creation
+        dispatch({ type: APPLICATION_ACTIONS_CONSTS.SET_SPINNING, payload: false });
         navigate(`/${ROUTES.ADMIN_PORTAL.MOVIES}/${newMovie.id}`);
       } else {
         const errorData = await response.json();
@@ -91,7 +94,7 @@ const AdminAddMovie: React.FC = () => {
       setError("An error occurred while adding the movie");
       console.error(err);
     } finally {
-      
+      dispatch({ type: APPLICATION_ACTIONS_CONSTS.SET_SPINNING, payload: false });
     }
   };
 
@@ -212,15 +215,16 @@ const AdminAddMovie: React.FC = () => {
           <Button
             type="button"
             style={StyleType.Free}
-            onClick={() => { setMovieData({
-              name: "",
-              description: "",
-              releaseDateDay: "",
-              releaseDateMonth: "",
-              releaseDateYear: "",
-              duration: 0,
+            onClick={() => {
+              setMovieData({
+                name: "",
+                description: "",
+                releaseDateDay: "",
+                releaseDateMonth: "",
+                releaseDateYear: "",
+                duration: 0,
 
-            });
+              });
               setPoster(null);
               setPosterPreview("");
             }}

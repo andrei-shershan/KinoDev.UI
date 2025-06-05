@@ -5,8 +5,6 @@ import {
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-
-import DataLoading from "../dataLoading";
 import { useState } from "react";
 import { URLS } from "../../constants/urls";
 import { ENDPOINTS } from "../../constants/endpoints";
@@ -113,9 +111,9 @@ const ShowTimeDetails = ({ showTimeDetails, isBooking, selectedSeats }:
 }
 
 const ShowTimeContent = ({ showTimeDetails, isBooking }: { showTimeDetails: ShowTimeDetailsApiModel, isBooking: boolean }) => {
-    if (!showTimeDetails || !isBooking) {
-        return <DataLoading />
-    }
+    // if (!showTimeDetails || !isBooking) {
+    //     return <DataLoading />
+    // }
 
     const [selectedSeats, setSelectedSeats] = useState<ShowTimeSeat[]>([]);
     // const screens = useBreakpoint();

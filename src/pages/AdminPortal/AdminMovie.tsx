@@ -5,7 +5,7 @@ import { URLS } from "../../constants/urls";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import MainLayout from "../../layouts/mainLayout";
 import useIsMobile from "../../hooks/useIsMobile";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 import { Movie } from "../../models/api.models";
 import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
@@ -13,6 +13,7 @@ import { getImageSourceUrl } from "../../utils/images";
 import { getDateTimeObject } from "../../utils/date-time";
 
 import "./index.css";
+import { AdminAction } from "../../components/admin-actions/addAction";
 
 const AdminMovie: React.FC = () => {
   const { fetchGet } = useInternalApiClient();
@@ -32,16 +33,17 @@ const AdminMovie: React.FC = () => {
   }, [movieId]);
 
   const { state, dispatch } = useApplicationContext();
+  const navigate = useNavigate();
 
   const movie = state.movie;
 
   return (
     <MainLayout portalType={PORTALS_TYPES.ADMIN} >
-      <p>
-        <Link to={`/${ROUTES.ADMIN_PORTAL.MOVIES}`} className="admin-movie__back">
-          Go back to movies List
-        </Link>
-      </p>
+      <AdminAction 
+        action={() =>navigate(`/${ROUTES.ADMIN_PORTAL.MOVIES}`)}
+        label="Go back to movies List"
+        type="back"
+      />
       {
         (!movie) &&
         <p>

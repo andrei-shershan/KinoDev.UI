@@ -18,9 +18,9 @@ export const getPortalSettings = async (apiClient: InternalApiClient, dispatch: 
     }
   } catch (error) {
     console.error("Error fetching portal settings:", error);
+    dispatch({ type: APPLICATION_ACTIONS_CONSTS.SET_PORTAL_SETTINGS, payload: undefined });
   }
   finally {
-    dispatch({ type: APPLICATION_ACTIONS_CONSTS.SET_PORTAL_SETTINGS, payload: undefined });
     dispatch({ type: APPLICATION_ACTIONS_CONSTS.SET_SPINNING, payload: false });
   }
 }

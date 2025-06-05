@@ -8,7 +8,7 @@ export const AdminAction = ({
 }: {
   action: () => void,
   label: string,
-  type: 'add' | 'back'
+  type?: 'add' | 'back' | undefined
 }) => {
   return (
     <div className="action-component" onClick={action}>
