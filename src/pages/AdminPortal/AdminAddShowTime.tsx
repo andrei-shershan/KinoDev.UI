@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { PORTALS_TYPES } from "../../constants/portalTypes";
 import MainLayout from "../../layouts/mainLayout";
 import { ROUTES } from "../../constants/routes";
@@ -9,10 +9,16 @@ import { URLS } from "../../constants/urls";
 import Dropdown from "../../ui/Dropdown";
 import { getDays } from "./AdminShowTimes";
 import Button from "../../ui/Button";
-import { SizeType, StyleType } from "../../ui/types";
-import { Modal } from "antd";
-import { Hall, Movie, ShowTimeForDate } from "../../models/api.models";
+import { InputType, SizeType, StyleType } from "../../ui/types";
+import { message } from "antd";
+import { Movie, ShowTimeForDate } from "../../models/api.models";
 import { getImageSourceUrl } from "../../utils/images";
+import { PageHeader } from "../../components/headers/pageHeader";
+import { Input } from "../../ui/Input";
+import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
+import { APPLICATION_ACTIONS_CONSTS } from "../../state-management/action-constants/application";
+import { SyncOutlined } from "@ant-design/icons";
+import { ShowTimeForDateCard } from "../../components/show-times/ShowTimeForDateCard";
 
 interface AddShowTimeRequestModel {
   movieId: number;
@@ -24,6 +30,7 @@ interface AddShowTimeRequestModel {
 const AdminAddShowTime = () => {
   const { fetchGet, fetchPost } = useInternalApiClient();
   const navigate = useNavigate();
+  const { dispatch } = useApplicationContext();
 
   const [movies, setMovies] = useState<Movie[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
@@ -31,7 +38,6 @@ const AdminAddShowTime = () => {
   const [showTimeForDate, setShowTimeForDate] = useState<ShowTimeForDate | null>(null);
   const [price, setPrice] = useState<number>(0);
   const [addShowTimeRequestModel, setAddShowTimeRequestModel] = useState<AddShowTimeRequestModel | null>();
-  const [showConfirmationModal, setShowConfirmationModal] = useState<boolean>(false);
 
   useEffect(() => {
     const getMovies = async () => {
@@ -77,9 +83,10 @@ const AdminAddShowTime = () => {
 
   const handleAddShowTime = async () => {
     try {
+      dispatch({ type: APPLICATION_ACTIONS_CONSTS.SET_SPINNING, payload: true });
       const timeAndPriceAdjustedModel = {
         ...addShowTimeRequestModel,
-        time: addShowTimeRequestModel 
+        time: addShowTimeRequestModel
           ? new Date(addShowTimeRequestModel.time.getTime() - (addShowTimeRequestModel.time.getTimezoneOffset() * 60000)) // Adjust for timezone
           : new Date(),
         price: price
@@ -87,35 +94,36 @@ const AdminAddShowTime = () => {
 
       const addShowTimeRequestResponse = await fetchPost(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.SHOW_TIMES.GET_SHOW_TIMES}`, timeAndPriceAdjustedModel);
       if (addShowTimeRequestResponse.ok) {
+        dispatch({ type: APPLICATION_ACTIONS_CONSTS.SET_SPINNING, payload: false });
         navigate(`/${ROUTES.ADMIN_PORTAL.SHOWTIMES}`);
       }
       else {
-        alert("Failed to add show time. Please try again.");
+        message.error("Failed to add show time. Please try again.");
       }
     }
     finally {
-      setShowConfirmationModal(false);
+      dispatch({ type: APPLICATION_ACTIONS_CONSTS.SET_SPINNING, payload: false });
     }
   }
 
   return (
     <MainLayout portalType={PORTALS_TYPES.ADMIN}>
-      <p>
-        <Link to={`/${ROUTES.ADMIN_PORTAL.SHOWTIMES}`} className="admin-movie__back">
-          Go back to showtimes List
-        </Link>
-      </p>
+      <PageHeader
+        header="Add Hall"
+        actionLabel="Go back to Showtimes list"
+        action={() => navigate(`/${ROUTES.ADMIN_PORTAL.SHOWTIMES}`)}
+        type="back"
+      />
 
       <div>
-        <div>
-          <Dropdown
-            options={movies.map(movie => ({ value: movie.id.toString(), label: movie.name }))}
-            onChange={handleMovieChange}
-            labelText="Select Movie:"
-            id="movieDropdown"
-            selectedValue={selectedMovie ? selectedMovie.id.toString() : ""}
-          />
-        </div>
+
+        <Dropdown
+          options={movies.map(movie => ({ value: movie.id.toString(), label: movie.name }))}
+          onChange={handleMovieChange}
+          labelText="Select Movie:"
+          id="movieDropdown"
+          selectedValue={selectedMovie ? selectedMovie.id.toString() : ""}
+        />
 
         {
           selectedMovie && (
@@ -137,35 +145,33 @@ const AdminAddShowTime = () => {
 
         <br />
 
-        <div>
-          <Dropdown
-            id="startDateDropdown"
-            options={getDays()}
-            onChange={handleDateChange}
-            selectedValue={selectedDate ? selectedDate.toISOString().split('T')[0] : ""}
-            labelText="Select date:"
-          />
-        </div>
+        <Dropdown
+          id="startDateDropdown"
+          options={getDays()}
+          onChange={handleDateChange}
+          selectedValue={selectedDate ? selectedDate.toISOString().split('T')[0] : ""}
+          labelText="Select date:"
+        />
 
         <br />
 
-        <div>
-          <input
-            type="number"
-            placeholder="Price"
-            value={price}
-            onChange={(e) => setPrice(Number(e.target.value))}
-            style={{ width: '100px', marginRight: '10px' }}
-          ></input>
+        <Input
+          type={InputType.Number}
+          id="price"
+          name="price"
+          value={price}
+          onChange={(e) => setPrice(Number(e.target.value))}
+          placeholder="Enter price"
+          labelText="Price*"
+          required
+          min={0}
+        />
 
-        </div>
-
-        <br />
         <br />
 
         {
           !addShowTimeRequestModel && selectedDate && selectedMovie && showTimeForDate && (
-            <ShotTimeForDateCard
+            <ShowTimeForDateCard
               showTimeForDate={showTimeForDate}
               selectedMovie={selectedMovie}
               onSlotSelected={({ h, s }) => {
@@ -197,154 +203,32 @@ const AdminAddShowTime = () => {
           )
         }
 
+        <br />
+
         <Button
           disabled={!addShowTimeRequestModel || price <= 0}
           size={SizeType.Medium}
           style={StyleType.Primary}
-          onClick={() => setShowConfirmationModal(true)}
+          onClick={handleAddShowTime}
           text="Add Show Time"
         />
 
-        <Modal
-          title="Confirm Adding Show Time"
-          open={showConfirmationModal}
-          onOk={handleAddShowTime}
-          onCancel={() => setShowConfirmationModal(false)}
+        <Button
+          type="button"
+          style={StyleType.Free}
+          onClick={() => {
+            setSelectedMovie(null);
+            setSelectedDate(null);
+            setShowTimeForDate(null);
+            setAddShowTimeRequestModel(null);
+            setPrice(0);            
+          }}
         >
-          <p>Are you sure you want to add this show time?</p>
-          <p>Movie: {selectedMovie?.name}</p>
-          <p>Hall: {showTimeForDate?.hallWithMovies?.find(x => x.hall.id === addShowTimeRequestModel?.hallId)?.hall?.name}</p>
-          <p>Time: {addShowTimeRequestModel?.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}</p>
-          <p>Price: {price}</p>
-        </Modal>
+          <SyncOutlined /> Reset
+        </Button>
       </div>
     </MainLayout >
   );
 }
 
 export default AdminAddShowTime;
-
-interface HallTimeTable {
-  hall: Hall,
-  timeTable: TimeTableSlot[],
-}
-
-interface TimeTableSlot {
-  time: Date,
-  isAvailable: boolean,
-  isEnoughTime: boolean,
-}
-
-const getTimeTable = (showTimeForDate: ShowTimeForDate, selectedMovie: Movie) => {
-  if (!showTimeForDate || !showTimeForDate.hallWithMovies || showTimeForDate.hallWithMovies.length === 0) {
-    return [];
-  }
-
-  const result: HallTimeTable[] = [];
-  showTimeForDate.hallWithMovies.forEach(hallWithMovies => {
-    let startTime = new Date(showTimeForDate.date);
-    startTime.setHours(9, 0); // Assuming start time is 10:00 AM
-    let endTime = new Date(showTimeForDate.date);
-    endTime.setHours(22, 0); // Assuming end time is 10:00 PM
-
-    let time = new Date(startTime);
-    const timeInterval = 30; // Assuming time slots are 30 minutes apart
-
-    const timeTableSlots: TimeTableSlot[] = [];
-    while (time <= endTime) {
-      timeTableSlots.push({
-        time: new Date(time),
-        isAvailable: !hallWithMovies.movies.some(movie => {
-          const movieStartTime = new Date(movie.time);
-          const movieEndTime = new Date(movieStartTime.getTime() + movie.duration * 60000);
-
-          // Check if the current time slot overlaps with any scheduled movie
-          return (time >= movieStartTime && time < movieEndTime) ||
-            (new Date(time.getTime() + timeInterval * 60000) > movieStartTime && time < movieEndTime);
-        }),
-        isEnoughTime: true
-      });
-
-      time = new Date(time.getTime() + timeInterval * 60000); // Increment time by 30 minutes
-    }
-
-    for (let i = 0; i < timeTableSlots.length; i++) {
-      let totalAvailableTimeInMin = 0;
-
-      for (let j = i; j < timeTableSlots.length - 1; j++) {
-        totalAvailableTimeInMin += timeInterval;
-        if (timeTableSlots[j + 1].isAvailable) {
-          continue;
-        } else {
-          if (totalAvailableTimeInMin >= selectedMovie.duration) {
-            timeTableSlots[i].isEnoughTime = true;
-          }
-          else {
-            timeTableSlots[i].isEnoughTime = false;
-          }
-          break;
-        }
-      }
-    }
-
-    const hallTimeTable: HallTimeTable = {
-      hall: hallWithMovies.hall,
-      timeTable: timeTableSlots,
-    };
-
-    result.push(hallTimeTable);
-  });
-
-  return result;
-}
-
-const ShotTimeForDateCard = ({ showTimeForDate, selectedMovie, onSlotSelected }
-  : { showTimeForDate: ShowTimeForDate, selectedMovie: Movie, onSlotSelected: ({ h, s }: { h: Hall, s: TimeTableSlot }) => void }) => {
-  if (!showTimeForDate || !showTimeForDate.hallWithMovies || showTimeForDate.hallWithMovies.length === 0) {
-    return <p>No showtimes available for the selected date.</p>;
-  }
-  else {
-    const timeTable = getTimeTable(showTimeForDate, selectedMovie);
-    return (
-      <div>
-        {
-          timeTable.map((hallTimeTable, index) => {
-            return (
-              <div>
-                <div>
-                  {hallTimeTable.hall.name}
-                </div>
-                <div>
-                  {
-                    hallTimeTable.timeTable.map((slot, slotIndex) => {
-                      return (
-                        <div key={`${index}-${slotIndex}`} style={{ display: 'inline-block', margin: '5px' }}>
-                          <button
-                            disabled={!(slot.isAvailable && slot.isEnoughTime)}
-                            style={{
-                              padding: '10px',
-                              // border: slot.isAvailable ? '3px solid #00FF00' : '3px solid #FF0000',
-                              border: slot.isAvailable && slot.isEnoughTime
-                                ? '3px solid #00FF00'
-                                : slot.isAvailable && !slot.isEnoughTime
-                                  ? '3px solid #FFFF00'
-                                  : '3px solid #FF0000',
-                              width: '60px',
-                            }}
-                            onClick={() => onSlotSelected({ h: hallTimeTable.hall, s: slot })}
-                          >
-                            {slot.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
-                          </button>
-                        </div>
-                      );
-                    })
-                  }
-                </div>
-              </div>)
-          })
-        }
-      </div>
-    );
-  }
-}
-

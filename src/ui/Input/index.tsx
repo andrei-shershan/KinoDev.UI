@@ -12,6 +12,8 @@ export const Input = ({
   onChange,
   min,
   max,
+  width,
+  accept
 }: {
   id?: string,
   name?: string,
@@ -23,6 +25,9 @@ export const Input = ({
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
   min?: number,
   max?: number,
+  width?: number,
+  accept?: string,
+
 }) => {
 
   return (
@@ -40,8 +45,10 @@ export const Input = ({
         id={id}
         name={name}
         type={type}
+        accept={accept}
         required={required}
         className="kinodev-input"
+        style={{ width: width ? `${width}px` : '' }}
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange ? onChange(e) : undefined}

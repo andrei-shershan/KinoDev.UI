@@ -33,6 +33,12 @@
   border: 3px solid var(--danger-color-dark);
 }
 
+.kd-button.kd-free {
+  color: var(--primary-color);
+  background-color: transparent;
+  border: none;
+}
+
 .kd-button:hover {
   cursor: pointer;
 }
@@ -50,6 +56,10 @@
 .kd-button.kd-danger:hover {
   background-color: var(--danger-color-dark);
   border: 3px solid var(--danger-color-dark-darker);
+}
+
+.kd-button.kd-free:hover {
+  color: var(--primary-color-dark);
 }
 
 .kd-button:active {

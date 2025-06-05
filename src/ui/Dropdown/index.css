@@ -9,6 +9,7 @@ select {
 select:hover, select:focus {
   border-color: var(--primary-color-dark-extra);
   color: var(--primary-color-dark-extra);
+  cursor: pointer;
 }
 
 .dropdown-option {

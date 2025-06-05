@@ -11,7 +11,6 @@ import {
 import { useApplicationContext } from '../../state-management/providers/AdminContextProvider';
 import BuyTicketCard from '../../components/BuyTicketCard';
 import ShowTimeSeatsMapSelector from '../../components/show-times/ShowTimeSeatsMapSelector';
-import ShowTimeDetailsComponent from '../../components/showtime/ShowTimeDetails';
 import { ENDPOINTS } from '../../constants/endpoints';
 import { ERRORS } from '../../constants/errors';
 import { PORTALS_TYPES } from '../../constants/portalTypes';
@@ -21,6 +20,8 @@ import { useInternalApiClient } from '../../hooks/useInternalApiClient';
 import MainLayout from '../../layouts/mainLayout';
 import { ShowTimeDetailsApiModel } from '../../models/api.models';
 import { OrderState } from '../../models/enums.model';
+import ShowTimeDetailsComponent from '../../components/show-times/ShowTimeDetails';
+import { APPLICATION_ACTIONS_CONSTS } from '../../state-management/action-constants/application';
 
 
 const ShowTime = () => {
@@ -36,7 +37,7 @@ const ShowTime = () => {
 
   useEffect(() => {
     const getShowTimeDetails = async () => {
-      dispatch({ type: 'SET_SPINNING', payload: true });
+      dispatch({ type: APPLICATION_ACTIONS_CONSTS.SET_SPINNING, payload: true });
       var result = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.SHOW_TIMES.GET_SHOW_TIME_DETAILS}/${showTimeId}`);
 
       try {
@@ -52,7 +53,7 @@ const ShowTime = () => {
         message.error(ERRORS.GENERIC_API_ERROR);
       }
 
-      dispatch({ type: 'SET_SPINNING', payload: false });
+      dispatch({ type: APPLICATION_ACTIONS_CONSTS.SET_SPINNING, payload: false });
     };
 
     const getActiveOrder = async () => {

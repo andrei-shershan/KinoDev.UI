@@ -1,4 +1,3 @@
-import { Button } from "antd";
 import { useEffect, useState } from "react";
 import { ENDPOINTS } from "../../constants/endpoints";
 import { PORTALS_TYPES } from "../../constants/portalTypes";
@@ -7,6 +6,7 @@ import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import MainLayout from "../../layouts/mainLayout";
 import { OrderSummary } from "../../models/api.models";
 import { getDateTimeObject } from "../../utils/date-time";
+import Button from "../../ui/Button";
 
 const inputStyle = {
   padding: '0.5rem',

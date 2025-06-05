@@ -1,7 +1,8 @@
 export enum StyleType {
-  None = 'None',
+  None = 'None', // TODO: Rename to Empty or Default
   Primary = 'Primary',
   Danger = 'Danger',
+  Free = 'Free', // TODO: Rename to No Style
 }
 
 export enum SizeType {
@@ -20,4 +21,5 @@ export enum InputType {
   Checkbox = 'checkbox',
   Radio = 'radio',
   Select = 'select',
+  File = 'file',
 }

@@ -1,0 +1,34 @@
+.slot-times-container {
+  display: inline-block;
+  margin: 5px;
+}
+
+.slot-time-button {
+  padding: 10px;
+  width: 60px;
+  background-color: white;
+  font-weight: 600;
+}
+
+.slot-time-button.available {
+  color: var(--primary-color);
+  border: 3px solid var(--primary-color);
+}
+
+.slot-time-button.available:hover {
+  cursor: pointer;
+  color: var(--primary-color-dark-extra);
+  border: 3px solid var(--primary-color-dark-extra);
+}
+
+.slot-time-button.not-enough-time {
+  background-color: var(--danger-color-light-extra);
+  color: var(--danger-color-light);
+  border: 3px solid var(--danger-color-light);
+}
+
+.slot-time-button.unavailable {
+  color: var(--danger-color-dark-extra);
+  border: 3px solid var(--danger-color-dark-extra);
+  background-color: var(--danger-color-light-extra);
+}

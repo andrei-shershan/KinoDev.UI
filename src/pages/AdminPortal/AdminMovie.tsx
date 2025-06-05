@@ -4,8 +4,6 @@ import { PORTALS_TYPES } from "../../constants/portalTypes";
 import { URLS } from "../../constants/urls";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import MainLayout from "../../layouts/mainLayout";
-
-import "./index.css";
 import useIsMobile from "../../hooks/useIsMobile";
 import { Link, useParams } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
@@ -13,6 +11,8 @@ import { Movie } from "../../models/api.models";
 import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
 import { getImageSourceUrl } from "../../utils/images";
 import { getDateTimeObject } from "../../utils/date-time";
+
+import "./index.css";
 
 const AdminMovie: React.FC = () => {
   const { fetchGet } = useInternalApiClient();

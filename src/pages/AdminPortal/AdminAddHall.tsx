@@ -14,6 +14,7 @@ import { PageHeader } from "../../components/headers/pageHeader";
 
 import "./index.css";
 import { Input } from "../../ui/Input";
+import { SyncOutlined } from "@ant-design/icons";
 
 const AdminAddHall = () => {
   const { fetchPost } = useInternalApiClient();
@@ -99,7 +100,7 @@ const AdminAddHall = () => {
         type="back"
       />
 
-      <div className="admin-add-movie-container">
+      <div>
         {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSubmit}>
@@ -146,7 +147,22 @@ const AdminAddHall = () => {
             type={"submit"}
             style={StyleType.Primary}
             text="Add Hall"
+            disabled={!hallData.name.trim() || hallData.rowsCount < 1 || hallData.seatsCount < 1}
           />
+
+          <Button
+            type="button"
+            style={StyleType.Free}
+            onClick={() => {
+              setHallData({
+                name: "",
+                rowsCount: 1,
+                seatsCount: 1,
+              });
+            }}
+          >
+            <SyncOutlined /> Reset
+          </Button>
 
         </form>
       </div>

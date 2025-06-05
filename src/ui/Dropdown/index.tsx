@@ -16,8 +16,14 @@ const Dropdown = ({
 
   return (
     <div>
-      <label htmlFor="valueDropdown">{labelText}</label>
-      <br />
+      {
+        labelText &&
+        <div className="kinodev-label-container">
+          <label htmlFor={id} className="kinodev-label-text">
+            {labelText}
+          </label>
+        </div>
+      }
       <select
         id={id}
         value={selectedValue}

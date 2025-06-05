@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import { PORTALS_TYPES } from "../../constants/portalTypes";
 import { useInternalApiClient } from "../../hooks/useInternalApiClient";
 import MainLayout from "../../layouts/mainLayout";
-
-import "./index.css";
 import { useNavigate } from "react-router-dom";
 import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
 import { getMovies } from "../../api-calls/movies";
 import { MoviesListAdmin } from "../../components/movies/moviesListAdmin";
 import { PageHeader } from "../../components/headers/pageHeader";
 import { ROUTES } from "../../constants/routes";
+
+import "./index.css";
 
 const AdminMovies: React.FC = () => {
   const apiClient = useInternalApiClient();

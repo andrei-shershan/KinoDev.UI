@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import ShowTimeSeatsMap from "../showtime/ShowTimeSeatsMap";
 import { useState } from "react";
-import SelectedSeatsDetails from "../showtime/SelectedSeatsDetails";
 import Button from "../../ui/Button";
 import { StyleType } from "../../ui/types";
 import { ShowTimeDetailsApiModel, ShowTimeSeat } from "../../models/api.models";
+import SelectedSeatsDetails from "./SelectedSeatsDetails";
+import ShowTimeSeatsMap from "./ShowTimeSeatsMap";
 
 const ShowTimeSeatsMapSelector = ({
     showTimeDetails,
