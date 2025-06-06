@@ -1,5 +1,7 @@
 import { MovieShowTimeDetails } from "../../models/api.models";
 
+import './showTimeButton.css';
+
 export const getShowTimeTime = (fullDate: Date) => {
   var date = new Date(fullDate);
   var hours = date.getHours().toString().padStart(2, '0');
@@ -13,17 +15,11 @@ interface ShowTimeButtonProps {
   onClick: (showTimeId: number) => void;
 }
 
-const ShowTimeButton = ({ movieShowTimeDetails, onClick }: ShowTimeButtonProps) => {
-  return (
+const ShowTimeButton = ({ movieShowTimeDetails, onClick }: ShowTimeButtonProps) => {  return (
     <button
-      style={{
-        padding: '4px 15px',
-        borderRadius: '6px',
-        border: '1px solid #d9d9d9',
-        backgroundColor: 'transparent',
-        cursor: movieShowTimeDetails.isSellingAvailable ? 'pointer' : 'not-allowed',
-        opacity: movieShowTimeDetails.isSellingAvailable ? 1 : 0.5
-      }}
+      className={`show-time-button ${movieShowTimeDetails.isSellingAvailable 
+        ? 'show-time-button--available' 
+        : 'show-time-button--unavailable'}`}
       disabled={!movieShowTimeDetails.isSellingAvailable}
       onClick={() => onClick(movieShowTimeDetails.id)}
     >

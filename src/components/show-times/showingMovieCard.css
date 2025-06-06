@@ -1,0 +1,47 @@
+
+.showing-movie-card {
+  display: flex;
+  gap: 16px;
+  margin: 16px 0;
+  width: 100%;
+}
+
+.poster-container {
+  flex-shrink: 0;
+}
+
+.poster-container-desktop {
+  width: 200px;
+}
+
+.poster-container-mobile {
+  width: 150px;
+}
+
+.content-container {
+  flex: 1;
+  min-width: 0;
+}
+
+.movie-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.info-section {
+  margin-bottom: 8px;
+}
+
+.poster-wrapper-mobile {
+  height: 150px;
+}
+
+.poster-container-img {
+  background-size: cover;
+  background-position: center;
+}
+
+.poster-img-mobile {
+  height: 150px;
+}

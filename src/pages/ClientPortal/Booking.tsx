@@ -10,11 +10,14 @@ import MainLayout from "../../layouts/mainLayout";
 import { OrderSummary } from "../../models/api.models";
 import { OrderState } from "../../models/enums.model";
 import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
+import { useIsLoading } from "../../hooks/useIsLoading";
+import { APPLICATION_ACTIONS_CONSTS } from "../../state-management/action-constants/application";
 
 const Booking: React.FC = () => {
   const { state, dispatch } = useApplicationContext();
   const [email, setEmail] = useState<string>('');
   const [editMode, setEditMode] = useState<boolean>(true);
+  const { setIsLoading } = useIsLoading();
 
   const handleEmailSubmit = (email: string) => {
     if (email) {
@@ -27,19 +30,27 @@ const Booking: React.FC = () => {
   }
 
   useEffect(() => {
-    const getActive = async () => {
-      var response = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.ORDERS.GET_ACTIVE}`);
-      if (response.ok) {
-        const orderSummary: OrderSummary = await response.json();
-        console.log("orderSummary", orderSummary);
-        dispatch({ type: 'SET_ACTIVE_ORDER', payload: orderSummary });
+    const getActiveOrder = async () => {
+      try {
+        setIsLoading(true);
+
+        var response = await fetchGet(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.ORDERS.GET_ACTIVE}`);
+        if (response.ok) {
+          const orderSummary: OrderSummary = await response.json();
+          dispatch({ type: APPLICATION_ACTIONS_CONSTS.SET_ACTIVE_ORDER, payload: orderSummary });
+        }
+        else {
+          dispatch({ type: APPLICATION_ACTIONS_CONSTS.SET_ACTIVE_ORDER, payload: undefined });
+        }
+      } catch (error) {
+        console.error("Error fetching active order:", error);
       }
-      else {
-        dispatch({ type: 'SET_ACTIVE_ORDER', payload: undefined });
+      finally {
+        setIsLoading(false);
       }
     }
 
-    getActive();
+    getActiveOrder();
   }, []);
 
   const { fetchGet } = useInternalApiClient();

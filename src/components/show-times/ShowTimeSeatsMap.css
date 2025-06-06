@@ -1,0 +1,36 @@
+.screen-div {
+  width: 200px;
+  height: 20px;
+  background-color: #d3d3d3;
+  margin: 20px auto;
+  text-align: center;
+  line-height: 20px;
+  border: 1px solid #888;
+}
+
+.seat-map-wrapper {
+  align-items: center;
+}
+
+.seat-number {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+}
+
+.seat-content {
+  text-align: center;
+  vertical-align: middle;
+  height: 100%;
+  padding-top: 20%;
+}

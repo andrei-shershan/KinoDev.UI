@@ -27,12 +27,19 @@ export const getDateTimeObject = (date: string | number | Date) => {
 
 export const overrideTodayDateName = (date: string) => {
   const today = new Date().toISOString().split('T')[0];
+  const tomorrowDate = new Date();
+  tomorrowDate.setDate(tomorrowDate.getDate() + 1);
 
-  if (date === today) {
-    return DATE_TIMES.TODAY;
+  const tomorrow = tomorrowDate.toISOString().split('T')[0];
+
+  switch (date) {
+    case today:
+      return DATE_TIMES.TODAY;
+    case tomorrow:
+      return DATE_TIMES.TOMORROW;
+    default:
+      return date;
   }
-
-  return date;
 }
 
 export const getYearMonthDay = (date: Date) => {

@@ -1,7 +1,7 @@
 import { ArrowLeftOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import './index.css';
 
-export const AdminAction = ({
+export const HeaderActions = ({
   action,
   label,
   type

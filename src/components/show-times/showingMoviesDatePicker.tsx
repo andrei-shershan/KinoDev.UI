@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { overrideTodayDateName } from "../../utils/date-time";
 
+import './showingMoviesDatePicker.css';
+import Button from "../../ui/Button";
+import { SizeType, StyleType } from "../../ui/types";
+
 interface ShowingMoviesDatePickerProps {
   selectedDate: string;
   callBack: (pickedDate: string) => void;
@@ -14,6 +18,7 @@ const ShowingMoviesDatePicker: React.FC<ShowingMoviesDatePickerProps> = ({ selec
   useEffect(() => {
     const days = [];
 
+    // TODO: Place 5 into Portal Settings
     for (let i = 0; i < 5; i++) {
       const date = new Date();
       date.setDate(date.getDate() + i);
@@ -29,21 +34,17 @@ const ShowingMoviesDatePicker: React.FC<ShowingMoviesDatePickerProps> = ({ selec
   }
 
   return (
-    <div style={{ display: 'flex', gap: '16px' }}>
+    <div className="showing-movies-date-picker-container">
       {
         days.map((day, index) => (
-          <button
+          <Button
+            size={SizeType.Small}
+            style={day === selectedDate ? StyleType.Primary : StyleType.Free}
             key={index}
-            style={{
-              padding: '8px 16px',
-              border: '1px solid #ddd',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
             onClick={() => handleDateClick(day)}
           >
-            {day === selectedDate ? <b>{overrideTodayDateName(day)}</b> : overrideTodayDateName(day)}
-          </button>
+            {overrideTodayDateName(day)}
+          </Button>
         ))
       }
     </div>

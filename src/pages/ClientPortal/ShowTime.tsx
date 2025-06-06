@@ -22,7 +22,7 @@ import { ShowTimeDetailsApiModel } from '../../models/api.models';
 import { OrderState } from '../../models/enums.model';
 import ShowTimeDetailsComponent from '../../components/show-times/ShowTimeDetails';
 import { APPLICATION_ACTIONS_CONSTS } from '../../state-management/action-constants/application';
-
+import { PageHeader } from '../../components/headers/pageHeader';
 
 const ShowTime = () => {
   const { showTimeId } = useParams<{ showTimeId: string }>();
@@ -84,9 +84,18 @@ const ShowTime = () => {
     }
   }
 
+  const localtion = useLocation();
+
   return (
     <MainLayout portalType={PORTALS_TYPES.CLIENT} >
+      <PageHeader
+        action={() => navigate(`${localtion?.state?.from ?? '/' + ROUTES.SHOWTIMES}`)}
+        actionLabel='Back to Show Times'
+        type="back"
+      />
+
       <ShowTimeDetailsComponent showTimeDetails={state.showTimeDetails} isBooking={isBooking} />
+
       {
         isBooking
           ? <ShowTimeSeatsMapSelector

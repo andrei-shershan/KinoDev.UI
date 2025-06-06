@@ -28,5 +28,3 @@ const Button = ({
 }
 
 export default Button;
-
-{/* <button disabled="" class="kd-button kd-primary kd-medium kd-disabled">Available</button> */}

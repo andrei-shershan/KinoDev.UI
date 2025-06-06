@@ -116,8 +116,10 @@ export interface OrderSummary {
   id: string,
   state: OrderState,
   orderCost: number,
+  cost: number,
   createdAt: Date,
   completedAt?: Date,
+  fileUrl?: string,
   showTimeSummary: ShowTimeSummary,
   tickets: TicketSummary[],
 }

@@ -34,6 +34,8 @@ export const getClassNameByStyleType = (type?: StyleType) => {
       return 'kd-none';
       case StyleType.Free:
       return 'kd-free';
+    case StyleType.Icon:
+      return 'kd-icon';
     default:
       return '';
   }

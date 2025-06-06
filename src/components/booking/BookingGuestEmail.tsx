@@ -1,5 +1,9 @@
 import { useState, FormEvent } from 'react';
 import Button from '../../ui/Button';
+import { Input } from '../../ui/Input';
+import { InputType, StyleType } from '../../ui/types';
+import { EditOutlined } from '@ant-design/icons';
+import { CancelBooking } from './CancelBooking';
 
 const BookingGuestEmail = ({
   editMode = false,
@@ -23,8 +27,12 @@ const BookingGuestEmail = ({
   };
 
   const validateConfirmEmail = (value: string): string => {
-    if (!value) return 'Please confirm your email';
-    if (value !== email) return 'Emails do not match';
+    if (!value) {
+      return 'Please confirm your email';
+    }
+    if (value !== email) {
+      return 'Emails do not match';
+    }
     return '';
   };
 
@@ -39,23 +47,8 @@ const BookingGuestEmail = ({
     });
 
     if (!emailError && !confirmError) {
-      // Handle form submission
       onEmailSubmit(email);
     }
-  };
-
-  const formStyle = {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    gap: '1rem',
-    maxWidth: '400px'
-  };
-
-  const inputStyle = {
-    padding: '0.5rem',
-    fontSize: '1rem',
-    borderRadius: '4px',
-    border: '1px solid #ccc'
   };
 
   const errorStyle = {
@@ -66,50 +59,51 @@ const BookingGuestEmail = ({
 
   if (editMode) {
     return (
-      <div style={formStyle}>
+      <>
         <div>
-          <label htmlFor="email">Email</label>
-          <input
+          <Input
             id="email"
-            type="email"
-            style={inputStyle}
+            type={InputType.Email}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
+            labelText='Email*'
           />
           {errors.email && <div style={errorStyle}>{errors.email}</div>}
-        </div>
-
-        <div>
-          <label htmlFor="confirmEmail">Confirm Email</label>
-          <input
+          <Input
             id="confirmEmail"
-            type="email"
-            style={inputStyle}
+            type={InputType.Email}
             value={confirmEmail}
             onChange={(e) => setConfirmEmail(e.target.value)}
             placeholder="Confirm your email"
+            labelText='Confirm Email*'
           />
           {errors.confirmEmail && <div style={errorStyle}>{errors.confirmEmail}</div>}
+          <div>
+            <Button
+              onClick={handleSubmit}
+              text='Continiue'
+              disabled={!email || !confirmEmail}
+            />
+            <CancelBooking />
+          </div>
         </div>
-        <div>
-          <Button onClick={handleSubmit} >
-            Continue
-          </Button>
-        </div>
-      </div>
+      </>
     );
   }
 
   return (
     <div>
-      <span
-      > {submittedEmail}</span>
-      <Button onClick={() => onEmailSubmit('')}>
-        Edit</Button></div>
+      <span> {submittedEmail}</span>
+      <Button
+        style={StyleType.Icon}
+        onClick={() => onEmailSubmit('')}
+      >
+        <EditOutlined style={{ fontSize: '20px' }} />
+        Edit
+      </Button>
+    </div >
   );
-
-
 };
 
 export default BookingGuestEmail;

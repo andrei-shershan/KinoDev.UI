@@ -39,7 +39,7 @@ const getShowTimesGroupedByDate = (showTimes: ShowTimeDetailsApiModel[]): ShowTi
       movies.push({
         movieId: showTimes[i].movie.id.toString(),
         movieName: showTimes[i].movie.name,
-        url: showTimes[i].movie.url,
+        url: getImageSourceUrl(showTimes[i].movie.url),
         duration: showTimes[i].movie.duration,
         showTimes: [showTimes[i]]
       });

@@ -28,7 +28,7 @@
 
 .main-layout-content {
   min-width: 450px;
-  max-width: 600px;
+  max-width: 800px;
   flex: 1 0 auto;
   background-color: white;
   margin: 0 auto;

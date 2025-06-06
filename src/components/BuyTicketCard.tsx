@@ -1,13 +1,15 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES } from "../constants/routes";
 import Button from '../ui/Button';
 import { getDateTimeObject } from "../utils/date-time";
+import { StyleType } from "../ui/types";
 
 const BuyTicketCard = ({ isActiveOrderAlredyExist, showTimeId, time, price, hallName }: {
   isActiveOrderAlredyExist: boolean, showTimeId: number, time: Date, price: number, hallName: string
 }) => {
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  const location = useLocation();
   if (isActiveOrderAlredyExist) {
     return (<div>
       <p>
@@ -19,9 +21,10 @@ const BuyTicketCard = ({ isActiveOrderAlredyExist, showTimeId, time, price, hall
         Cancel or complete your current order to book a new show time.
       </p>
       <Button
-        onClick={() => navigate(`/${ROUTES.BOOKING}`)}>
-        {'Go to Booking'}
-      </Button>
+        style={StyleType.Free}
+        onClick={() => navigate(`/${ROUTES.BOOKING}`, { state: { from: location.pathname } })}
+        text="Go to Booking"
+      />
     </div>);
   }
 
@@ -31,7 +34,11 @@ const BuyTicketCard = ({ isActiveOrderAlredyExist, showTimeId, time, price, hall
       <h2>{price}</h2>
       <h3>{hallName}</h3>
 
-      <Button text="Buy Ticket" onClick={() => navigate(`/${ROUTES.SHOWTIMES}/${showTimeId}/booking`)} />
+      <Button
+        text="Buy Ticket"
+        onClick={() => navigate(`/${ROUTES.SHOWTIMES}/${showTimeId}/booking`, { state: { from: location.pathname } })}
+        style={StyleType.Primary}
+      />      
     </div>
   );
 }

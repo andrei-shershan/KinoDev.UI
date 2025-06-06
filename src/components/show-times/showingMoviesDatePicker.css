@@ -1,0 +1,11 @@
+.showing-movies-date-picker-container {
+  display: flex-inline;
+  width: 100%;
+
+}
+
+
+.showing-movies-date-picker-container>.kd-button {
+  margin: 5px;
+  font-weight: 600;
+}
