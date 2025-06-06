@@ -1,92 +1,46 @@
-import { Grid } from "antd";
 import { ShowTimeDetailsApiModel } from "../../models/api.models";
-const { useBreakpoint } = Grid;
+import useIsMobile from "../../hooks/useIsMobile";
+import './ShowTimeDetails.css'; 
+import { getImageSourceUrl } from "../../utils/images";
 
 const ShowTimeDetailsComponent = (
+  {
+    showTimeDetails,
+    isBooking
+  }:
     {
-        showTimeDetails,
-        isBooking
-    }:
-        {
-            showTimeDetails: ShowTimeDetailsApiModel,
-            isBooking: boolean
-        }) => {
+      showTimeDetails: ShowTimeDetailsApiModel,
+      isBooking: boolean
+    }) => {
 
-    const { movie } = showTimeDetails;
+  const { movie } = showTimeDetails;
+  const isMobile = useIsMobile();
 
-    const screens = useBreakpoint();
-    if (screens.sm) {
-        return (
-            isBooking
-                ? <div style={{ display: 'flex', gap: '20px' }}>
-                    <div style={{
-                        width: '150px',
-                        height: '150px',
-                        backgroundImage: `url(${movie.url})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center'
-                    }}>
-                    </div>
-                    <div style={{ flex: 1 }}>
-                        <h1>{movie.name}</h1>
-                        <p>{movie.releaseDate.toString()}</p>
-                        <p>{movie.duration}</p>
-                    </div>
-                </div>
-                : <div style={{ display: 'flex', gap: '20px' }}>
-                    <div style={{
-                        width: '300px',
-                        height: '300px',
-                        backgroundImage: `url(${movie.url})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center'
-                    }}>
-                    </div>
-                    <div style={{ flex: 1 }}>
-                        <h1>{movie.name}</h1>
-                        <p>{movie.releaseDate.toString()}</p>
-                        <p>{movie.duration}</p>
-                        <p>{movie.description}</p>
-                    </div>
-                </div>
-        );
+  // Get appropriate image class based on device and booking state
+  const getImageClass = () => {
+    if (isMobile) {
+      return isBooking ? 'movie-image-mobile-booking' : 'movie-image-mobile';
+    } else {
+      return isBooking ? 'movie-image-desktop-booking' : 'movie-image-desktop';
     }
-    else {
-        return (
-            isBooking
-                ? <div style={{ display: 'flex', gap: '20px' }}>
-                    <div style={{
-                        width: '100px',
-                        height: '100px',
-                        backgroundImage: `url(${movie.url})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center'
-                    }}>
-                    </div>
-                    <div style={{ flex: 1 }}>
-                        <h1>{movie.name}</h1>
-                        <p>{movie.releaseDate.toString()}</p>
-                        <p>{movie.duration}</p>
-                    </div>
-                </div>
-                : <div style={{ display: 'flex', gap: '20px' }}>
-                    <div style={{
-                        width: '150px',
-                        height: '150px',
-                        backgroundImage: `url(${movie.url})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center'
-                    }}>
-                    </div>
-                    <div style={{ flex: 1 }}>
-                        <h1>{movie.name}</h1>
-                        <p>{movie.releaseDate.toString()}</p>
-                        <p>{movie.duration}</p>
-                    </div>
-                </div>
-        );
-    }
+  };
 
-}
+  return (
+    <div className="show-time-details-container">
+      <div 
+        className={`movie-image ${getImageClass()}`}
+        style={{ backgroundImage: `url(${getImageSourceUrl(movie.url)})` }}
+      >
+      </div>
+      <div className="movie-details">
+        <h1>{movie.name}</h1>
+        <p>{movie.releaseDate.toString()}</p>
+        <p>{movie.duration}</p>
+        {/* Show description only when not in booking mode and on desktop */}
+        {!isBooking && !isMobile && <p>{movie.description}</p>}
+      </div>
+    </div>
+  );
+};
 
 export default ShowTimeDetailsComponent;

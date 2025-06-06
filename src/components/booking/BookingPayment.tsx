@@ -9,6 +9,12 @@ import { ROUTES } from "../../constants/routes";
 import Button from "../../ui/Button";
 import { StyleType } from "../../ui/types";
 import { OrderSummary } from "../../models/api.models";
+import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
+import { CancelBooking } from "./CancelBooking";
+import { useIsLoading } from "../../hooks/useIsLoading";
+
+import './bookingPayment.css';
+import { Notification } from "../notification";
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -36,14 +42,14 @@ const CARD_ELEMENT_OPTIONS = {
   hidePostalCode: true,
 };
 
-const stripePromise = loadStripe('pk_test_51R312X01BnhxNbMc13npKhobKSEDspHTsphDdFtmA3jyxdWXcfpZfIiYhkgaTn86EIkyfNfi2qjbXtYFKRK1Ttxq00zZDSeWoJ');
-
 const CheckoutForm = ({
   email }: {
     email: string
   }) => {
 
   const [payButtonDisabled, setPaymentButtonDisabled] = useState(false);
+  const { setIsLoading } = useIsLoading();
+  const { state } = useApplicationContext();
 
   const stripe = useStripe();
   const elements = useElements();
@@ -61,6 +67,7 @@ const CheckoutForm = ({
     setPaymentButtonDisabled(true);
 
     try {
+      setIsLoading(true);
 
       // Create a PaymentIntent by calling your backend
       const response = await fetchPost(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.PAYMENTS.CREATE_PAYMENT}`, {
@@ -86,7 +93,6 @@ const CheckoutForm = ({
         console.error(result.error.message);
       } else {
         if (result.paymentIntent.status === 'succeeded') {
-          console.log("Payment succeeded!");
           var completeResult = await fetchPost(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.ORDERS.COMPLETE_ORDER}`, {
             paymentIntentId: result.paymentIntent.id,
           });
@@ -96,36 +102,49 @@ const CheckoutForm = ({
           } else {
             console.error("Error completing order");
           }
-
-          console.log(completeResult, "Payment completed successfully!");
         }
       }
     }
     finally {
+      setIsLoading(false);
       setPaymentButtonDisabled(false);
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <CardElement options={CARD_ELEMENT_OPTIONS} />
-      <Button text="Pay with Stripe" type="submit" style={StyleType.Primary} disabled={!stripe || payButtonDisabled} />
-
+      {
+        state?.portalSettings?.notifications?.testCreditCard &&
+          <Notification
+            message={state.portalSettings.notifications.testCreditCard}
+          />
+      }
+      <CardElement options={CARD_ELEMENT_OPTIONS} className="kd-stripe" />
+      <br />
+      <div>
+        <Button text="Pay with Stripe" type="submit" style={StyleType.Primary} disabled={!stripe || payButtonDisabled} />
+        <CancelBooking />
+      </div>
     </form>
   );
 }
 
 const BookingPayment = ({
-  // orderSummary,
   email
 }: {
   orderSummary: OrderSummary,
   email: string
 }) => {
+
+  const { state } = useApplicationContext();
+
+  const stripePromise = loadStripe(state?.portalSettings?.stripePK || "");
+
   return (
-    <div><br /><br /><Elements stripe={stripePromise}>
-      <CheckoutForm email={email} />
-    </Elements>
+    <div>
+      <Elements stripe={stripePromise}>
+        <CheckoutForm email={email} />
+      </Elements>
     </div>
   );
 }

@@ -1,0 +1,33 @@
+.show-time-details-container {
+  display: flex;
+  gap: 20px;
+}
+
+.movie-image {
+  background-size: cover;
+  background-position: center;
+}
+
+.movie-image-mobile-booking {
+  width: 100px;
+  height: 100px;
+}
+
+.movie-image-mobile {
+  width: 150px;
+  height: 150px;
+}
+
+.movie-image-desktop-booking {
+  width: 150px;
+  height: 150px;
+}
+
+.movie-image-desktop {
+  width: 300px;
+  height: 300px;
+}
+
+.movie-details {
+  flex: 1;
+}

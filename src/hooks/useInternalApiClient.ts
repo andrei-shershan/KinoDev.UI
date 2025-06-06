@@ -62,7 +62,6 @@ export const useInternalApiClient = () => {
 
     const data = await response.json();
     if (!data) {
-      console.log('Invalid data!');
       return false;
     }
 

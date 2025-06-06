@@ -3,6 +3,7 @@ export enum StyleType {
   Primary = 'Primary',
   Danger = 'Danger',
   Free = 'Free', // TODO: Rename to No Style
+  Icon = 'Icon',
 }
 
 export enum SizeType {
@@ -18,7 +19,6 @@ export enum InputType {
   Number = 'number',
   Date = 'date',
   Time = 'time',
-  Checkbox = 'checkbox',
   Radio = 'radio',
   Select = 'select',
   File = 'file',

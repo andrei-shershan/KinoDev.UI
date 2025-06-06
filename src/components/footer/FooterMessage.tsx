@@ -5,7 +5,6 @@ import { GithubFilled, LinkedinFilled } from '@ant-design/icons';
 
 export const FooterMessage = () => {
   const { state } = useApplicationContext();
-  console.log('FooterMessage state:', state.portalSettings?.githubLink, state.portalSettings?.linkedinLink);
 
   return (
     <div className="footer-message-container">

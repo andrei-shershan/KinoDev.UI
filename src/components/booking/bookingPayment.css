@@ -1,0 +1,4 @@
+.kd-stripe {
+  border: 3px solid var(--primary-color);
+  width: 350px;
+}

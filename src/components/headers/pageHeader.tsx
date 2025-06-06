@@ -1,4 +1,4 @@
-import { AdminAction } from "../admin-actions/addAction";
+import { HeaderActions } from "../header-actions/headerActions";
 
 import './index.css';
 
@@ -8,7 +8,7 @@ export const PageHeader = ({
   actionLabel: actionLabel,
   type,
 }: {
-  header: string,
+  header?: string,
   action?: () => void,
   actionLabel?: string,
   type?: 'add' | 'back' | undefined
@@ -16,10 +16,10 @@ export const PageHeader = ({
 
   return (
     <div className="page-header-container">
-      <h1>{header}</h1>
+      {header && <h1>{header}</h1>}
       {action && actionLabel && (
         <>
-          <AdminAction
+          <HeaderActions
             action={action}
             label={actionLabel}
             type={type}
