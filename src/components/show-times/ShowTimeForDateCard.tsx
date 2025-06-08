@@ -26,10 +26,10 @@ export const ShowTimeForDateCard = ({ showTimeForDate, selectedMovie, onSlotSele
           timeTable.map((hallTimeTable, index) => {
             return (
               <div>
-                <h2>
+                <h3>
                   {hallTimeTable.hall.name}
-                </h2>
-                <div>
+                </h3>
+                <div className="hall-slot-times-container" key={index}>
                   {
                     hallTimeTable.timeTable.map((slot, slotIndex) => {
                       return (

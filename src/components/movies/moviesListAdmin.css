@@ -1,12 +1,38 @@
 .movie-card {
-  margin: 20px;
+  margin-left: -20px;
+  margin-right: -20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
   padding: 20px;
+  display: flex;
+  width: 100%;
 }
 
 .movie-card:hover {
-  background-color: var(--primary-color-light);
+  color: var(--primary-color-dark-extra);
 }
 
-.movie-card-img {}
+.movie-card:hover .basic-details .label,
+.movie-card:hover .basic-details .details {
+  color: var(--primary-color-dark);
+  transition: color 0.3s ease;
+}
 
-.movie-card-content {}
+.movie-card:hover .movie-card-img {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+.movie-card-img {
+  background-size: cover;
+  vertical-align: top;
+  transition: transform 0.3s ease, border 0.3s ease;
+  margin-top: 10px;
+}
+
+.movie-card-content {
+  vertical-align: top;
+  margin-left: 20px;
+  flex: 1;
+  overflow: hidden;
+}

@@ -10,6 +10,7 @@ import { PageHeader } from "../../components/headers/pageHeader";
 import { ShowTimesListAdmin } from "../../components/show-times/showtimesListAdmin";
 import { getShowTimes } from "../../api-calls/showtimes";
 import { getYearMonthDay } from "../../utils/date-time";
+import useIsMobile from "../../hooks/useIsMobile";
 
 export const getDays = () => {
   const days = [];
@@ -40,8 +41,9 @@ const AdminShowTimes = () => {
   const [endDate, setEndDate] = useState(getYearMonthDay(new Date()));
   const navigate = useNavigate();
   const apiClient = useInternalApiClient();
+  const isMobile = useIsMobile();
 
-  useEffect(() => {   
+  useEffect(() => {
     getShowTimes(apiClient, dispatch, startDate, endDate);
   }, [startDate, endDate]);
 
@@ -62,7 +64,7 @@ const AdminShowTimes = () => {
         type="add"
       />
       <div className="admin-showtimes">
-        <div className="dropdown-container">
+        <div className="dropdown-container" style={{ display: isMobile ? 'block' : 'flex' }}>
           <Dropdown
             id="startDateDropdown"
             options={getDays()}

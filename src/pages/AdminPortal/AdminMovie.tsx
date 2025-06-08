@@ -13,7 +13,10 @@ import { getImageSourceUrl } from "../../utils/images";
 import { getDateTimeObject } from "../../utils/date-time";
 
 import "./index.css";
+import './../../components/movies/moviesListAdmin.css';
 import { HeaderActions } from "../../components/header-actions/headerActions";
+import { BasicDetails } from "../../components/labels/BasicDetails";
+import { CalendarOutlined, ClockCircleOutlined } from "@ant-design/icons";
 
 const AdminMovie: React.FC = () => {
   const { fetchGet } = useInternalApiClient();
@@ -39,8 +42,8 @@ const AdminMovie: React.FC = () => {
 
   return (
     <MainLayout portalType={PORTALS_TYPES.ADMIN} >
-      <HeaderActions 
-        action={() =>navigate(`/${ROUTES.ADMIN_PORTAL.MOVIES}`)}
+      <HeaderActions
+        action={() => navigate(`/${ROUTES.ADMIN_PORTAL.MOVIES}`)}
         label="Go back to movies List"
         type="back"
       />
@@ -52,32 +55,28 @@ const AdminMovie: React.FC = () => {
       }
       {
         (movie) &&
-        <div className="admin-movie">
-          <div className="movie-card">
-            <div className="movie-card-img" style={{
-              width: isMobile ? '100px' : '200px',
-              height: isMobile ? '100px' : '200px',
-              backgroundImage: `url(${getImageSourceUrl(movie.url)})`,
-              backgroundSize: 'cover',
-              display: 'inline-block',
-              verticalAlign: 'top'
-            }} >
-            </div>
-            <div className="movie-card-content" style={{
-              display: 'inline-block',
-              verticalAlign: 'top',
-              maxWidth: isMobile ? 'calc(100% - 110px)' : 'calc(100% - 210px)',
-              marginLeft: '10px'
-            }}>
-              <h2>{movie.name}</h2>
-              <br />
-              <p><strong>Release Date:</strong>{getDateTimeObject(movie.releaseDate).date} </p>
+        <div className="movie-card">
+          <div className="movie-card-img" style={{
+            width: isMobile ? '100px' : '200px',
+            height: isMobile ? '100px' : '200px',
+            backgroundImage: `url(${getImageSourceUrl(movie.url)})`,
+          }} >
+          </div>
+          <div className="movie-card-content">
+            <h2>{movie.name}</h2>
+            <BasicDetails
+              details={movie.releaseDate.toString()}
+              multiline
+            >
+              <CalendarOutlined />
+            </BasicDetails>
+            <BasicDetails
+              details={`${movie.duration} minutes`}
+            >
+              <ClockCircleOutlined />
+            </BasicDetails>
 
-              <br />
-              <p><strong>Duration</strong>{movie.duration}</p>
-              <br />
-              <p>{movie.description}</p>
-            </div>
+            <p>{movie.description}</p>
           </div>
         </div>
       }

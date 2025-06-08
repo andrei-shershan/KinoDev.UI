@@ -1,4 +1,22 @@
-.showtime-selected-date{
+.showtime-selected-date {
   padding: 10px;
   margin-bottom: 10px;
+}
+
+.showtime-movie {
+  display: block;
+  margin-bottom: 50px;
+}
+
+.showtime-movie .movie-card-img {
+  margin-top: 5px;
+}
+
+.show-time-card {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.hall-showtimes {
+  margin-top: 10px;;
 }
