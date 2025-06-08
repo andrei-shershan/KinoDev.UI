@@ -1,10 +1,43 @@
+div {
+  /* border: 1px solid red; */
+}
 
 .showing-movie-card {
   display: flex;
-  gap: 16px;
+  gap: 25px;
   margin: 16px 0;
   width: 100%;
+  margin-top: 30px;
+  margin-bottom: 50px;
 }
+
+.showing-movie-card:hover {
+  /* cursor: pointer; */
+}
+
+.showing-movie-card .movie-poster {
+  margin-top: 10px;
+  width: 200px;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+}
+
+.showing-movie-card .movie-poster.mobile {
+  width: 100px;
+  height: 100px;
+}
+
+.showing-movie-card .show-time-buttons {
+  margin-top: 0px;
+}
+
+.showing-movie-card .movie-description {
+  margin-top: 15px;
+}
+
+/*
 
 .poster-container {
   flex-shrink: 0;
@@ -15,7 +48,7 @@
 }
 
 .poster-container-mobile {
-  width: 150px;
+  width: 100px;
 }
 
 .content-container {
@@ -34,7 +67,7 @@
 }
 
 .poster-wrapper-mobile {
-  height: 150px;
+  height: 100px;
 }
 
 .poster-container-img {
@@ -43,5 +76,33 @@
 }
 
 .poster-img-mobile {
-  height: 150px;
+  height: 100px;
 }
+
+.movie-poster-wrapper {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* .movie-poster-wrapper:hover {
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  transition: all 1s;
+} */
+
+.movie-poster-container {
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* .movie-poster-container:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+  transition: all 1s;
+} */
+*/

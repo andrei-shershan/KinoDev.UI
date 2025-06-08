@@ -1,7 +1,9 @@
 import { ShowTimeDetailsApiModel } from "../../models/api.models";
 import useIsMobile from "../../hooks/useIsMobile";
-import './ShowTimeDetails.css'; 
+import './ShowTimeDetails.css';
 import { getImageSourceUrl } from "../../utils/images";
+import { BasicDetails } from "../labels/BasicDetails";
+import { CalendarOutlined, ClockCircleOutlined, ClockCircleTwoTone } from "@ant-design/icons";
 
 const ShowTimeDetailsComponent = (
   {
@@ -27,15 +29,24 @@ const ShowTimeDetailsComponent = (
 
   return (
     <div className="show-time-details-container">
-      <div 
+      <div
         className={`movie-image ${getImageClass()}`}
         style={{ backgroundImage: `url(${getImageSourceUrl(movie.url)})` }}
       >
       </div>
       <div className="movie-details">
-        <h1>{movie.name}</h1>
-        <p>{movie.releaseDate.toString()}</p>
-        <p>{movie.duration}</p>
+        <h2>{movie.name}</h2>
+        <BasicDetails
+          details={movie.releaseDate.toString()}
+          multiline={true}
+        >
+          <CalendarOutlined />
+        </BasicDetails>
+        <BasicDetails
+          details={`${movie.duration.toString()} minutes`}
+        >
+          <ClockCircleOutlined />
+        </BasicDetails>
         {/* Show description only when not in booking mode and on desktop */}
         {!isBooking && !isMobile && <p>{movie.description}</p>}
       </div>

@@ -1,11 +1,12 @@
 .show-time-details-container {
   display: flex;
-  gap: 20px;
+  gap: 25px;
 }
 
 .movie-image {
   background-size: cover;
   background-position: center;
+  margin-top: 10px;;
 }
 
 .movie-image-mobile-booking {
@@ -14,8 +15,8 @@
 }
 
 .movie-image-mobile {
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
 }
 
 .movie-image-desktop-booking {

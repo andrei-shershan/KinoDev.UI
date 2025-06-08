@@ -9,7 +9,6 @@ import {
   message
 } from 'antd';
 import { useApplicationContext } from '../../state-management/providers/AdminContextProvider';
-import BuyTicketCard from '../../components/BuyTicketCard';
 import ShowTimeSeatsMapSelector from '../../components/show-times/ShowTimeSeatsMapSelector';
 import { ENDPOINTS } from '../../constants/endpoints';
 import { ERRORS } from '../../constants/errors';
@@ -23,6 +22,7 @@ import { OrderState } from '../../models/enums.model';
 import ShowTimeDetailsComponent from '../../components/show-times/ShowTimeDetails';
 import { APPLICATION_ACTIONS_CONSTS } from '../../state-management/action-constants/application';
 import { PageHeader } from '../../components/headers/pageHeader';
+import BuyTicketCard from '../../components/booking/BuyTicketCard';
 
 const ShowTime = () => {
   const { showTimeId } = useParams<{ showTimeId: string }>();

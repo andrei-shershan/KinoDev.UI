@@ -33,8 +33,8 @@ const getSeatsMap = (seats: ShowTimeSeat[]) => {
 }
 
 const getSeatStyle = (isLargeScreen: boolean, isAvailable?: boolean, isSelected?: boolean) => ({
-  width: isLargeScreen ? '50px' : '30px',
-  height: isLargeScreen ? '50px' : '30px',
+  width: isLargeScreen ? '50px' : '25px',
+  height: isLargeScreen ? '50px' : '25px',
   display: 'inline-block',
   margin: isLargeScreen ? '5px' : '2px',
   padding: '5px',
@@ -55,10 +55,8 @@ const drawSeatsMap = (
     <div key={rowIndex}
       style={{ justifyContent: 'center' }}
     >
-
-
       <div style={{ width: 'max-content', margin: '0 auto' }}>
-        <div>
+        <div className="row-label">
           <span>row {rowIndex + 1}</span>
         </div>
         <div>

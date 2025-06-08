@@ -20,7 +20,7 @@ export const Input = ({
   type: InputType,
   required?: boolean,
   placeholder?: string,
-  value?: string | readonly string[] | number | boolean | undefined,
+  value?: string | readonly string[] | number | undefined,
   labelText?: string,
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
   min?: number,

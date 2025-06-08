@@ -1,11 +1,12 @@
 .notification {
-  margin: 5px;
-  padding: 5px;
+  margin: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
   color: var(--primary-color-dark);
   background-color: var(--primary-color-light-extra);
   border: 1px solid var(--primary-color-light);
-  font-size: small;
+  font-size: smaller;
   font-weight: 600;
-  font-style: italic;
-  max-width: 350px;
+  /* font-style: italic; */
+  max-width: 320px;
 }

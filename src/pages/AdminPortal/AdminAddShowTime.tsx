@@ -235,7 +235,7 @@ const AdminAddShowTime = () => {
 
         <Button
           type="button"
-          style={StyleType.Free}
+          style={StyleType.Icon}
           onClick={() => {
             setSelectedMovie(null);
             setSelectedDate(null);

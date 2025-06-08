@@ -15,6 +15,7 @@ import { useIsLoading } from "../../hooks/useIsLoading";
 
 import './bookingPayment.css';
 import { Notification } from "../notification";
+import useIsMobile from "../../hooks/useIsMobile";
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -53,6 +54,7 @@ const CheckoutForm = ({
 
   const stripe = useStripe();
   const elements = useElements();
+  const isMobile = useIsMobile();
 
   const { fetchPost } = useInternalApiClient();
   const navigate = useNavigate();
@@ -115,16 +117,30 @@ const CheckoutForm = ({
     <form onSubmit={handleSubmit}>
       {
         state?.portalSettings?.notifications?.testCreditCard &&
-          <Notification
-            message={state.portalSettings.notifications.testCreditCard}
-          />
+        <Notification
+          message={state.portalSettings.notifications.testCreditCard}
+        />
       }
       <CardElement options={CARD_ELEMENT_OPTIONS} className="kd-stripe" />
       <br />
-      <div>
-        <Button text="Pay with Stripe" type="submit" style={StyleType.Primary} disabled={!stripe || payButtonDisabled} />
-        <CancelBooking />
-      </div>
+
+      {
+        !isMobile && <div>
+          <Button text="Pay with Stripe" type="submit" style={StyleType.Primary} disabled={!stripe || payButtonDisabled} />
+          <CancelBooking />
+        </div>
+      }
+
+      {
+        isMobile && <div>
+          <Button text="Pay with Stripe" type="submit" style={StyleType.Primary} disabled={!stripe || payButtonDisabled} />
+          <div style={{ marginLeft: '-15px' }}>
+            <CancelBooking />
+          </div>
+        </div>
+      }
+
+
     </form>
   );
 }

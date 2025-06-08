@@ -11,11 +11,10 @@ import { useApplicationContext } from "../../state-management/providers/AdminCon
 import { APPLICATION_ACTIONS_CONSTS } from "../../state-management/action-constants/application";
 import { message } from "antd";
 import { PageHeader } from "../../components/headers/pageHeader";
-import { Notification } from "../../components/notification";
 
 export const SignIn = () => {
   const { state: authState } = useAuthContext();
-  const { state: appState, dispatch } = useApplicationContext();
+  const {dispatch } = useApplicationContext();
   const apiClient = useInternalApiClient();
   const { fetchSignIn } = apiClient;
 
@@ -80,6 +79,8 @@ export const SignIn = () => {
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             />
           </div>
+
+          <br />
 
           <Button
             type={"submit"}
