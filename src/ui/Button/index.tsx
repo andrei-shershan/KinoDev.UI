@@ -10,7 +10,7 @@ const Button = ({
   style = StyleType.Primary,
   size = SizeType.Medium,
   type = undefined,
-  disabled = false
+  disabled = false,
 }: {
   children?: React.ReactNode;
   onClick?: (e: FormEvent) => void;

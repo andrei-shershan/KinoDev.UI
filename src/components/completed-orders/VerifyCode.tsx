@@ -27,7 +27,7 @@ export const VerifyCode = ({
     if (!code) {
       return
     };
-    
+
     try {
       setIsLoading(true);
       var response = await fetchPost(`${URLS.API_GATEWAY_BASE_URL}/${ENDPOINTS.API_GATEWAY.ORDERS.GET_COMPLETED_ORDER_COOKIE}`, { email, code });
@@ -48,21 +48,20 @@ export const VerifyCode = ({
 
   return (
     <div>
-      <p>
-        A verification code has been sent to your email. Please check your inbox.
-      </p>
-      <div style={{ display: 'flex', gap: '10px' }}>
-        <Input
-          type={InputType.Number}
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          placeholder="Enter verification code"
-        />
-        <Button
-          onClick={handleVerifyCode}
-          text="Verify Code"
-        />
-      </div>
+      <span className="gray-label">
+        A verification code has been sent to your email. Please check your inbox:
+      </span>
+      <Input
+        type={InputType.Number}
+        value={code}
+        onChange={(e) => setCode(e.target.value)}
+        placeholder="Enter verification code"
+      />
+      <br />
+      <Button
+        onClick={handleVerifyCode}
+        text="Verify Code"
+      />
     </div>
   );
 }

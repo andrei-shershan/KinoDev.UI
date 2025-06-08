@@ -44,25 +44,30 @@ export const EmailVerification = ({
     }
   };
   return (
-    <>
-      <p>
-        If you don't see your tickets, please enter your email address below to load your tickets.
-      </p>
-      <div style={{ display: 'flex', gap: '10px' }}>
-        <Input
-          type={InputType.Email}
-          value={email}
-          onChange={(e) => handleEmailChange(e)}
-          placeholder="Enter your email"
-        />
-        <Button
-          onClick={handleLoadTickets}
-          text={
-            verificationEmailSent
-              ? "Resend Verification Code"
-              : "Send Verification Code"
-          }
-        />
-      </div></>
+    <div>
+      <span className="gray-label">
+        If you don't see your tickets, please enter your email address below to load your tickets:
+      </span>
+      <Input
+        type={InputType.Email}
+        value={email}
+        onChange={(e) => handleEmailChange(e)}
+        placeholder="Enter your email"
+      />
+
+      <br />
+
+      <Button
+        onClick={handleLoadTickets}
+        text={
+          verificationEmailSent
+            ? "Resend Code"
+            : "Send Code"
+        }
+      />
+      <br />
+      <br />
+      <br />
+    </div>
   );
 }

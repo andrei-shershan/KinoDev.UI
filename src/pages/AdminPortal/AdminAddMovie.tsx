@@ -214,7 +214,7 @@ const AdminAddMovie: React.FC = () => {
 
           <Button
             type="button"
-            style={StyleType.Free}
+            style={StyleType.Icon}
             onClick={() => {
               setMovieData({
                 name: "",

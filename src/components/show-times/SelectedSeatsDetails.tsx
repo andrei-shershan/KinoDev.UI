@@ -65,26 +65,27 @@ const SelectedSeatsDetails = ({ showTimeDetails, selectedSeats, resetSelectedSea
   return (
     <div>
       <h2>{getDateTimeObject(showTimeDetails.time).date} {getDateTimeObject(showTimeDetails.time).time}</h2>
-      <h2>{showTimeDetails.price}</h2>
-      <h3>{showTimeDetails.hall.name}</h3>
+      <h3>Hall: {showTimeDetails.hall.name}</h3>
+      <br />
+      {
+        selectedSeats?.length > 0 &&
+        <div>
+          <span>
+            You selected: <strong> {selectedSeats.length}</strong>
+            <br />Total price: <strong>{selectedSeats.length * showTimeDetails.price}</strong>
+          </span>
+          <br />
+          <br />
+          <div>
+            <Button text="Book" style={StyleType.Primary} onClick={() => setIsModalOpen(true)} />
 
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {
-          selectedSeats?.length > 0 &&
-          <>
-            <div style={{ marginBottom: '10px' }}>
-              You selected {selectedSeats.length}, total price: {selectedSeats.length * showTimeDetails.price}
-            </div>
-            <div>
-              <Button text="Book" style={StyleType.Primary} onClick={() => setIsModalOpen(true)} />
+            <ResetSeats
+              resetSelectedSeats={resetSelectedSeats}
+            />
+          </div>
+        </div>
+      }
 
-              <ResetSeats
-                resetSelectedSeats={resetSelectedSeats}
-              />
-            </div>
-          </>
-        }
-      </div>
       <Modal
         title="Booking Confirmation"
         open={isModalOpen}

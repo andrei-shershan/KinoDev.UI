@@ -79,6 +79,7 @@ const BookingGuestEmail = ({
             labelText='Confirm Email*'
           />
           {errors.confirmEmail && <div style={errorStyle}>{errors.confirmEmail}</div>}
+          <br />
           <div>
             <Button
               onClick={handleSubmit}
@@ -93,15 +94,17 @@ const BookingGuestEmail = ({
   }
 
   return (
-    <div>
-      <span> {submittedEmail}</span>
-      <Button
-        style={StyleType.Icon}
-        onClick={() => onEmailSubmit('')}
-      >
-        <EditOutlined style={{ fontSize: '20px' }} />
-        Edit
-      </Button>
+    <div style={{ display: 'flex', alignItems: 'left', gap: '5px' }}>
+      <div style={{ marginRight: '-20px', marginLeft: '-20px', marginTop: '-10px' }}>
+        <Button
+          style={StyleType.Icon}
+          onClick={() => onEmailSubmit('')}
+        >
+          <EditOutlined style={{ fontSize: '20px' }} />          
+        </Button>
+      </div>
+      <h4>{submittedEmail}</h4>
+
     </div >
   );
 };
