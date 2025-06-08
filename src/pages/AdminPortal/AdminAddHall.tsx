@@ -31,12 +31,10 @@ const AdminAddHall = () => {
 
     if (name === "rowsCount" || name === "seatsCount") {
       const numValue = parseInt(value);
-      if (!isNaN(numValue) && numValue >= 1 && numValue <= 10) {
-        setHallData({
-          ...hallData,
-          [name]: numValue,
-        });
-      }
+      setHallData({
+        ...hallData,
+        [name]: numValue,
+      });
     } else {
       setHallData({
         ...hallData,

@@ -12,7 +12,19 @@ div {
 }
 
 .showing-movie-card:hover {
-  /* cursor: pointer; */
+  cursor: pointer;
+  color: var(--primary-color-dark-extra);
+}
+
+.showing-movie-card:hover .basic-details .label,
+.showing-movie-card:hover .basic-details .details {
+  color: var(--primary-color-dark);
+  transition: color 0.3s ease;
+}
+
+.showing-movie-card:hover .movie-poster {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
 }
 
 .showing-movie-card .movie-poster {
@@ -22,6 +34,7 @@ div {
   background-size: cover;
   background-position: center;
   flex-shrink: 0;
+  transition: transform 0.3s ease;
 }
 
 .showing-movie-card .movie-poster.mobile {

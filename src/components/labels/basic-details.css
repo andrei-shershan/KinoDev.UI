@@ -9,10 +9,12 @@
 
 .basic-details .label {
   color: var(--none-color-dark);
+  transition: color 0.3s ease;
 }
 
 .basic-details .details {
   color: var(--none-color-dark-darker);
   margin-left: 5px;
   font-weight: 600;
+  transition: color 0.3s ease;
 }

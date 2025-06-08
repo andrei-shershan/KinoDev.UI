@@ -1,6 +1,6 @@
 .slot-times-container {
   display: inline-block;
-  margin: 5px;
+  margin: 5px;  
 }
 
 .slot-time-button {
@@ -31,4 +31,8 @@
   color: var(--danger-color-dark-extra);
   border: 3px solid var(--danger-color-dark-extra);
   background-color: var(--danger-color-light-extra);
+}
+
+.hall-slot-times-container {
+  margin-bottom: 30px;
 }

@@ -17,9 +17,12 @@ import { PageHeader } from "../../components/headers/pageHeader";
 import { Input } from "../../ui/Input";
 import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
 import { APPLICATION_ACTIONS_CONSTS } from "../../state-management/action-constants/application";
-import { SyncOutlined } from "@ant-design/icons";
+import { ClockCircleOutlined, EyeOutlined, SyncOutlined } from "@ant-design/icons";
 import { ShowTimeForDateCard } from "../../components/show-times/ShowTimeForDateCard";
 import { useIsLoading } from "../../hooks/useIsLoading";
+import { BasicDetails } from "../../components/labels/BasicDetails";
+import './index.css';
+import { getHourMinute } from "../../utils/date-time";
 
 interface AddShowTimeRequestModel {
   movieId: number;
@@ -134,119 +137,125 @@ const AdminAddShowTime = () => {
         action={() => navigate(`/${ROUTES.ADMIN_PORTAL.SHOWTIMES}`)}
         type="back"
       />
+      <Dropdown
+        options={movies.map(movie => ({ value: movie.id.toString(), label: movie.name }))}
+        onChange={handleMovieChange}
+        labelText="Select Movie:"
+        id="movieDropdown"
+        selectedValue={selectedMovie ? selectedMovie.id.toString() : ""}
+      />
+      <br />
 
-      <div>
-
-        <Dropdown
-          options={movies.map(movie => ({ value: movie.id.toString(), label: movie.name }))}
-          onChange={handleMovieChange}
-          labelText="Select Movie:"
-          id="movieDropdown"
-          selectedValue={selectedMovie ? selectedMovie.id.toString() : ""}
-        />
-
-        {
-          selectedMovie && (
-            <div>
-              <h3>Selected Movie: {selectedMovie.name}</h3>
-              <p>Duration: {selectedMovie.duration} minutes</p>
-              <div className="movie-card-img" style={{
-                width: '200px',
-                height: '200px',
-                backgroundImage: `url(${getImageSourceUrl(selectedMovie.url)})`,
-                backgroundSize: 'cover',
-                display: 'inline-block',
-                verticalAlign: 'top'
-              }} >
-              </div>
+      {
+        selectedMovie && (
+          <div>
+            <BasicDetails
+              details={selectedMovie.name}
+              multiline
+            >
+              <EyeOutlined />
+            </BasicDetails>
+            <BasicDetails
+              details={`${selectedMovie.duration} minutes`}
+            >
+              <ClockCircleOutlined />
+            </BasicDetails>
+            <div className="movie-card-img" style={{
+              width: '200px',
+              height: '200px',
+              backgroundImage: `url(${getImageSourceUrl(selectedMovie.url)})`,
+              backgroundSize: 'cover',
+              display: 'inline-block',
+              verticalAlign: 'top'
+            }} >
             </div>
-          )
-        }
+          </div>
+        )
+      }
 
-        <br />
+      <br />
 
-        <Dropdown
-          id="startDateDropdown"
-          options={getDays()}
-          onChange={handleDateChange}
-          selectedValue={selectedDate ? selectedDate.toISOString().split('T')[0] : ""}
-          labelText="Select date:"
-        />
+      <Dropdown
+        id="startDateDropdown"
+        options={getDays()}
+        onChange={handleDateChange}
+        selectedValue={selectedDate ? selectedDate.toISOString().split('T')[0] : ""}
+        labelText="Select date:"
+      />
 
-        <br />
+      <br />
 
-        <Input
-          type={InputType.Number}
-          id="price"
-          name="price"
-          value={price}
-          onChange={(e) => setPrice(Number(e.target.value))}
-          placeholder="Enter price"
-          labelText="Price*"
-          required
-          min={0}
-        />
+      <Input
+        type={InputType.Number}
+        id="price"
+        name="price"
+        value={price}
+        onChange={(e) => setPrice(Number(e.target.value))}
+        placeholder="Enter price"
+        labelText="Price*"
+        required
+        min={0}
+      />
 
-        <br />
+      <br />
 
-        {
-          !addShowTimeRequestModel && selectedDate && selectedMovie && showTimeForDate && (
-            <ShowTimeForDateCard
-              showTimeForDate={showTimeForDate}
-              selectedMovie={selectedMovie}
-              onSlotSelected={({ h, s }) => {
-                setAddShowTimeRequestModel({
-                  movieId: selectedMovie.id,
-                  hallId: h.id,
-                  time: s.time,
-                  price: 0
-                });
-              }}
+      {
+        !addShowTimeRequestModel && selectedDate && selectedMovie && showTimeForDate && (
+          <ShowTimeForDateCard
+            showTimeForDate={showTimeForDate}
+            selectedMovie={selectedMovie}
+            onSlotSelected={({ h, s }) => {
+              setAddShowTimeRequestModel({
+                movieId: selectedMovie.id,
+                hallId: h.id,
+                time: s.time,
+                price: 0
+              });
+            }}
+          />
+        )
+      }
+
+      {
+        addShowTimeRequestModel && (
+          <div className="hall-slot-details">
+            <span>Selected Slot:</span>
+            <p>Hall: <strong>{showTimeForDate?.hallWithMovies?.find(x => x.hall.id === addShowTimeRequestModel?.hallId)?.hall?.name}</strong></p>
+            <p>Time: <strong>{getHourMinute(addShowTimeRequestModel.time)}</strong></p>
+            <br />
+            <Button
+              size={SizeType.Small}
+              style={StyleType.None}
+              onClick={() => setAddShowTimeRequestModel(null)}
+              text="Change Slot"
             />
-          )
-        }
+          </div>
+        )
+      }
 
-        {
-          addShowTimeRequestModel && (
-            <div>
-              <h3>Selected Slot:</h3>
-              <p>Hall: {showTimeForDate?.hallWithMovies?.find(x => x.hall.id === addShowTimeRequestModel?.hallId)?.hall?.name}</p>
-              <p>{addShowTimeRequestModel.time.toTimeString()}</p>
+      <br />
 
-              <Button
-                size={SizeType.Small}
-                style={StyleType.None}
-                onClick={() => setAddShowTimeRequestModel(null)}
-                text="Change Slot"
-              />
-            </div>
-          )
-        }
+      <Button
+        disabled={!addShowTimeRequestModel || price <= 0}
+        size={SizeType.Medium}
+        style={StyleType.Primary}
+        onClick={handleAddShowTime}
+        text="Add Show Time"
+      />
 
-        <br />
-
-        <Button
-          disabled={!addShowTimeRequestModel || price <= 0}
-          size={SizeType.Medium}
-          style={StyleType.Primary}
-          onClick={handleAddShowTime}
-          text="Add Show Time"
-        />
-
-        <Button
-          type="button"
-          style={StyleType.Icon}
-          onClick={() => {
-            setSelectedMovie(null);
-            setSelectedDate(null);
-            setShowTimeForDate(null);
-            setAddShowTimeRequestModel(null);
-            setPrice(0);
-          }}
-        >
-          <SyncOutlined /> Reset
-        </Button>
-      </div>
+      <Button
+        type="button"
+        style={StyleType.Icon}
+        onClick={() => {
+          setSelectedMovie(null);
+          setSelectedDate(null);
+          setShowTimeForDate(null);
+          setAddShowTimeRequestModel(null);
+          setPrice(0);
+        }}
+      >
+        <SyncOutlined /> Reset
+      </Button>
     </MainLayout >
   );
 }

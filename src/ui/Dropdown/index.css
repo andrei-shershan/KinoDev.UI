@@ -1,5 +1,6 @@
 select {
-  width: 200px;
+  width: 240px;
+  height: 40px;
   padding: 10px;
   font-family: sans-serif;
   color: var(--primary-color);

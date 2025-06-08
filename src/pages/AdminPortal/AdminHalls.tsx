@@ -8,6 +8,26 @@ import { useApplicationContext } from "../../state-management/providers/AdminCon
 import { getHalls } from "../../api-calls/halls";
 import { PageHeader } from "../../components/headers/pageHeader";
 
+import './index.css';
+import { HallSummary } from "../../models/api.models";
+
+const getHallStats = (hall: HallSummary) => {
+  // If no seats, return empty stats
+  if (!hall.seats || hall.seats.length === 0) {
+    return { rowsCount: 0, seatsPerRow: 0 };
+  }
+
+  // Get unique rows
+  const rows = [...new Set(hall.seats.map(seat => seat.row))];
+  const rowsCount = rows.length;
+
+  const seatsPerRow = hall.seats.filter(seat => seat.row === rows[0]).length;
+  return {
+    rowsCount,
+    seatsPerRow
+  };
+};
+
 const AdminHalls = () => {
   const apiClient = useInternalApiClient();
   const { state, dispatch } = useApplicationContext();
@@ -34,11 +54,8 @@ const AdminHalls = () => {
         state.halls && state.halls.length > 0 &&
         state.halls.map((hall) => (
           <div key={hall.id} className="hall-card">
-            <div>
-              <h3>{hall.name}</h3>
-              <p>Seats: <strong>{hall.seats.length}</strong></p>
-            </div>
-            <br />
+            <h3>{hall.name}</h3>
+            <p>Seats: <strong>{hall.seats.length}</strong> ({`${getHallStats(hall).rowsCount} x ${getHallStats(hall).seatsPerRow}`})</p>
           </div>
         ))
       }

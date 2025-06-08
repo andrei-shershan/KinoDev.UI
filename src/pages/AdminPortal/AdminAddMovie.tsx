@@ -133,8 +133,7 @@ const AdminAddMovie: React.FC = () => {
             placeholder="Enter movie description"
             labelText="Description*"
           />
-
-          <div style={{ display: 'flex', gap: '10px' }}>
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-end' }}>
             <Input
               type={InputType.Number}
               id="releaseDateDay"
