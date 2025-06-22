@@ -8,7 +8,10 @@ pool:
 
 variables:
   workingDirectory: '$(System.DefaultWorkingDirectory)'
-
+  # Update these variables with your Azure Web App information
+  webAppName: '$(AZURE_WEBAPP_NAME)'
+  azureSubscription: '$(AZURE_SERVICE_CONNECTION)'
+  
 stages:
   - stage: Build_and_Test
     displayName: 'Build and Test React App'
@@ -49,22 +52,77 @@ stages:
             customCommand: 'run build'
           displayName: 'Build application'
 
-        - script: |
-            echo "Listing directory contents:"
-            ls -la $(System.DefaultWorkingDirectory)
-            echo "Listing build directory contents:"
-            ls -la $(System.DefaultWorkingDirectory)/dist
-          displayName: 'Debug directory contents'
-
         - task: PublishTestResults@2
           inputs:
             testResultsFormat: 'JUnit'
             testResultsFiles: 'coverage/junit.xml'
           displayName: 'Publish test results'
           condition: succeededOrFailed()
+        
+        - script: |
+            echo "Creating web.config for Azure Web App..."
+            echo '<?xml version="1.0" encoding="utf-8"?>' > $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '<configuration>' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '  <system.webServer>' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '    <rewrite>' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '      <rules>' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '        <rule name="React Routes" stopProcessing="true">' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '          <match url=".*" />' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '          <conditions logicalGrouping="MatchAll">' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '            <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '            <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '          </conditions>' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '          <action type="Rewrite" url="/" />' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '        </rule>' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '      </rules>' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '    </rewrite>' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '    <staticContent>' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '      <mimeMap fileExtension=".json" mimeType="application/json" />' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '      <mimeMap fileExtension=".woff" mimeType="application/font-woff" />' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '      <mimeMap fileExtension=".woff2" mimeType="application/font-woff2" />' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '    </staticContent>' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '  </system.webServer>' >> $(System.DefaultWorkingDirectory)/dist/web.config            echo '</configuration>' >> $(System.DefaultWorkingDirectory)/dist/web.config
+          displayName: 'Create web.config for SPA routing'
+
+        - task: ArchiveFiles@2
+          displayName: 'Archive build files'
+          inputs:
+            rootFolderOrFile: '$(System.DefaultWorkingDirectory)/dist'
+            includeRootFolder: false
+            archiveType: 'zip'
+            archiveFile: '$(Build.ArtifactStagingDirectory)/$(webAppName).zip'
+            replaceExistingArchive: true
 
         - task: PublishBuildArtifacts@1
           inputs:
-            PathtoPublish: '$(System.DefaultWorkingDirectory)/dist'
-            ArtifactName: 'react-app'
-          displayName: 'Publish build artifacts'
+            pathToPublish: '$(Build.ArtifactStagingDirectory)'
+            artifactName: 'drop'
+          displayName: 'Publish artifacts'
+
+  - stage: Deploy
+    displayName: 'Deploy to Azure Web App'
+    dependsOn: Build_and_Test
+    condition: succeeded()
+    jobs:
+      - job: Deploy
+        displayName: 'Deploy Web App'
+        steps:
+        - task: DownloadBuildArtifacts@1
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            artifactName: 'drop'
+            downloadPath: '$(System.ArtifactsDirectory)'
+          displayName: 'Download build artifacts'
+
+        - task: AzureRmWebAppDeployment@4
+          inputs:
+            ConnectionType: 'AzureRM'
+            azureSubscription: '$(azureSubscription)'
+            appType: 'webApp'
+            WebAppName: '$(webAppName)'
+            packageForLinux: '$(System.ArtifactsDirectory)/drop/$(webAppName).zip'
+            enableCustomDeployment: true
+            DeploymentType: 'zipDeploy'
+            StartupCommand: ''
+          displayName: 'Deploy to Azure Web App'

@@ -5,6 +5,7 @@ export const URLS = {
   ADMIN_PORTAL_URL: import.meta.env.VITE_ADMIN_PORTAL_URL,
   PUBLIC_IMAGES_HOST: import.meta.env.VITE_PUBLIC_IMAGES_HOST,
   PUBLIC_IMAGES_STORE_ACCOUNT: import.meta.env.VITE_PUBLIC_IMAGES_STORE_ACCOUNT,
+  PUBLIC_TICKETS_STORE_ACCOUNT: import.meta.env.VITE_PUBLIC_TICKETS_STORE_ACCOUNT,
 } as const;
 
 export type UrlKeys = keyof typeof URLS;
