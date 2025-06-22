@@ -10,7 +10,6 @@ import { ROUTES } from "../../constants/routes";
 import { Movie } from "../../models/api.models";
 import { useApplicationContext } from "../../state-management/providers/AdminContextProvider";
 import { getImageSourceUrl } from "../../utils/images";
-import { getDateTimeObject } from "../../utils/date-time";
 
 import "./index.css";
 import './../../components/movies/moviesListAdmin.css';

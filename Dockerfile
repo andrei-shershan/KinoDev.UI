@@ -9,6 +9,7 @@ ARG Portals_Main
 ARG Portals_Admin
 ARG Public_Images_Host
 ARG Public_Images_Store_Account
+ARG Public_Tickets_Store_Account
 
 # Set the environment variable for Vite to pick up
 ENV VITE_AUTH_BASE_URL=$ApiClients_IdentityServiceUri
@@ -17,6 +18,7 @@ ENV VITE_MAIN_PORTAL_URL=$Portals_Main
 ENV VITE_ADMIN_PORTAL_URL=$Portals_Admin
 ENV VITE_PUBLIC_IMAGES_HOST=$Public_Images_Host
 ENV VITE_PUBLIC_IMAGES_STORE_ACCOUNT=$Public_Images_Store_Account
+ENV VITE_PUBLIC_TICKETS_STORE_ACCOUNT=$Public_Tickets_Store_Account
 
 # Copy package files first
 COPY package*.json ./

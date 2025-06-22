@@ -3,7 +3,7 @@ import useIsMobile from "../../hooks/useIsMobile";
 import './ShowTimeDetails.css';
 import { getImageSourceUrl } from "../../utils/images";
 import { BasicDetails } from "../labels/BasicDetails";
-import { CalendarOutlined, ClockCircleOutlined, ClockCircleTwoTone } from "@ant-design/icons";
+import { CalendarOutlined, ClockCircleOutlined } from "@ant-design/icons";
 
 const ShowTimeDetailsComponent = (
   {

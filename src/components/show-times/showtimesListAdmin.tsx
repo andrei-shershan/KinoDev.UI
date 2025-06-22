@@ -1,7 +1,6 @@
 import useIsMobile from "../../hooks/useIsMobile";
 import { ShowTimeDetailsApiModel } from "../../models/api.models";
 import { getImageSourceUrl } from "../../utils/images";
-import { BasicDetails } from "../labels/BasicDetails";
 import { getShowTimeTime } from "./showTimeButton";
 
 import './showtimesListAdmin.css';

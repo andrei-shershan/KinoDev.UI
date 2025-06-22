@@ -1,4 +1,4 @@
-import { AppstoreOutlined, BorderBottomOutlined, DownloadOutlined, ReloadOutlined } from "@ant-design/icons";
+import { AppstoreOutlined, DownloadOutlined, ReloadOutlined } from "@ant-design/icons";
 import { OrderSummary } from "../../models/api.models";
 import { getDateTimeObject } from "../../utils/date-time";
 import { getFileUrl } from "../../utils/files";
