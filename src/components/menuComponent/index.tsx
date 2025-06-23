@@ -13,7 +13,7 @@ interface MenuProps {
   menuItems: MenuItem[];
 }
 
-const Menu: React.FC<MenuProps> = ({ menuItems }) => {
+export const MenuComponent: React.FC<MenuProps> = ({ menuItems }) => {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const location = useLocation();
@@ -86,5 +86,3 @@ const Menu: React.FC<MenuProps> = ({ menuItems }) => {
     </div>
   );
 };
-
-export default Menu;

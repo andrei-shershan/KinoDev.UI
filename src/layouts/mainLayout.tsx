@@ -2,7 +2,7 @@ import { Layout } from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import '../styles/index.css';
 import { FC, PropsWithChildren, useEffect } from 'react';
-import Menu from "../components/menu/index";
+import { MenuComponent } from "../components/menuComponent";
 import { PORTALS_TYPES } from "../constants/portalTypes";
 import { useApplicationContext } from "../state-management/providers/AdminContextProvider";
 import { getMenuItems } from "../utils/menu";
@@ -34,7 +34,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children, portalType = PORTALS_TYPES.
     <Layout style={{ minHeight: '100vh' }}>
       <Header className={classNameAdjusted('main-layout-header', isMobile, 'mobile')}>
         <div className='main-layout-menu-wrapper'>
-          <Menu menuItems={getMenuItems(portalType)} />
+          <MenuComponent menuItems={getMenuItems(portalType)} />
         </div>
       </Header>
       <Loading isLoading={state.spinning}>
