@@ -144,6 +144,7 @@ stages:
           inputs:
             pathToPublish: '$(Build.ArtifactStagingDirectory)'
             artifactName: 'drop'
+            publishLocation: 'Container'
           displayName: 'Publish artifacts'
 
   - stage: Deploy
