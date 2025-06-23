@@ -46,6 +46,11 @@ stages:
             customCommand: 'run test'
           displayName: 'Run tests'
 
+        - script: |
+            echo "Removing vite.config.ts file before build..."
+            rm -f $(System.DefaultWorkingDirectory)/vite.config.ts
+          displayName: 'Remove vite.config.ts'
+
         - task: Npm@1
           inputs:
             command: 'custom'
