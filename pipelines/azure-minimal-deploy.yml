@@ -1,7 +1,4 @@
-trigger:
-  branches:
-    include:
-      - main
+trigger: none  # Disable automatic triggers - pipeline will run manually
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -20,11 +17,21 @@ stages:
           inputs:
             versionSpec: '22-lts'
           displayName: 'Install Node.js 22-LTS'
-
+          
         - task: Npm@1
           inputs:
             command: 'ci'
           displayName: 'Install dependencies'
+
+        - script: |
+            echo "Copying production Vite config..."
+            if [ -f "$(System.DefaultWorkingDirectory)/vite.config.prod.ts" ]; then
+              cp $(System.DefaultWorkingDirectory)/vite.config.prod.ts $(System.DefaultWorkingDirectory)/vite.config.ts
+              echo "Production config copied successfully"
+            else
+              echo "Production config file not found, using default"
+            fi
+          displayName: 'Set production Vite config'
 
         - task: Npm@1
           inputs:
