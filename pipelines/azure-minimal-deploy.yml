@@ -1,4 +1,7 @@
-trigger: none  # Disable automatic triggers - pipeline will run manually
+trigger:
+  branches:
+    include:
+      - main
 
 pool:
   vmImage: 'ubuntu-latest'
