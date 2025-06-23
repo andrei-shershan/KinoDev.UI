@@ -1,0 +1,77 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  webAppName: '$(AZURE_WEBAPP_NAME)'
+  azureSubscription: '$(AZURE_SERVICE_CONNECTION)'
+
+stages:
+  - stage: Build
+    displayName: 'Build'
+    jobs:
+      - job: Build
+        steps:
+        - task: NodeTool@0
+          inputs:
+            versionSpec: '22-lts'
+          displayName: 'Install Node.js 22-LTS'
+
+        - task: Npm@1
+          inputs:
+            command: 'ci'
+          displayName: 'Install dependencies'
+
+        - task: Npm@1
+          inputs:
+            command: 'custom'
+            customCommand: 'run build'
+          displayName: 'Build application'
+
+        - task: ArchiveFiles@2
+          displayName: 'Archive build files'
+          inputs:
+            rootFolderOrFile: '$(System.DefaultWorkingDirectory)/dist'
+            includeRootFolder: false
+            archiveType: 'zip'
+            archiveFile: '$(Build.ArtifactStagingDirectory)/$(webAppName).zip'
+            replaceExistingArchive: true
+            
+        - task: PublishBuildArtifacts@1
+          displayName: 'Publish artifacts'
+          inputs:
+            pathToPublish: '$(Build.ArtifactStagingDirectory)'
+            artifactName: 'drop'
+            publishLocation: 'Container'
+
+  - stage: Deploy
+    displayName: 'Deploy'
+    dependsOn: Build
+    condition: succeeded()
+    jobs:
+      - deployment: Deploy
+        environment: kinodev-live
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+              - task: DownloadBuildArtifacts@1
+                inputs:
+                  buildType: 'current'
+                  downloadType: 'single'
+                  artifactName: 'drop'
+                  downloadPath: '$(System.ArtifactsDirectory)'
+                displayName: 'Download build artifacts'
+
+              - task: AzureWebApp@1
+                inputs:
+                  azureSubscription: '$(azureSubscription)'
+                  appType: 'webAppLinux'
+                  appName: '$(webAppName)'
+                  package: '$(System.ArtifactsDirectory)/drop/$(webAppName).zip'
+                  runtimeStack: 'NODE|22-lts'
+                displayName: 'Deploy to Azure Web App'
