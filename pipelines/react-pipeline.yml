@@ -47,9 +47,9 @@ stages:
           displayName: 'Run tests'
 
         - script: |
-            echo "Removing vite.config.ts file before build..."
-            rm -f $(System.DefaultWorkingDirectory)/vite.config.ts
-          displayName: 'Remove vite.config.ts'
+            echo "Copying production Vite config..."
+            cp $(System.DefaultWorkingDirectory)/vite.config.prod.ts $(System.DefaultWorkingDirectory)/vite.config.ts
+          displayName: 'Set production Vite config'
 
         - task: Npm@1
           inputs:
@@ -86,8 +86,16 @@ stages:
             echo '      <mimeMap fileExtension=".woff" mimeType="application/font-woff" />' >> $(System.DefaultWorkingDirectory)/dist/web.config
             echo '      <mimeMap fileExtension=".woff2" mimeType="application/font-woff2" />' >> $(System.DefaultWorkingDirectory)/dist/web.config
             echo '    </staticContent>' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '  </system.webServer>' >> $(System.DefaultWorkingDirectory)/dist/web.config            echo '</configuration>' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '  </system.webServer>' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            echo '</configuration>' >> $(System.DefaultWorkingDirectory)/dist/web.config
           displayName: 'Create web.config for SPA routing'
+
+        # Add step to verify build output contents
+        - script: |
+            echo "Verifying build output contents..."
+            ls -la $(System.DefaultWorkingDirectory)/dist
+            cat $(System.DefaultWorkingDirectory)/dist/index.html || echo "index.html not found!"
+          displayName: 'Verify build output'
 
         - task: ArchiveFiles@2
           displayName: 'Archive build files'
