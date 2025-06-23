@@ -2,7 +2,7 @@ import { Layout } from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import '../styles/index.css';
 import { FC, PropsWithChildren, useEffect } from 'react';
-import Menu from "../components/menu";
+import Menu from "../components/menu/index";
 import { PORTALS_TYPES } from "../constants/portalTypes";
 import { useApplicationContext } from "../state-management/providers/AdminContextProvider";
 import { getMenuItems } from "../utils/menu";
