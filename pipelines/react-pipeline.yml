@@ -48,7 +48,12 @@ stages:
 
         - script: |
             echo "Copying production Vite config..."
-            cp $(System.DefaultWorkingDirectory)/vite.config.prod.ts $(System.DefaultWorkingDirectory)/vite.config.ts
+            if [ -f "$(System.DefaultWorkingDirectory)/vite.config.prod.ts" ]; then
+              cp $(System.DefaultWorkingDirectory)/vite.config.prod.ts $(System.DefaultWorkingDirectory)/vite.config.ts
+              echo "Production config copied successfully"
+            else
+              echo "Production config file not found, using default"
+            fi
           displayName: 'Set production Vite config'
 
         - task: Npm@1
@@ -64,38 +69,58 @@ stages:
           displayName: 'Publish test results'
           condition: succeededOrFailed()
         
+        # Enhanced build verification
+        - script: |
+            echo "=== Build Output Verification ==="
+            echo "Contents of dist directory:"
+            ls -la $(System.DefaultWorkingDirectory)/dist || echo "dist directory not found!"
+            echo ""
+            echo "Checking for index.html:"
+            if [ -f "$(System.DefaultWorkingDirectory)/dist/index.html" ]; then
+              echo "✓ index.html found"
+              echo "File size: $(stat -c%s $(System.DefaultWorkingDirectory)/dist/index.html) bytes"
+              echo "First few lines of index.html:"
+              head -10 $(System.DefaultWorkingDirectory)/dist/index.html
+            else
+              echo "✗ index.html NOT found!"
+              echo "Available files in dist:"
+              find $(System.DefaultWorkingDirectory)/dist -type f -name "*.html" 2>/dev/null || echo "No HTML files found"
+            fi
+            echo ""
+            echo "Checking for assets:"
+            find $(System.DefaultWorkingDirectory)/dist -type f \( -name "*.js" -o -name "*.css" \) | head -10
+          displayName: 'Enhanced build verification'
+
         - script: |
             echo "Creating web.config for Azure Web App..."
-            echo '<?xml version="1.0" encoding="utf-8"?>' > $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '<configuration>' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '  <system.webServer>' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '    <rewrite>' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '      <rules>' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '        <rule name="React Routes" stopProcessing="true">' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '          <match url=".*" />' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '          <conditions logicalGrouping="MatchAll">' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '            <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '            <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '          </conditions>' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '          <action type="Rewrite" url="/" />' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '        </rule>' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '      </rules>' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '    </rewrite>' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '    <staticContent>' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '      <mimeMap fileExtension=".json" mimeType="application/json" />' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '      <mimeMap fileExtension=".woff" mimeType="application/font-woff" />' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '      <mimeMap fileExtension=".woff2" mimeType="application/font-woff2" />' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '    </staticContent>' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '  </system.webServer>' >> $(System.DefaultWorkingDirectory)/dist/web.config
-            echo '</configuration>' >> $(System.DefaultWorkingDirectory)/dist/web.config
+            cat > $(System.DefaultWorkingDirectory)/dist/web.config << 'EOF'
+            <?xml version="1.0" encoding="utf-8"?>
+            <configuration>
+              <system.webServer>
+                <rewrite>
+                  <rules>
+                    <rule name="React Routes" stopProcessing="true">
+                      <match url=".*" />
+                      <conditions logicalGrouping="MatchAll">
+                        <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+                        <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+                      </conditions>
+                      <action type="Rewrite" url="/" />
+                    </rule>
+                  </rules>
+                </rewrite>
+                <staticContent>
+                  <mimeMap fileExtension=".json" mimeType="application/json" />
+                  <mimeMap fileExtension=".woff" mimeType="application/font-woff" />
+                  <mimeMap fileExtension=".woff2" mimeType="application/font-woff2" />
+                </staticContent>
+                <httpErrors existingResponse="PassThrough" />
+              </system.webServer>
+            </configuration>
+            EOF
+            echo "web.config created successfully"
+            cat $(System.DefaultWorkingDirectory)/dist/web.config
           displayName: 'Create web.config for SPA routing'
-
-        # Add step to verify build output contents
-        - script: |
-            echo "Verifying build output contents..."
-            ls -la $(System.DefaultWorkingDirectory)/dist
-            cat $(System.DefaultWorkingDirectory)/dist/index.html || echo "index.html not found!"
-          displayName: 'Verify build output'
 
         - task: ArchiveFiles@2
           displayName: 'Archive build files'
@@ -105,6 +130,15 @@ stages:
             archiveType: 'zip'
             archiveFile: '$(Build.ArtifactStagingDirectory)/$(webAppName).zip'
             replaceExistingArchive: true
+
+        # Verify archive contents
+        - script: |
+            echo "=== Archive Verification ==="
+            echo "Archive file: $(Build.ArtifactStagingDirectory)/$(webAppName).zip"
+            echo "Archive size: $(stat -c%s $(Build.ArtifactStagingDirectory)/$(webAppName).zip) bytes"
+            echo "Archive contents:"
+            unzip -l $(Build.ArtifactStagingDirectory)/$(webAppName).zip | head -20
+          displayName: 'Verify archive contents'
 
         - task: PublishBuildArtifacts@1
           inputs:
@@ -128,6 +162,22 @@ stages:
             downloadPath: '$(System.ArtifactsDirectory)'
           displayName: 'Download build artifacts'
 
+        # Verify downloaded artifacts
+        - script: |
+            echo "=== Downloaded Artifacts Verification ==="
+            echo "Contents of artifacts directory:"
+            ls -la $(System.ArtifactsDirectory)/drop/
+            echo "Archive to deploy: $(System.ArtifactsDirectory)/drop/$(webAppName).zip"
+            if [ -f "$(System.ArtifactsDirectory)/drop/$(webAppName).zip" ]; then
+              echo "✓ Archive found for deployment"
+              echo "Archive size: $(stat -c%s $(System.ArtifactsDirectory)/drop/$(webAppName).zip) bytes"
+            else
+              echo "✗ Archive NOT found!"
+              echo "Available files:"
+              find $(System.ArtifactsDirectory)/drop/ -type f
+            fi
+          displayName: 'Verify downloaded artifacts'
+
         - task: AzureRmWebAppDeployment@4
           inputs:
             ConnectionType: 'AzureRM'
@@ -137,5 +187,6 @@ stages:
             packageForLinux: '$(System.ArtifactsDirectory)/drop/$(webAppName).zip'
             enableCustomDeployment: true
             DeploymentType: 'zipDeploy'
-            StartupCommand: ''
+            # Remove or comment out StartupCommand for static content
+            # StartupCommand: ''
           displayName: 'Deploy to Azure Web App'
