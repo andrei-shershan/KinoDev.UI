@@ -80,7 +80,7 @@ stages:
               - task: AzureWebApp@1
                 inputs:
                   azureSubscription: '$(azureSubscription)'
-                  appType: 'webAppLinux'
+                  appType: 'webApp'
                   appName: '$(webAppName)'
                   package: '$(System.ArtifactsDirectory)/drop/$(webAppName).zip'
                   runtimeStack: 'NODE|22-lts'
