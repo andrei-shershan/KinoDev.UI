@@ -21,6 +21,7 @@ stages:
 
     - script: |
         npm ci
+        npm install terser --save-dev
       displayName: 'Install dependencies'
 
     - script: |
