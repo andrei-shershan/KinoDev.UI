@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KinoDev Deployment Status</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+        }
+        .info {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .timestamp {
+            font-size: 0.8rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>KinoDev Deployment Status</h1>
+    <div class="info">
+        <p>This page confirms that your static files are being served correctly.</p>
+        <p>If you can see this page but not your application, there might be issues with:</p>
+        <ul>
+            <li>Client-side routing configuration</li>
+            <li>Web.config URL rewrite rules</li>
+            <li>Index.html loading or script references</li>
+            <li>Azure App Service configuration</li>
+        </ul>
+    </div>
+    <div class="timestamp">
+        <p>Build timestamp: <span id="build-time"></span></p>
+    </div>
+    <script>
+        document.getElementById('build-time').textContent = new Date().toISOString();
+    </script>
+</body>
+</html>
