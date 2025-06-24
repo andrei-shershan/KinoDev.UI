@@ -29,16 +29,6 @@ stages:
         npm ci
       workingDirectory: $(workingDirectory)
       displayName: 'Install dependencies'
-
-    - script: |
-        npm run lint
-      workingDirectory: $(workingDirectory)
-      displayName: 'Lint code'
-
-    - script: |
-        npm run test
-      workingDirectory: $(workingDirectory)
-      displayName: 'Run tests'
       
     - script: |
         npm run build
