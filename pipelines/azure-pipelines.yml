@@ -25,6 +25,19 @@ stages:
       displayName: 'Install dependencies'
 
     - script: |
+        # Set environment variables for the build process
+        export VITE_AUTH_BASE_URL="$(VITE_AUTH_BASE_URL)"
+        export VITE_API_GATEWAY_BASE_URL="$(VITE_API_GATEWAY_BASE_URL)"
+        export VITE_MAIN_PORTAL_URL="$(VITE_MAIN_PORTAL_URL)"
+        export VITE_ADMIN_PORTAL_URL="$(VITE_ADMIN_PORTAL_URL)"
+        export VITE_PUBLIC_IMAGES_HOST="$(VITE_PUBLIC_IMAGES_HOST)"
+        export VITE_PUBLIC_IMAGES_STORE_ACCOUNT="$(VITE_PUBLIC_IMAGES_STORE_ACCOUNT)"
+        export VITE_PUBLIC_TICKETS_STORE_ACCOUNT="$(VITE_PUBLIC_TICKETS_STORE_ACCOUNT)"
+        export VITE_API_BASE_URL="$(VITE_API_BASE_URL)"
+        # Print environment variables for debugging (remove in production)
+        echo "Build environment variables:"
+        env | grep VITE_ || echo "No VITE_ variables found"
+        # Build the application
         npm run build -- --mode production
       displayName: 'Build Vite React app for production'
 
