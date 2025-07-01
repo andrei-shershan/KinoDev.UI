@@ -81,32 +81,36 @@ stages:
   dependsOn: Build
   condition: succeeded()
   jobs:
-  - job: Deploy
+  - deployment: Deploy
     displayName: 'Deploy to Azure Web App'
-    steps:
-    - task: DownloadBuildArtifacts@1
-      displayName: 'Download Build Artifacts'
-      inputs:
-        buildType: 'current'
-        downloadType: 'single'
-        artifactName: 'drop'
-        downloadPath: '$(System.ArtifactsDirectory)'
+    environment: 'kinodev-live'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DownloadBuildArtifacts@1
+            displayName: 'Download Build Artifacts'
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'drop'
+              downloadPath: '$(System.ArtifactsDirectory)'
 
-    - task: AzureWebApp@1
-      displayName: 'Deploy to Azure Web App'
-      inputs:
-        azureSubscription: '$(AZURE_SERVICE_CONNECTION)'
-        appType: 'webApp'
-        appName: '$(AZURE_WEBAPP_NAME)'
-        package: '$(System.ArtifactsDirectory)/drop'
-        deploymentMethod: 'auto'
-        
-    - script: |
-        echo "Deployment completed. Waiting 60 seconds before verifying..."
-        sleep 60
-        curl -I https://$(AZURE_WEBAPP_NAME).azurewebsites.net/health.html || echo "Health check failed but deployment might still be in progress"
-        curl -I https://$(AZURE_WEBAPP_NAME).azurewebsites.net/deployment-info.html || echo "Deployment info page check failed"
-        echo "Note: It can sometimes take up to 5 minutes for Azure to fully process the deployment."
-        echo "If you're seeing an 'app is waiting for your content' message, please wait and refresh after a few minutes."
-      displayName: 'Verify deployment'
-      continueOnError: 'true'
+          - task: AzureWebApp@1
+            displayName: 'Deploy to Azure Web App'
+            inputs:
+              azureSubscription: '$(AZURE_SERVICE_CONNECTION)'
+              appType: 'webApp'
+              appName: '$(AZURE_WEBAPP_NAME)'
+              package: '$(System.ArtifactsDirectory)/drop'
+              deploymentMethod: 'auto'
+              
+          - script: |
+              echo "Deployment completed. Waiting 60 seconds before verifying..."
+              sleep 60
+              curl -I https://$(AZURE_WEBAPP_NAME).azurewebsites.net/health.html || echo "Health check failed but deployment might still be in progress"
+              curl -I https://$(AZURE_WEBAPP_NAME).azurewebsites.net/deployment-info.html || echo "Deployment info page check failed"
+              echo "Note: It can sometimes take up to 5 minutes for Azure to fully process the deployment."
+              echo "If you're seeing an 'app is waiting for your content' message, please wait and refresh after a few minutes."
+            displayName: 'Verify deployment'
+            continueOnError: 'true'
