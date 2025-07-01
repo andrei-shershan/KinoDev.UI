@@ -34,9 +34,9 @@ ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
 RUN if [ "$NODE_ENV" = "development" ]; then \
-      npm run build -- --sourcemap; \
+      npm run build:docker -- --sourcemap; \
     else \
-      npm run build; \
+      npm run build:docker; \
     fi
 
 FROM nginx:alpine
