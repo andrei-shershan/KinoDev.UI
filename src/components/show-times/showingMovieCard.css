@@ -1,7 +1,3 @@
-div {
-  /* border: 1px solid red; */
-}
-
 .showing-movie-card {
   display: flex;
   gap: 25px;

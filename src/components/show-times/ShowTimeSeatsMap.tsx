@@ -142,7 +142,18 @@ const ShowTimeSeatsMap = ({ showTimeId, onSelectSeat, reset }:
 
   return (
     <div className="seat-map-wrapper">
-      <div className="screen-div">
+      <div 
+        className="screen-div"
+        style={{
+          width: '200px',
+          height: '20px',
+          backgroundColor: '#d3d3d3',
+          margin: '50px auto 0 auto',
+          textAlign: 'center',
+          lineHeight: '20px',
+          border: '1px solid #888'
+        }}
+      >
         Screen
       </div>
       {drawSeatsMap(getSeatsMap(seats?.seats || []), handleSeatClick, selectedSeats)}
