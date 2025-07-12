@@ -1,0 +1,13 @@
+.about-list {
+  list-style-type: disc;
+  margin-top: 15px;
+}
+
+.about-list li {
+  margin-bottom: 10px;
+  margin-left: 25px;
+}
+
+p {
+  margin-bottom: 15px;
+}

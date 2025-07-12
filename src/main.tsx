@@ -12,7 +12,6 @@ import AdminAddShowTime from './pages/AdminPortal/AdminAddShowTime';
 import { ApplicationProvider } from './state-management/providers/AdminContextProvider';
 import { AuthProvider } from './state-management/providers/AuthContextProvider';
 import About from './pages/ClientPortal/About';
-import AboutCinema from './pages/ClientPortal/AboutCinema';
 import Booking from './pages/ClientPortal/Booking';
 import ShowTimes from './pages/ClientPortal/ShowTimes';
 import Tickets from './pages/ClientPortal/Tickets';
@@ -32,7 +31,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Route path={`/${ROUTES.SHOWTIMES}/:showTimeId/booking`} element={<ShowTime />} />
             <Route path={`/${ROUTES.TICKETS}`} element={<Tickets />} />
             <Route path={`/${ROUTES.ABOUT}`} element={<About />} />
-            <Route path={`/${ROUTES.OUR_CINEMA}`} element={<AboutCinema />} />
             <Route path={`/${ROUTES.ADMIN_PORTAL.MOVIES}/add`} element={<AdminAddMovie />} />
             <Route path={`/${ROUTES.ADMIN_PORTAL.MOVIES}/:movieId`} element={<AdminMovie />} />
             <Route path={`/${ROUTES.ADMIN_PORTAL.MOVIES}`} element={<AdminMovies />} />

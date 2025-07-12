@@ -13,11 +13,6 @@ export const clientMenuItems: MainMenuType[] = [
     path: `/${ROUTES.SHOWING}`,
   },
   {
-    key: `/${ROUTES.OUR_CINEMA}`,
-    label: 'Our Cinema',
-    path: `/${ROUTES.OUR_CINEMA}`,
-  },
-  {
     key: `/${ROUTES.ABOUT}`,
     label: 'About',
     path: `/${ROUTES.ABOUT}`,

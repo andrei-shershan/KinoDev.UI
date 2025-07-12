@@ -12,7 +12,7 @@ export const FooterMessage = () => {
         Welcome to the <strong>KinoDev</strong>
       </div>
       <div className="footer-message-text">
-        {<Link target='_blank' to={state.portalSettings?.githubLink || '#'} className="footer-link">Source code at Github: <GithubFilled style={{ fontSize: '20px' }} /> </Link>}
+        {<Link target='_blank' to={state.portalSettings?.githubLink || '#'} className="footer-link">Source code on Github: <GithubFilled style={{ fontSize: '20px' }} /> </Link>}
       </div>
       <div className="footer-message-text">
         {<Link target='_blank' to={state.portalSettings?.linkedinLink || '#'} className="footer-link"> Developer's LinkedIn: <LinkedinFilled style={{ fontSize: '20px' }} /></Link>}
