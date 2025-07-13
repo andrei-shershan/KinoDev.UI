@@ -11,7 +11,7 @@ export const getUserDetails = async (apiClient: InternalApiClient) => {
   if (userDetailsResponse.ok) {
     const userDetails = await userDetailsResponse.json();
 
-    if (userDetails.find((x: string) => x === ROLES.ADMIN)) {
+    if (userDetails.find((x: string) => x === ROLES.ADMIN || x === ROLES.MANAGER)) {
       window.location.href = URLS.ADMIN_PORTAL_URL;
     }
     else {
